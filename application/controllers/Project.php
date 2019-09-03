@@ -10,8 +10,13 @@ class Project extends MY_Controller {
 	}
 
 	public function view($slug){
-		$data['page_name'] = "home";
+		$data['page_name'] = "viwe";
         $this->template->load('template/template','project/view', $data); 
+	}
+
+	public function create(){
+		$data['page_name'] = "create";
+        $this->template->load('template/template','project/create', $data); 
 	}
 	
 }
