@@ -163,7 +163,8 @@ $this->session->set_userdata(array('url_session' => $actual_link));
     <script src="<?= base_url('assets/') ?>bower_components/fastclick/lib/fastclick.js"></script>
     <script src="<?= base_url('assets/') ?>dist/js/adminlte.min.js"></script>
     <script src="<?= base_url('assets/') ?>dist/js/demo.js"></script>
-    <script src="<?= base_url('assets/') ?>custom/number-separator.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.min.js"></script>
+    <script src="<?= base_url('assets/') ?>custom/number-separator.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.min.js"></script>
     <script>
       function formatNumber(num) {
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
