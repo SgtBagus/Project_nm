@@ -8,24 +8,28 @@ class Dashboard extends MY_Controller {
 
 	public function index()
 	{
-		$data['content'] = "overview";
+		$data['title'] = "Dashboard";
+		$data['content'] = "dashboard";
 		$this->template->load('template/template','dashboard/index', $data);
     }
 
 	public function account()
 	{
+		$data['title'] = "Akun Saya";
 		$data['content'] = "account";
 		$this->template->load('template/template','dashboard/index', $data);
     }
     	
 	public function notif()
 	{
+		$data['title'] = "Notifikasi";
 		$data['content'] = "notif";
 		$this->template->load('template/template','dashboard/index', $data);
     }
     
 	public function mitra()
 	{
+		$data['title'] = "Jadi Mitra";
 		$data['content'] = "mitra";
 		$this->template->load('template/template','dashboard/index', $data);
     }

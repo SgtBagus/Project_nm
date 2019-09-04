@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <h1>Overview</h1>
+        <br>
         <div class="row">
             <div class="col-md-6">        
                 <div class="box box-solid round">

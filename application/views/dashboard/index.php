@@ -3,7 +3,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-xs-12">
-                    <h1>Dashboard </h1>
+                    <h1><?= $title ?> </h1>
                     <div class="box box-solid round avatar">
                         <div class="box-body">
                             <div class="row">
@@ -28,13 +28,13 @@
                                     <ul class="list-group list-group-unbordered">
                                         <a href="<?= base_url('dashboard') ?>">
                                             <li class="list-group-item a_black" style="margin-bottom: 5px;" id="overview">
-                                                <i class="fa fa-dashboard"></i> Overview
+                                                <i class="fa fa-dashboard"></i> Dashboard
                                             </li>
                                         </a>
                                         <a href="<?= base_url('dashboard/notif') ?>">
                                             <li class="list-group-item a_black" style="margin-bottom: 5px;" id="notif">
                                                 <span class="badge bg-red">2</span>
-                                                <i class="fa fa-bell"></i> Notification
+                                                <i class="fa fa-bell"></i> Notifikasi
                                             </li>
                                         </a>
                                         <a href="<?= base_url('dashboard/account') ?>">
@@ -56,8 +56,8 @@
                 </div>
                 <div class="col-md-9 col-sm-6 col-xs-12">
                     <?php 
-                    if($content == 'overview'){
-                        $this->load->view('dashboard/overview');
+                    if($content == 'dashboard'){
+                        $this->load->view('dashboard/dashboard');
                     }else if($content == 'notif'){
                         $this->load->view('dashboard/notif');
                     }else if($content == 'account'){

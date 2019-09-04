@@ -34,9 +34,7 @@
 </head>
 <?php 
 $actual_link = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
-// echo $actual_link;
 $this->session->set_userdata(array('url_session' => $actual_link));
-// echo $this->session->userdata('url_session');
 ?>
 <body class="hold-transition skin-green layout-top-nav">
   <div class="wrapper">
@@ -51,10 +49,10 @@ $this->session->set_userdata(array('url_session' => $actual_link));
           </div>
           <div class="collapse navbar-collapse pull-left menu-custom_css" id="navbar-collapse">
             <ul class="nav navbar-nav">
-              <li><a href="#"><i class="fa fa-users"></i> Jadi Mitra</a></li>
-              <li><a href="#"><i class="fa fa-newspaper-o"></i> Blog</a></li>
-              <li><a href="#"><i class="fa fa-list"></i> Tentang Kami</a></li>
-              <li><a href="#"><i class="fa fa-info"></i> FAQ</a></li>
+              <li><a href="<?= base_url('project') ?>"><i class="fa fa-archive"></i> Proyek</a></li>
+              <li><a href="<?= base_url('blog') ?>"><i class="fa fa-newspaper-o"></i> Blog</a></li>
+              <li><a href="<?= base_url('dashboard/mitra') ?>"><i class="fa fa-users"></i> Jadi Mitra</a></li>
+              <li><a href="<?= base_url('info') ?>"><i class="fa fa-list"></i> Info Lainnya</a></li>
             </ul>
           </div>
           <?php

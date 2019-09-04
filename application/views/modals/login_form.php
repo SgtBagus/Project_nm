@@ -1,14 +1,14 @@
-<?php 
-// var_dump($google_login_url);
-?>
 <h3 align="center"> Masuk Sebagai Donatur</h3>
 <form action="#" method="POST" id="login_form">
   <div class="form-group">
     <div class="show_error" id="error_input"></div>
-    <!-- <label>Email</label> -->
+    <label>Email</label>
+    <input type="email" name="email" class="form-control">
+    <hr>
+    <h4 align="center">atau</h4>
     <div class="row">
       <div class="col-md-12" align="center">
-        <a href="<?=$this->google_url?>" class="btn btn-block btn-social btn-login btn-md round">
+        <a href="<?=$this->google_url?>" class="btn btn-block btn-social btn-login btn-md">
           <img src="http://transformations-spafitness.com/wp-content/uploads/2013/11/google-logo-icon-PNG-Transparent-Background-1.png">
           <div class="row" align="center">
             Masuk Dengan Google

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <h1>Akun Saya</h1>
+        <br>
         <div class="row">
             <div class="col-md-12">        
                 <div class="box box-solid round" >
@@ -42,7 +42,7 @@
                                     <div class="form-group">
                                         <div class="checkbox">
                                           <label>
-                                            <input type="checkbox" name="dt[statusDonatur]" value="1" checked>
+                                            <input type="checkbox" name="dt[statusDonatur]" value="1">
                                             Saya Menyetujui <b>Syarat dan Ketentuan</b> tersebut
                                         </label>
                                     </div>
