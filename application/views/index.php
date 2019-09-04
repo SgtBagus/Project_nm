@@ -156,7 +156,7 @@
               </h4>
               <div class="row" align="center">
                 <div class="col-md-12" align="center">
-                  <a href="<?= base_url('project') ?>">
+                  <a href="<?= base_url('project/view/asd') ?>">
                     <button type="button" class="btn btn-primary btn-block btn-md round">
                       <i class="fa fa-search"></i> Selengkapnya
                     </button>
@@ -193,7 +193,7 @@
               </h4>
               <div class="row" align="center">
                 <div class="col-md-12" align="center">
-                  <a href="<?= base_url('project') ?>">
+                  <a href="<?= base_url('project/view/asd') ?>">
                     <button type="button" class="btn btn-primary btn-block btn-md round">
                       <i class="fa fa-search"></i> Selengkapnya
                     </button>
@@ -229,7 +229,7 @@
               </h4>
               <div class="row" align="center">
                 <div class="col-md-12" align="center">
-                  <a href="<?= base_url('project') ?>">
+                  <a href="<?= base_url('project/view/asd') ?>">
                     <button type="button" class="btn btn-primary btn-block btn-md round">
                       <i class="fa fa-search"></i> Selengkapnya
                     </button>
