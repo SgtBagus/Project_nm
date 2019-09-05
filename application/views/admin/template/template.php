@@ -30,6 +30,8 @@ if($this->session->userdata('session_sop')=="") {
   <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
+  <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
   <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
 
   <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/main.css">
@@ -227,6 +229,7 @@ if($this->session->userdata('session_sop')=="") {
   <script src="<?= base_url('assets/') ?>dist/js/adminlte.min.js"></script>
   <script src="<?= base_url('assets/') ?>dist/js/pages/dashboard.js"></script>
   <script src="<?= base_url('assets/') ?>dist/js/demo.js"></script>
+  <script src="<?= base_url('assets/') ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
       $('#user-data-autocomplete').autocomplete({
@@ -333,6 +336,5 @@ if($this->session->userdata('session_sop')=="") {
       return ribuan;
     }
   </script>
-
 </body>
 </html>

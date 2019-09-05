@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Sep 05, 2019 at 02:14 AM
--- Server version: 10.1.39-MariaDB
--- PHP Version: 7.3.5
+-- Host: localhost
+-- Generation Time: Sep 05, 2019 at 10:07 AM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -572,8 +572,8 @@ INSERT INTO `access_control` (`id`, `folder`, `class`, `method`, `val`) VALUES
 CREATE TABLE `activity` (
   `ip` varchar(255) DEFAULT NULL,
   `link` varchar(255) DEFAULT NULL,
-  `get` longtext,
-  `post` longtext,
+  `get` longtext DEFAULT NULL,
+  `post` longtext DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -633,7 +633,12 @@ CREATE TABLE `file` (
 --
 
 INSERT INTO `file` (`id`, `name`, `mime`, `dir`, `table`, `table_id`, `status`, `created_at`, `updated_at`) VALUES
-(179, '6950c16c9bcc6995f376b297f16317592823.png', 'image/png', 'webfile/users/6950c16c9bcc6995f376b297f16317592823.png', 'tbl_investor', 2, 'ENABLE', '2019-09-04 15:08:01', NULL);
+(179, '6950c16c9bcc6995f376b297f16317592823.png', 'image/png', 'webfile/users/6950c16c9bcc6995f376b297f16317592823.png', 'tbl_investor', 2, 'ENABLE', '2019-09-04 15:08:01', NULL),
+(180, '6950c16c9bcc6995f376b297f163175998660.jpg', 'image/jpeg', 'webfile/users/6950c16c9bcc6995f376b297f163175998660.jpg', 'user', 13, 'ENABLE', '2019-09-04 15:08:01', '2019-09-05 09:18:14'),
+(182, 'default.png', 'image/png', 'webfile/users/default.png', 'tbl_investor', 6, 'ENABLE', '2019-09-05 12:19:49', '2019-09-05 12:19:49'),
+(183, 'default.png', 'image/png', 'webfile/users/default.png', 'tbl_investor', 7, 'ENABLE', '2019-09-05 12:23:01', '2019-09-05 12:23:01'),
+(184, '6950c16c9bcc6995f376b297f163175929730.png', 'image/png', 'webfile/users/6950c16c9bcc6995f376b297f163175929730.png', 'user', 14, 'ENABLE', '2019-09-05 12:56:42', NULL),
+(185, '6950c16c9bcc6995f376b297f163175952937.jpeg', 'image/jpeg', 'webfile/users/6950c16c9bcc6995f376b297f163175952937.jpeg', 'user', 15, 'ENABLE', '2019-09-05 12:57:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -701,7 +706,7 @@ INSERT INTO `keys` (`id`, `user_id`, `key`, `level`, `ignore_limits`, `is_privat
 CREATE TABLE `konfig` (
   `id` int(11) NOT NULL,
   `slug` varchar(255) DEFAULT NULL,
-  `value` text,
+  `value` text DEFAULT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
@@ -718,7 +723,7 @@ INSERT INTO `konfig` (`id`, `slug`, `value`, `status`, `created_at`, `updated_at
 (9, 'COLOR_HEADER', 'background: linear-gradient(to right,#0052D4,#65C7F7);', 'DISABLE', '2019-02-18 15:30:24', '2019-02-18 15:31:08'),
 (10, 'VERSION', '1.0.0', 'ENABLE', '2019-02-18 15:30:39', NULL),
 (11, 'COPYRIGHT', '© 2019 <a href=\"http://smartsoftstudio.com/\" target=\"_blank\">SmartSoft Studio</a>.</strong> All rights     reserved.', 'ENABLE', '2019-02-18 15:32:01', '2019-02-19 10:27:32'),
-(12, 'SKIN', 'skin-purple', 'ENABLE', '2019-02-18 15:34:01', '2019-08-22 11:03:46'),
+(12, 'SKIN', 'skin-purple-light', 'ENABLE', '2019-02-18 15:34:01', '2019-09-05 13:03:19'),
 (13, 'TITLE_APPLICATION', 'Smartsoft | Standard operation system', 'ENABLE', '2019-02-18 15:39:54', NULL),
 (14, 'APPLICATION_SMALL', 'SM', 'ENABLE', '2019-02-18 15:42:41', '2019-02-18 15:43:24'),
 (15, 'LOGIN_BOX', 'background : #fff !important ; ', 'ENABLE', '2019-02-18 15:45:53', '2019-02-18 15:58:53'),
@@ -737,13 +742,13 @@ CREATE TABLE `logs` (
   `id` int(11) NOT NULL,
   `uri` varchar(255) NOT NULL,
   `method` varchar(6) NOT NULL,
-  `params` text,
+  `params` text DEFAULT NULL,
   `api_key` varchar(40) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
   `time` int(11) NOT NULL,
   `rtime` float DEFAULT NULL,
   `authorized` varchar(1) NOT NULL,
-  `response_code` smallint(3) DEFAULT '0'
+  `response_code` smallint(3) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -770,8 +775,15 @@ CREATE TABLE `menu_master` (
 --
 
 INSERT INTO `menu_master` (`id`, `name`, `icon`, `link`, `urutan`, `parent`, `notif`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Dashboard', 'fa fa-dashboard', '/', '0', '0', '', 'ENABLE', '2019-01-17 14:33:33', '2019-09-04 14:39:10'),
-(20, 'Investor', 'fa fa-users', 'admin/investor', '1', '0', '', 'ENABLE', '2019-09-04 21:58:18', '2019-09-04 22:12:34');
+(1, 'Dashboard', 'fa fa-dashboard', '/admin', '0', '0', '', 'ENABLE', '2019-01-17 14:33:33', '2019-09-05 09:24:25'),
+(20, 'Investor', 'fa fa-users', 'admin/investor', '3', '0', '', 'ENABLE', '2019-09-04 21:58:18', '2019-09-05 13:01:40'),
+(21, 'Master', 'fa fa-database', '#', '4', '0', '', 'ENABLE', '2019-09-05 08:50:16', '2019-09-05 13:01:47'),
+(22, 'User', 'fa fa-user', 'admin/master/user', '0', '21', '', 'ENABLE', '2019-09-05 08:51:03', '2019-09-05 08:58:57'),
+(23, 'Proyek', 'fa fa-archive', 'admin/project', '1', '0', '', 'ENABLE', '2019-09-05 12:59:18', '2019-09-05 13:00:23'),
+(24, 'Blog', 'fa fa-newspaper-o', 'admin/blog', '2', '0', '', 'ENABLE', '2019-09-05 13:01:21', '2019-09-05 13:02:30'),
+(25, 'Pengaturan', 'fa fa-cog', '#', '5', '0', '', 'ENABLE', '2019-09-05 13:06:20', '2019-09-05 13:08:32'),
+(26, 'Halaman', 'fa fa-link', 'master/page', '0', '25', '', 'ENABLE', '2019-09-05 13:07:23', NULL),
+(27, 'Cara Kerja', 'fa fa-gear', 'admin/howswork', '1', '25', '', 'ENABLE', '2019-09-05 14:09:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -782,7 +794,7 @@ INSERT INTO `menu_master` (`id`, `name`, `icon`, `link`, `urutan`, `parent`, `no
 CREATE TABLE `report` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `query` longtext,
+  `query` longtext DEFAULT NULL,
   `header` varchar(255) DEFAULT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -799,7 +811,7 @@ CREATE TABLE `role` (
   `id` int(11) NOT NULL,
   `role` varchar(255) DEFAULT NULL,
   `status` enum('DISABLE','ENABLE') DEFAULT NULL,
-  `menu` text,
+  `menu` text DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -809,7 +821,30 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (`id`, `role`, `status`, `menu`, `created_at`, `updated_at`) VALUES
-(17, 'Admin', 'ENABLE', '[\"1\",\"20\"]', '2018-10-12 17:03:59', '2019-09-04 21:58:28');
+(17, 'Super Admin', 'ENABLE', '[\"1\",\"23\",\"24\",\"20\",\"21\",\"22\",\"25\",\"26\",\"27\"]', '2018-10-12 17:03:59', '2019-09-05 14:10:27'),
+(18, 'Admin', 'ENABLE', '[\"1\",\"23\",\"24\"]', '2019-09-05 12:28:50', '2019-09-05 13:14:47');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_hows_work`
+--
+
+CREATE TABLE `tbl_hows_work` (
+  `id` int(11) NOT NULL,
+  `title` varchar(225) DEFAULT NULL,
+  `value` text DEFAULT NULL,
+  `status` enum('ENABLE','DISABLE') DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_hows_work`
+--
+
+INSERT INTO `tbl_hows_work` (`id`, `title`, `value`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Cara Pertama', '<p><b>Lorem Ipsum dan Kawan Kawan</b><br></p>', 'ENABLE', '2019-09-05 14:38:35', '2019-09-05 14:44:45');
 
 -- --------------------------------------------------------
 
@@ -821,8 +856,7 @@ CREATE TABLE `tbl_investor` (
   `id` int(11) NOT NULL,
   `name` varchar(225) DEFAULT NULL,
   `email` varchar(225) DEFAULT NULL,
-  `password` varchar(225) DEFAULT NULL,
-  `address` text,
+  `address` text DEFAULT NULL,
   `phone` varchar(225) DEFAULT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -833,8 +867,10 @@ CREATE TABLE `tbl_investor` (
 -- Dumping data for table `tbl_investor`
 --
 
-INSERT INTO `tbl_investor` (`id`, `name`, `email`, `password`, `address`, `phone`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'Bagus Andika', 'procw57@gmail.com', 'Andhikab57chan', 'Disini aja', '0821723124', 'ENABLE', '2019-09-04 00:00:00', '2019-09-05 00:00:00');
+INSERT INTO `tbl_investor` (`id`, `name`, `email`, `address`, `phone`, `status`, `created_at`, `updated_at`) VALUES
+(2, 'Bagus Andika', 'procw57@gmail.com', 'Disini aja', '0821723124', 'ENABLE', '2019-09-04 00:00:00', '2019-09-05 00:00:00'),
+(6, 'User Ke 2', 'user@gmail.com', NULL, NULL, 'ENABLE', '2019-09-05 12:19:49', '2019-09-05 12:19:49'),
+(7, 'User Ke 3', 'userke3@gmail.com', NULL, NULL, 'ENABLE', '2019-09-05 12:23:01', '2019-09-05 12:23:01');
 
 -- --------------------------------------------------------
 
@@ -861,10 +897,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `nip`, `name`, `email`, `password`, `role_id`, `desc`, `status`, `created_at`, `updated_at`, `telepon`) VALUES
-(1, 'smartsoft', 'Smartsoft Studio', 'smartsoftstudio1@mail.com', '21232f297a57a5a743894a0e4a801fc3', 17, 'asda', '0', '2018-02-23 16:09:49', '2019-02-19 11:02:53', ''),
-(9, 'operator', 'Operator', '', '4b583376b2767b923c3e1da60d10de59', 17, '0', '0', '2018-10-24 10:53:02', '2019-08-15 13:44:03', ''),
-(12, 'amz', 'Aang Muammar Zein', 'amuammarzein@gmail.com', 'ecf6312e560a8370e9ff2a99d74817dc', 17, 'deskripsi ku', '0', '2019-07-01 10:00:40', '2019-07-01 10:13:34', '0856'),
-(13, 'bagus', 'Bagus', 'bagus@gmail.com', '17b38fc02fd7e92f3edeb6318e3066d8', 17, 'gkdshagdsj', '0', '2019-07-02 09:55:20', '2019-09-04 15:01:10', '085');
+(13, 'bagus', 'Bagus', 'bagus@gmail.com', '17b38fc02fd7e92f3edeb6318e3066d8', 17, 'gkdshagdsj', '0', '2019-07-02 09:55:20', '2019-09-05 09:18:15', '085'),
+(14, 'Admin', 'Super Admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 17, 'Super Admin', '0', '2019-09-05 12:56:42', NULL, ''),
+(15, 'Mitra', 'Mitra', 'mitra@gmail.com', '92706ba4fd3022cede6d1610b17a0d2d', 18, 'Mitra', '0', '2019-09-05 12:57:38', '2019-09-05 13:11:56', '');
 
 --
 -- Indexes for dumped tables
@@ -931,6 +966,12 @@ ALTER TABLE `role`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_hows_work`
+--
+ALTER TABLE `tbl_hows_work`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_investor`
 --
 ALTER TABLE `tbl_investor`
@@ -962,7 +1003,7 @@ ALTER TABLE `access_control`
 -- AUTO_INCREMENT for table `file`
 --
 ALTER TABLE `file`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
 
 --
 -- AUTO_INCREMENT for table `grafik`
@@ -992,7 +1033,7 @@ ALTER TABLE `logs`
 -- AUTO_INCREMENT for table `menu_master`
 --
 ALTER TABLE `menu_master`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `report`
@@ -1004,19 +1045,25 @@ ALTER TABLE `report`
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `tbl_hows_work`
+--
+ALTER TABLE `tbl_hows_work`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_investor`
 --
 ALTER TABLE `tbl_investor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
