@@ -13,7 +13,7 @@ class Investor extends MY_Controller {
 
 	public function create(){
 		$data['page_name'] = "Investor";
-		$this->template->load('template/template','admin/investor/create',$data);
+		$this->template->load('admin/template/template','admin/investor/create',$data);
 	}
 
 	public function validate(){
@@ -95,9 +95,10 @@ class Investor extends MY_Controller {
 	}
 
 	public function edit($id){
-		$data['tbl_investor'] = $this->mymodel->selectDataone('tbl_investor',array('id'=>$id));$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_investor'));
+		$data['tbl_investor'] = $this->mymodel->selectDataone('tbl_investor',array('id'=>$id));
+		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_investor'));
 		$data['page_name'] = "Investor";
-		$this->template->load('admin/template','admin/investor/edit',$data);
+		$this->template->load('admin/template/template','admin/investor/edit',$data);
 	}
 
 	public function update(){
