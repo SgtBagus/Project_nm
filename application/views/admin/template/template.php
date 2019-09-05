@@ -1,6 +1,11 @@
 <?php 
 if($this->session->userdata('session_sop')=="") {
   header('Location: '.base_url('admin/login'));
+}else{
+  if($this->session->userdata('role') == 'investor'){
+    $this->load->view('errors/html/error_404');
+    return false;
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -24,7 +29,6 @@ if($this->session->userdata('session_sop')=="") {
   <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
   <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
 
   <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
 
@@ -58,7 +62,7 @@ if($this->session->userdata('session_sop')=="") {
       window.onkeypress = resetTimer;
 
       function logout() {
-        window.location.href = '<?= base_url('login/lockscreen?user='.$this->session->userdata('nip')) ?>';
+        window.location.href = '<?= base_url('admin/login/lockscreen?user='.$this->session->userdata('nip')) ?>';
       }
 
       function resetTimer() {
@@ -110,18 +114,17 @@ if($this->session->userdata('session_sop')=="") {
               </a>
               <ul class="dropdown-menu">
                 <li class="user-header">
-                  <object data="<?= base_url($file['dir'])?>" type="image/png" style="width: 100px;">
+                  <object data="<?= base_url($file['dir'])?>" type="image/png" style="border-radius: 50%; width: 125px; height: 125px;">
                     <img src="https://www.library.caltech.edu/sites/default/files/styles/headshot/public/default_images/user.png?itok=1HlTtL2d" alt="example"  width="100px" height="100px" >
                   </object>
                   <p>
-                    <?= $this->session->userdata('name');?> - <?php $role = $this->mymodel->selectWhere('role',array('id'=>$this->session->userdata('role_id'))); echo $role[0]['role']; ?>
+                    <?= $this->session->userdata('name');?> - <?= $this->session->userdata('role');?>
                   </p>
                 </li>
                 <li class="user-footer">
-                  <a href="<?= base_url('master/user/editUser/').$this->template->sonEncode($this->session->userdata('id')); ?>" class="btn btn-default btn-flat"><i class="fa fa-user"></i> Profile</a>
-                  <a href="<?= base_url('login/lockscreen?user=').$this->session->userdata('nip'); ?>" class="btn btn-default btn-flat"><i class="fa fa-key"></i> Lockscreen</a>
-                  <!-- </div> -->
-                  <a href="<?= base_url('login/logout') ?>" class="btn btn-default btn-flat"><i class="fa fa-sign-out"></i> Sign out</a>
+                  <a href="<?= base_url('admin/master/user/editUser/').$this->session->userdata('id'); ?>" class="btn btn-default btn-flat"><i class="fa fa-user"></i> Profile</a>
+                  <a href="<?= base_url('admin/login/lockscreen?user=').$this->session->userdata('nip'); ?>" class="btn btn-default btn-flat"><i class="fa fa-key"></i> Lockscreen</a>
+                  <a href="<?= base_url('admin/login/logout') ?>" class="btn btn-default btn-flat"><i class="fa fa-sign-out"></i> Sign out</a>
                 </li>
               </ul>
             </li>
@@ -140,10 +143,9 @@ if($this->session->userdata('session_sop')=="") {
               </button>
             </span>
           </div>
-        </form>>
-        <ul class="sidebar-menu" data-widget="tree">
-          <li class="header">MENU BUILD</li>
+        </form>
 
+        <ul class="sidebar-menu" data-widget="tree">
           <?php 
           $role = $this->mymodel->selectDataone('role',['id'=>$this->session->userdata('role_id')]);
           $jsonmenu = json_decode($role['menu']);
@@ -231,7 +233,7 @@ if($this->session->userdata('session_sop')=="") {
         source: "<?php echo site_url('home/get_autocomplete');?>",
 
         select: function (event, ui) {
-          window.location.href = "<?= base_url('master/user/editUser_redirect/') ?>"+ui.item.id;
+          window.location.href = "<?= base_url('admin/master/user/editUser_redirect/') ?>"+ui.item.id;
         }
       });
     });

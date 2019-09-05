@@ -1,3 +1,12 @@
+<?php 
+if($this->session->userdata('session_sop')=="") {
+    header('Location: '.base_url());
+}else{
+    if($this->session->userdata('role') != 'investor'){
+        header('Location: '.base_url('admin'));
+    }
+}
+?>
 <div class="content-wrapper">
     <div class="container">
         <section class="content">

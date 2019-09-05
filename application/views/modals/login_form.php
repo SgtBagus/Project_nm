@@ -1,16 +1,11 @@
 <h3 align="center"> Masuk Sebagai Investor</h3>
-<form action="#" method="POST" id="login_form">
+<form action="<?= base_url('login/act_login') ?>" method="POST" id="login_form">
   <div class="show_error" id="error_input">
 
   </div>
   <div class="form-group">
     <label>Email</label>
     <input type="email" name="email" class="form-control">
-  </div>
-  <div class="form-group">
-    <label>Password</label>
-    <input type="password" name="password" class="form-control">
-    <p class="help-block"><a href="<?= base_url('user') ?>/password">Lupa Password</a> </p>
   </div>
   <button type="submit" class="btn btn-block btn-primary">
     Masuk Login
@@ -31,26 +26,26 @@
   </div>
 </div>
 <script type="text/javascript">
-  // $("#login_form").submit(function(){
-  //   var mydata = new FormData(this);
-  //   var form = $(this);
-  //   $.ajax({
-  //     type: "POST",
-  //     url: form.attr("action"),
-  //     data: mydata,
-  //     cache: false,
-  //     contentType: false,
-  //     processData: false,
-  //     success: function(response, textStatus, xhr) {
-  //       var str = response;
-  //       if (str.indexOf("success") != -1){
-  //         location.reload();
-  //       }else{
-  //         $("#error_input").hide().html(response).slideDown("fast");
-  //       }
-  //     },
-  //   });
-  //   return false;
-  // });
+  $("#login_form").submit(function(){
+    var mydata = new FormData(this);
+    var form = $(this);
+    $.ajax({
+      type: "POST",
+      url: form.attr("action"),
+      data: mydata,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function(response, textStatus, xhr) {
+        var str = response;
+        if (str.indexOf("success") != -1){
+          location.reload();
+        }else{
+          $("#error_input").hide().html(response).slideDown("fast");
+        }
+      },
+    });
+    return false;
+  });
 
 </script>

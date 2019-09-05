@@ -20,7 +20,6 @@ class Investor extends MY_Controller {
 		$this->form_validation->set_error_delimiters('<li>', '</li>');
 		$this->form_validation->set_rules('dt[name]', '<strong>Name</strong>', 'required');
 		$this->form_validation->set_rules('dt[email]', '<strong>Email</strong>', 'required');
-		$this->form_validation->set_rules('dt[password]', '<strong>Password</strong>', 'required');
 		$this->form_validation->set_rules('dt[address]', '<strong>Address</strong>', 'required');
 		$this->form_validation->set_rules('dt[phone]', '<strong>Phone</strong>', 'required');
 	}
@@ -34,7 +33,8 @@ class Investor extends MY_Controller {
 			$dt['created_at'] = date('Y-m-d H:i:s');
 			$dt['status'] = "ENABLE";
 			$str = $this->db->insert('tbl_investor', $dt);
-			$last_id = $this->db->insert_id();	    if (!empty($_FILES['file']['name'])){
+			$last_id = $this->db->insert_id();	    
+			if (!empty($_FILES['file']['name'])){
 				$dir  = "webfile/users/";
 				$config['upload_path']          = $dir;
 				$config['allowed_types']        = '*';
@@ -83,7 +83,7 @@ class Investor extends MY_Controller {
 			$status = 'ENABLE';
 		}
 		header('Content-Type: application/json');
-		$this->datatables->select('id,name,email,password,address,phone,status');
+		$this->datatables->select('id,name,email,address,phone,status');
 		$this->datatables->where('status',$status);
 		$this->datatables->from('tbl_investor');
 		if($status=="ENABLE"){

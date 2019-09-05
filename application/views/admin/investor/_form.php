@@ -19,10 +19,6 @@ if($data_edit){
       <input type="text" class="form-control" id="form-email" placeholder="Masukan Email" name="dt[email]" <?php if($data_edit){ echo "value='".$data_edit['email']."'"; } ?>>
     </div>
     <div class="form-group">
-      <label for="form-password">Password</label>
-      <input type="text" class="form-control" id="form-password" placeholder="Masukan Password" name="dt[password]" <?php if($data_edit){ echo "value='".$data_edit['password']."'"; } ?>>
-    </div>
-    <div class="form-group">
       <label for="form-address">Address</label>
       <textarea name="dt[address]" class="form-control"> <?php if($data_edit){ echo $data_edit['address']; } ?> </textarea>
     </div>

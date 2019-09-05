@@ -113,10 +113,7 @@
                           <h3><b>Simulasi Bagi Hasil</b></h3>
                         </div>
                         <div class="row">
-                          <div class="col-md-8 col-sm-8 col-xs-12">
-                            <canvas id="myChart" width="500" height="200"></canvas>
-                          </div>
-                          <div class="col-md-4 col-sm-4 col-xs-12">
+                          <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="box-body table-responsive no-padding">
                               <table class="table table-hover">
                                 <thead>
@@ -159,6 +156,24 @@
                                 </tbody>
                               </table>
                             </div>
+                            <br>
+
+                            <div class="box-group" id="accordion">
+                              <div class="panel box box-primary" align="center">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
+                                  <div class="box-header with-border">
+                                    <h4 class="box-title">
+                                      Buka Simulasi Grafik
+                                    </h4>
+                                  </div>
+                                </a>
+                                <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                  <div class="row" style="width: 100%; height: 300px;">
+                                    <canvas id="myChart" style="width: 512px; height: 256px" ></canvas>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -193,6 +208,7 @@
 
     var options = {
       responsive: true,
+      maintainAspectRatio: false,
       legend: {
         position: 'top',
       },

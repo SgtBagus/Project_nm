@@ -98,7 +98,7 @@
     var table = '<table class="table table-bordered" id="mytable">'+
     '     <thead>'+
     '     <tr class="bg-success">'+
-    '       <th style="width:20px">No</th>'+'<th>Name</th>'+'<th>Email</th>'+'<th>Password</th>'+'<th>Address</th>'+'<th>Phone</th>'+'       <th style="width:150px">Status</th>'+
+    '       <th style="width:20px">No</th>'+'<th>Name</th>'+'<th>Email</th>'+'<th>Address</th>'+'<th>Phone</th>'+'       <th style="width:150px">Status</th>'+
     '       <th style="width:150px"></th>'+
     '     </tr>'+
     '     </thead>'+
@@ -127,7 +127,7 @@
       serverSide: true,
       ajax: {"url": "<?= base_url('admin/investor/json?status=') ?>"+status, "type": "POST"},
       columns: [
-      {"data": "id","orderable": false},{"data": "name"},{"data": "email"},{"data": "password"},{"data": "address"},{"data": "phone"},
+      {"data": "id","orderable": false},{"data": "name"},{"data": "email"},{"data": "address"},{"data": "phone"},
       {"data": "status"},
       {"data": "view","orderable": false}
       ],

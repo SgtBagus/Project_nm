@@ -31,8 +31,12 @@ class Login extends MY_Controller {
             $this->session->set_userdata('session_sop', true);
             $this->session->set_userdata('id', $session->id);
             $this->session->set_userdata('nip', $session->nip);
-            
+            $this->session->set_userdata('email', $session->email);
             $this->session->set_userdata('role_id', $session->role_id);
+
+            $role = $this->mymodel->selectDataone('role', array('id' => $session->role_id));
+
+            $this->session->set_userdata('role', $role['role']);
             $this->session->set_userdata('name', $session->name);
 
             echo "oke";
