@@ -3,7 +3,7 @@
     <h1> Investor </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Tbl Investor</li>
+      <li class="active">Investor</li>
     </ol>
   </section>
   <section class="content">
@@ -12,12 +12,7 @@
         <div class="box">
           <div class="box-header">
             <div class="row">
-              <div class="col-md-6">
-                <select onchange="loadtable(this.value)" id="select-status" style="width: 150px" class="form-control">
-                  <option value="ENABLE">ENABLE</option>
-                  <option value="DISABLE">DISABLE</option>
-                </select>
-              </div>
+              <div class="col-md-6"> </div>
               <div class="col-md-6">
                 <div class="pull-right">          
                   <a href="<?= base_url('admin/investor/create') ?>">
@@ -98,7 +93,7 @@
     var table = '<table class="table table-bordered" id="mytable">'+
     '     <thead>'+
     '     <tr class="bg-success">'+
-    '       <th style="width:20px">No</th>'+'<th>Name</th>'+'<th>Email</th>'+'<th>Address</th>'+'<th>Phone</th>'+'       <th style="width:150px">Status</th>'+
+    '       <th style="width:20px">No</th>'+'<th>Name</th>'+'<th>Email</th>'+'<th>Address</th>'+'<th>Phone</th>'+
     '       <th style="width:150px"></th>'+
     '     </tr>'+
     '     </thead>'+
@@ -125,27 +120,18 @@
       },
       processing: true,
       serverSide: true,
-      ajax: {"url": "<?= base_url('admin/investor/json?status=') ?>"+status, "type": "POST"},
+      ajax: {"url": "<?= base_url('admin/investor/json') ?>", "type": "POST"},
       columns: [
-      {"data": "id","orderable": false},{"data": "name"},{"data": "email"},{"data": "address"},{"data": "phone"},
-      {"data": "status"},
+      {"data": "id", "orderable": false},
+      {"data": "name"},
+      {"data": "email"},
+      {"data": "address"},
+      {"data": "phone"},
       {"data": "view","orderable": false}
       ],
       order: [[1, 'asc']],
       columnDefs : [{ 
-        targets : [6],
-        render : function (data, type, row, meta) {
-          if(row['status']=='ENABLE'){
-            var htmls = '<a href="<?= base_url('admin/investor/status/') ?>'+row['id']+'/DISABLE">'+
-            '    <button type="button" class="btn btn-sm btn-sm btn-success"><i class="fa fa-home"></i> ENABLE</button>'+
-            '</a>';
-          }else{
-            var htmls = '<a href="<?= base_url('admin/investor/status/') ?>'+row['id']+'/ENABLE">'+
-            '    <button type="button" class="btn btn-sm btn-sm btn-danger"><i class="fa fa-home"></i> DISABLE</button>'+
-            '</a>';
-          }
-          return htmls;
-        }
+        targets : [5]
       }],
       rowCallback: function(row, data, iDisplayIndex) {
         var info = this.fnPagingInfo();
@@ -158,6 +144,10 @@
   }
 
   loadtable($("#select-status").val());
+
+  function view(id) {
+    location.href = "<?= base_url('admin/investor/view/') ?>"+id;
+  }       
 
   function edit(id) {
     location.href = "<?= base_url('admin/investor/edit/') ?>"+id;

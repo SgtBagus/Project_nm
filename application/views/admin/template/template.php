@@ -90,7 +90,7 @@ if($this->session->userdata('session_sop')=="") {
   <div class="wrapper">
 
     <header class="main-header">
-      <a href="<?= base_url() ?>" class="logo">
+      <a href="<?= base_url('admin') ?>" class="logo">
         <span class="logo-mini"><?= APPLICATION_SMALL  ?> </span>
         <span class="logo-lg"><?= APPLICATION  ?> </span>
       </a>

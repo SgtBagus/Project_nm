@@ -11,6 +11,13 @@ class Investor extends MY_Controller {
 		$this->template->load('admin/template/template','admin/investor/index',$data);
 	}
 
+	public function view($id){
+		$data['page_name'] = "Investor";
+		$data['tbl_investor'] = $this->mymodel->selectDataone('tbl_investor',array('id'=>$id));
+		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_investor'));
+		$this->template->load('admin/template/template','admin/investor/view',$data);
+	}
+
 	public function create(){
 		$data['page_name'] = "Investor";
 		$this->template->load('admin/template/template','admin/investor/create',$data);
@@ -78,19 +85,15 @@ class Investor extends MY_Controller {
 	}
 
 	public function json(){
-		$status = $_GET['status'];
-		if($status==''){
-			$status = 'ENABLE';
-		}
 		header('Content-Type: application/json');
-		$this->datatables->select('id,name,email,address,phone,status');
-		$this->datatables->where('status',$status);
+		$this->datatables->select('id,name,email,address,phone');
 		$this->datatables->from('tbl_investor');
-		if($status=="ENABLE"){
-			$this->datatables->add_column('view', '<div class="btn-group"><button type="button" class="btn btn-sm btn-primary" onclick="edit($1)"><i class="fa fa-pencil"></i> Edit</button></div>', 'id');
-		}else{
-			$this->datatables->add_column('view', '<div class="btn-group"><button type="button" class="btn btn-sm btn-primary" onclick="edit($1)"><i class="fa fa-pencil"></i> Edit</button><button type="button" onclick="hapus($1)" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i> Hapus</button></div>', 'id');
-		}
+		$this->datatables->add_column('view', 
+			'<div class="btn-group">
+				<button type="button" class="btn btn-primary" onclick="view($1)"><i class="fa fa-eye"></i></button>
+				<button type="button" class="btn btn-info" onclick="edit($1)"><i class="fa fa-edit"></i></button>
+				<button type="button" class="btn btn-danger" onclick="hapus($1)"><i class="fa fa-trash"></i></button>
+			</div>', 'id');
 		echo $this->datatables->generate();
 	}
 
