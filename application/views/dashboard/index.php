@@ -36,7 +36,7 @@ if($this->session->userdata('session_sop')=="") {
                                 <div class="box-body">
                                     <ul class="list-group list-group-unbordered">
                                         <a href="<?= base_url('dashboard') ?>">
-                                            <li class="list-group-item a_black" style="margin-bottom: 5px;" id="overview">
+                                            <li class="list-group-item a_black" style="margin-bottom: 5px;" id="dashboard">
                                                 <i class="fa fa-dashboard"></i> Dashboard
                                             </li>
                                         </a>
@@ -49,11 +49,6 @@ if($this->session->userdata('session_sop')=="") {
                                         <a href="<?= base_url('dashboard/account') ?>">
                                             <li class="list-group-item a_black" style="margin-bottom: 5px;" id="account">
                                                 <i class="fa fa-user-circle"></i> Akun Saya
-                                            </li>
-                                        </a>
-                                        <a href="<?= base_url('dashboard/mitra') ?>">
-                                            <li class="list-group-item a_black" style="margin-bottom: 5px;" id="mitra">
-                                                <i class="fa fa-users"></i> Jadi Mitra
                                             </li>
                                         </a>
                                     </ul>
@@ -71,8 +66,6 @@ if($this->session->userdata('session_sop')=="") {
                         $this->load->view('dashboard/notif');
                     }else if($content == 'account'){
                         $this->load->view('dashboard/account');
-                    }else if($content == 'mitra'){
-                        $this->load->view('dashboard/mitra');
                     }else{
                         $this->load->view('errors/html/error_404.php');
                     } 
@@ -84,14 +77,12 @@ if($this->session->userdata('session_sop')=="") {
 </div>
 <script>
     $(document).ready(function() {
-        if('<?= $content ?>' == 'overview'){
-            $("#overview").addClass("active");
+        if('<?= $content ?>' == 'dashboard'){
+            $("#dashboard").addClass("active");
         }else if('<?= $content ?>' == 'notif'){
             $("#notif").addClass("active");
         }else if('<?= $content ?>' == 'account'){
             $("#account").addClass("active");
-        }else if('<?= $content ?>' == 'mitra'){
-            $("#mitra").addClass("active");
         }
     });
 </script>

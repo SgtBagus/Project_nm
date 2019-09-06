@@ -51,26 +51,26 @@
       <div class="col-md-4 col-6 mb-md-0 mb-5">
         <div class="box box-solid round">
           <div class="box-body">
-            <img src="https://i.etsystatic.com/14036052/r/il/f3b876/1124957092/il_794xN.1124957092_bgb2.jpg" alt="Second slide" style="height: 230px; width: 100%">
+            <img style="height: 200px; width: 100%; object-fit: cover; display: inline;" src="<?= base_url('webfile/project') ?>/b308be49-af1a-4b20-b639-98eafb121ec6.jpeg">
             <h2 align="center">
-              Pembudidayaan Bunga Sakura
+              Jeruk Gerga
             </h2>
             <h5 align="center">
               Oleh : <b>Sakamoto Company</b>
               <hr>
               Lokasi : <b>Iwo Jima Pasific</b>
               <hr>
-              Return : <b>17% Per Tahun</b>
+              Return : <b>20% Per Tahun</b>
               <hr>
-              Periode Kontrak : <b>2 Tahun</b>
+              Periode Kontrak : <b>3 Tahun</b>
               <hr>
-              Stok : <b>0</b>
+              Stok : <b>200</b>
               <hr>
               Periode Bagi Hasil : <b>1 Tahun</b>
             </h5>
             <br>
             <h4 align="center">
-              Harga : <b>Rp 45.000,00</b>
+              Harga : <b>Rp 5,000,000,-</b>
             </h4>
             <div class="row" align="center">
               <div class="col-md-12" align="center">
@@ -87,26 +87,26 @@
       <div class="col-md-4 col-6 mb-md-0 mb-5">
         <div class="box box-solid round">
           <div class="box-body">
-            <img src="https://i.etsystatic.com/14036052/r/il/f3b876/1124957092/il_794xN.1124957092_bgb2.jpg" alt="Second slide" style="height: 230px; width: 100%">
+            <img style="height: 200px; width: 100%; object-fit: cover; display: inline;" src="<?= base_url('webfile/project') ?>/b308be49-af1a-4b20-b639-98eafb121ec6.jpeg">
             <h2 align="center">
-              Pembudidayaan Bunga Sakura
+              Jeruk Gerga
             </h2>
             <h5 align="center">
               Oleh : <b>Sakamoto Company</b>
               <hr>
               Lokasi : <b>Iwo Jima Pasific</b>
               <hr>
-              Return : <b>17% Per Tahun</b>
+              Return : <b>20% Per Tahun</b>
               <hr>
-              Periode Kontrak : <b>2 Tahun</b>
+              Periode Kontrak : <b>3 Tahun</b>
               <hr>
-              Stok : <b>0</b>
+              Stok : <b>200</b>
               <hr>
               Periode Bagi Hasil : <b>1 Tahun</b>
             </h5>
             <br>
             <h4 align="center">
-              Harga : <b>Rp 45.000,00</b>
+              Harga : <b>Rp 5,000,000,-</b>
             </h4>
             <div class="row" align="center">
               <div class="col-md-12" align="center">
@@ -123,26 +123,26 @@
       <div class="col-md-4 col-6 mb-md-0 mb-5">
         <div class="box box-solid round">
           <div class="box-body">
-            <img src="https://i.etsystatic.com/14036052/r/il/f3b876/1124957092/il_794xN.1124957092_bgb2.jpg" alt="Second slide" style="height: 230px; width: 100%">
+            <img style="height: 200px; width: 100%; object-fit: cover; display: inline;" src="<?= base_url('webfile/project') ?>/b308be49-af1a-4b20-b639-98eafb121ec6.jpeg">
             <h2 align="center">
-              Pembudidayaan Bunga Sakura
+              Jeruk Gerga
             </h2>
             <h5 align="center">
               Oleh : <b>Sakamoto Company</b>
               <hr>
               Lokasi : <b>Iwo Jima Pasific</b>
               <hr>
-              Return : <b>17% Per Tahun</b>
+              Return : <b>20% Per Tahun</b>
               <hr>
-              Periode Kontrak : <b>2 Tahun</b>
+              Periode Kontrak : <b>3 Tahun</b>
               <hr>
-              Stok : <b>0</b>
+              Stok : <b>200</b>
               <hr>
               Periode Bagi Hasil : <b>1 Tahun</b>
             </h5>
             <br>
             <h4 align="center">
-              Harga : <b>Rp 45.000,00</b>
+              Harga : <b>Rp 5,000,000,-</b>
             </h4>
             <div class="row" align="center">
               <div class="col-md-12" align="center">

@@ -4,13 +4,13 @@
       <div class="row">
         <div class="col-md-8">
           <h1>
-            <b>Pembudidayaan Bunga Sakura</b>
+            <b>Jeruk Gerga</b>
           </h1>
         </div>
       </div>
       <div class="row">
         <div class="col-md-8">
-          <img src="https://i.etsystatic.com/14036052/r/il/f3b876/1124957092/il_794xN.1124957092_bgb2.jpg" alt="Second slide" style="height: 390px; width: 100%" class="round">
+          <img src="<?= base_url('webfile/project') ?>/b308be49-af1a-4b20-b639-98eafb121ec6.jpeg" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%" class="round">
           <br><br>
           <div class="box box-solid round">
             <div class="box-body" align="center">
@@ -40,7 +40,7 @@
                   Return yang didapat :
                 </div>
                 <div class="col-md-6" align="left">
-                  <b>18% per tahun</b>
+                  <b>20% per tahun</b>
                 </div>
               </div>
               <div class="row">
@@ -55,16 +55,22 @@
           </div>
         </div>
         <div class="col-md-4">
+          <div class="row" align="center" style="margin-top: -20px">
+            <h2>Slot Unit : <b>200</b></h2>
+          </div>
           <div class="box box-solid round">
             <div class="box-body" align="center">
               Harga :
               <h2><b>Rp 4,800,000 / Unit</b></h2>
+              Sisa Slot : <b>120</b>
             </div>
           </div>
           <div class="alert alert-success alert-dismissible round status-alert" align="center">
             <i class="fa fa-check-circle"></i> <b>Masih Dibuka</b>
           </div>
-          Proyek dimulai <b>12-02-2019</b> oleh:
+          <div style="margin: 5px">
+            Proyek dimulai <b>12-02-2019</b> oleh:
+          </div>
           <div class="box box-solid round">
             <div class="box-body">
               <div class="row">

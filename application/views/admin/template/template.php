@@ -12,7 +12,7 @@ if($this->session->userdata('session_sop')=="") {
 <html>
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
   <title><?= TITLE_APPLICATION  ?></title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -205,7 +205,7 @@ if($this->session->userdata('session_sop')=="") {
       <div class="pull-right hidden-xs">
         <b>Version</b> <?= VERSION ?>
       </div>
-      <strong>Copyright <?= COPYRIGHT ?>
+      <strong>Copyright © 2019  by <a href="https://www.agnov.id/">Agnov</a></strong>
     </footer>
     <div class="control-sidebar-bg"></div>
   </div>
@@ -230,7 +230,14 @@ if($this->session->userdata('session_sop')=="") {
   <script src="<?= base_url('assets/') ?>dist/js/pages/dashboard.js"></script>
   <script src="<?= base_url('assets/') ?>dist/js/demo.js"></script>
   <script src="<?= base_url('assets/') ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+  <script src="<?= base_url('assets/') ?>bower_components/ckeditor/ckeditor.js"></script> 
+  <script src="<?= base_url('assets/') ?>custom/number-separator.js"></script>
   <script type="text/javascript">
+    
+    function formatNumber(num) {
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
+
     $(document).ready(function(){
       $('#user-data-autocomplete').autocomplete({
         source: "<?php echo site_url('home/get_autocomplete');?>",
@@ -253,6 +260,10 @@ if($this->session->userdata('session_sop')=="") {
 
   <script type="text/javascript">
 
+    function slugify(string) {
+      return string.toString().trim().toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]+/g, "").replace(/\-\-+/g, "-").replace(/^-+/, "").replace(/-+$/, "");
+    }
+    
     $('.select2').select2();
     $('.tgl').datepicker({
       autoclose: true,
@@ -335,6 +346,26 @@ if($this->session->userdata('session_sop')=="") {
 
       return ribuan;
     }
+
+    $("#btnFile").click(function() {
+      document.getElementById('imageFile').click();
+    });
+
+    $("#imageFile").change(function() {
+      imagePreview(this);
+    });
+
+    function imagePreview(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          $('#preview_image').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+      }
+    };
   </script>
 </body>
 </html>

@@ -21,15 +21,8 @@
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6" align="right">
               <h5>
-                <i class="fa fa-heart" style="color: red;"></i> 35              
+                <i class="fa fa-list"> </i> <b>Kategori</b>           
               </h5> 
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <button type="button" class="btn btn-block btn-danger round">
-                <i class="fa fa-heart"></i> <b> Saya Menyukai Cerita ini</b>
-              </button>
             </div>
           </div>
           <br>

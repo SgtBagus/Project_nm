@@ -10,8 +10,8 @@ abstract class MY_Controller extends CI_Controller{
 
 		parent::__construct();
 
-        $this->load->library('google');
-        
+		$this->load->library('google');
+
 		date_default_timezone_set("Asia/Jakarta");
 
 		$folder = $this->router->directory;
@@ -39,19 +39,19 @@ abstract class MY_Controller extends CI_Controller{
 
 		if($this->session->userdata('session_sop')==true){
 
-		$get_link = $this->mymodel->selectDataone('access_control',array('val'=>$link));
+			$get_link = $this->mymodel->selectDataone('access_control',array('val'=>$link));
 
-		$cek = $this->mymodel->selectWhere('access',array('access_control_id'=>$get_link['id'],'role_id'=>$role));
+			$cek = $this->mymodel->selectWhere('access',array('access_control_id'=>$get_link['id'],'role_id'=>$role));
 
-		if($link!=""){
+			if($link!=""){
 
-			if(count($cek)==0){
+				if(count($cek)==0){
 
 				// redirect('/');
 
-			}	
+				}	
 
-		}
+			}
 
 		}
 
@@ -103,47 +103,47 @@ abstract class MY_Controller extends CI_Controller{
 
 
 
-				$dir  = "webfile/";
+		$dir  = "webfile/";
 
-				$config['upload_path']          = $dir;
+		$config['upload_path']          = $dir;
 
-				$config['allowed_types']        = '*';
+		$config['allowed_types']        = '*';
 
-				$config['file_name']           = md5('smartsoftstudio').rand(1000,100000);
+		$config['file_name']           = md5('smartsoftstudio').rand(1000,100000);
 
-        		$this->load->library('upload', $config);
+		$this->load->library('upload', $config);
 
-				if ( ! $this->upload->do_upload($files)){
+		if ( ! $this->upload->do_upload($files)){
 
-					$msg['response'] = false;
+			$msg['response'] = false;
 
-					$msg['message'] = $this->upload->display_errors();
-
-						
-
-				}else{
-
-					$file = $this->upload->data();
-
-					$data = array(
-
-				   				'name'=> $file['file_name'],
-
-				   				'mime'=> $file['file_type'],				   				
-
-				   				'dir'=> $dir.$file['file_name'],
-
-				   	 		);
-
-					$msg['response'] = true;
-
-					$msg['message'] = $data;
-
-				}
+			$msg['message'] = $this->upload->display_errors();
 
 
 
-				return $msg;
+		}else{
+
+			$file = $this->upload->data();
+
+			$data = array(
+
+				'name'=> $file['file_name'],
+
+				'mime'=> $file['file_type'],				   				
+
+				'dir'=> $dir.$file['file_name'],
+
+			);
+
+			$msg['response'] = true;
+
+			$msg['message'] = $data;
+
+		}
+
+
+
+		return $msg;
 
 
 
@@ -169,13 +169,13 @@ abstract class MY_Controller extends CI_Controller{
 
 				if (strpos($a, '.php') !== false) {
 
-				    $data['file'][] = $a;
+					$data['file'][] = $a;
 
 				}else{
 
 					if($a!="." AND $a!=".." AND strpos($a, '.') === false)
 
-				    $data['folder'][] = $a;
+						$data['folder'][] = $a;
 
 				}
 
@@ -301,8 +301,5 @@ abstract class MY_Controller extends CI_Controller{
 
 		exit;
 
-    } */
-
-
-
+	} */
 }

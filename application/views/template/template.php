@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>JUDUL APLIKASI</title>
+  <title>AGNOV</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/font-awesome/css/font-awesome.min.css">
@@ -42,7 +42,7 @@ $this->session->set_userdata(array('url_session' => $actual_link));
       <nav class="navbar navbar-static-top">
         <div class="container">
           <div class="navbar-header">
-            <a href="<?= base_url()?>" class="navbar-brand"><b>JUDUL APLIKASI</b></a>
+            <a href="<?= base_url()?>" class="navbar-brand"><b>AGNOV</b></a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
               <i class="fa fa-bars"></i>
             </button>
@@ -51,7 +51,7 @@ $this->session->set_userdata(array('url_session' => $actual_link));
             <ul class="nav navbar-nav">
               <li><a href="<?= base_url('project') ?>"><i class="fa fa-archive"></i> Proyek</a></li>
               <li><a href="<?= base_url('blog') ?>"><i class="fa fa-newspaper-o"></i> Blog</a></li>
-              <li><a href="<?= base_url('dashboard/mitra') ?>"><i class="fa fa-users"></i> Jadi Mitra</a></li>
+              <!-- <li><a href="<?= base_url('dashboard/mitra') ?>"><i class="fa fa-users"></i> Jadi Mitra</a></li> -->
               <li><a href="<?= base_url('info') ?>"><i class="fa fa-list"></i> Info Lainnya</a></li>
             </ul>
           </div>
@@ -67,12 +67,12 @@ $this->session->set_userdata(array('url_session' => $actual_link));
               <ul class="nav navbar-nav">
                 <li class="dropdown user user-menu">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="<?= $photo['dir'] ?>" class="user-image" alt="User Image">
+                    <img src="<?= base_url().$photo['dir'] ?>" class="user-image" alt="User Image">
                     <span class="hidden-xs"><?php echo $this->session->userdata('name') ?></span>
                   </a>
                   <ul class="dropdown-menu">
                     <li class="user-header">
-                      <img src="<?= $photo['dir'] ?>" class="img-circle" alt="User Image">
+                      <img src="<?= base_url().$photo['dir'] ?>" class="img-circle" alt="User Image">
                       <p>
                         <?php echo $this->session->userdata('name'). ' - '.$this->session->userdata('role'); ?>
                         <small><?php echo $this->session->userdata('email') ?></small>
@@ -80,24 +80,24 @@ $this->session->set_userdata(array('url_session' => $actual_link));
                     </li>
                     <li class="user-body">
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-xs-12" style="margin-top: 5px; margin-bottom: 5px">
                           <a href="<?= base_url('dashboard') ?>">
                             <button type="button" class="btn btn-block btn-primary"><i class="fa fa-dashboard"></i> Dashboard</button>
                           </a>
                         </div>  
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-xs-12" style="margin-top: 5px; margin-bottom: 5px">
                           <a href="<?= base_url('login/logout') ?>">
                             <button type="button" class="btn btn-block btn-danger"><i class="fa fa-sign-out"></i> Logout</button>
                           </a>
                         </div>        
                       </div>
                     </li>
-                    <li>
-                      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="refresh">
-                        <i class="fa fa-refresh"></i>
-                      </button>
-                    </li>
                   </ul>
+                </li>
+                <li>
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="refresh">
+                    <i class="fa fa-refresh"></i>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -138,8 +138,7 @@ $this->session->set_userdata(array('url_session' => $actual_link));
         <div class="container">
           <div class="pull-right hidden-xs"></div>
           <center>
-            <strong>Copyright &copy; 2019 Made with <span style=color:#e25555>&#10084;</span> in Banyuwangi by <a href="https://www.karyastudio.com/">Karya Studio Teknologi Digital</a> x <a href="https://www.ayokumpul.com/">Komunitas Ayo Kumpul</a>
-            </center>
+            <strong>Copyright © 2019  by <a href="https://www.agnov.id/">Agnov</a></strong>
           </div>
         </footer>
       </div>

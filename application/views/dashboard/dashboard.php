@@ -60,12 +60,12 @@
                                     <td>12-02-2019</td>
                                     <td>Rp 40,000,-</td>
                                     <td align="center">
-                                        <small class="label bg-yellow round">
+                                        <small class="label bg-yellow">
                                             <i class="fa fa-warning"> </i> Menunggu Dikonfirmasi
                                         </small>
                                     </td>
                                     <td align="center">
-                                        <small class="label bg-blue round">
+                                        <small class="label bg-blue">
                                             <i class="fa fa-check-circle"></i> Baru Mulai
                                         </small>
                                     </td>
@@ -80,12 +80,12 @@
                                     <td>12-02-2019</td>
                                     <td>Rp 40,000,-</td>
                                     <td align="center">
-                                        <small class="label bg-yellow round">
+                                        <small class="label bg-yellow">
                                             <i class="fa fa-warning"> </i> Menunggu Dikonfirmasi
                                         </small>
                                     </td>
                                     <td align="center">
-                                        <small class="label bg-blue round">
+                                        <small class="label bg-blue">
                                             <i class="fa fa-check-circle"></i> Baru Mulai
                                         </small>
                                     </td>
@@ -100,12 +100,12 @@
                                     <td>12-02-2019</td>
                                     <td>Rp 40,000,-</td>
                                     <td align="center">
-                                        <small class="label bg-green round">
+                                        <small class="label bg-green">
                                             <i class="fa fa-check"> </i> Dikonfirmasi
                                         </small>
                                     </td>
                                     <td align="center">
-                                        <small class="label bg-green round">
+                                        <small class="label bg-green">
                                             <i class="fa fa-check-circle"></i> Sudah Panen
                                         </small>
                                     </td>
@@ -120,12 +120,12 @@
                                     <td>12-02-2019</td>
                                     <td>Rp 40,000,-</td>
                                     <td align="center">
-                                        <small class="label bg-green round">
+                                        <small class="label bg-green">
                                             <i class="fa fa-check"> </i> Dikonfirmasi
                                         </small>
                                     </td>
                                     <td align="center">
-                                        <small class="label bg-blue round">
+                                        <small class="label bg-blue">
                                             <i class="fa fa-check-circle"></i> Baru Mulai
                                         </small>
                                     </td>
