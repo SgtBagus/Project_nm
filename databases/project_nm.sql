@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 05, 2019 at 10:07 AM
+-- Generation Time: Sep 06, 2019 at 10:29 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -638,7 +638,8 @@ INSERT INTO `file` (`id`, `name`, `mime`, `dir`, `table`, `table_id`, `status`, 
 (182, 'default.png', 'image/png', 'webfile/users/default.png', 'tbl_investor', 6, 'ENABLE', '2019-09-05 12:19:49', '2019-09-05 12:19:49'),
 (183, 'default.png', 'image/png', 'webfile/users/default.png', 'tbl_investor', 7, 'ENABLE', '2019-09-05 12:23:01', '2019-09-05 12:23:01'),
 (184, '6950c16c9bcc6995f376b297f163175929730.png', 'image/png', 'webfile/users/6950c16c9bcc6995f376b297f163175929730.png', 'user', 14, 'ENABLE', '2019-09-05 12:56:42', NULL),
-(185, '6950c16c9bcc6995f376b297f163175952937.jpeg', 'image/jpeg', 'webfile/users/6950c16c9bcc6995f376b297f163175952937.jpeg', 'user', 15, 'ENABLE', '2019-09-05 12:57:38', NULL);
+(185, '6950c16c9bcc6995f376b297f163175952937.jpeg', 'image/jpeg', 'webfile/users/6950c16c9bcc6995f376b297f163175952937.jpeg', 'user', 15, 'ENABLE', '2019-09-05 12:57:38', NULL),
+(186, 'default.png', 'image/png', 'webfile/users/default.png', 'tbl_investor', 8, 'ENABLE', '2019-09-06 10:13:58', '2019-09-06 10:13:58');
 
 -- --------------------------------------------------------
 
@@ -779,7 +780,7 @@ INSERT INTO `menu_master` (`id`, `name`, `icon`, `link`, `urutan`, `parent`, `no
 (20, 'Investor', 'fa fa-users', 'admin/investor', '3', '0', '', 'ENABLE', '2019-09-04 21:58:18', '2019-09-05 13:01:40'),
 (21, 'Master', 'fa fa-database', '#', '4', '0', '', 'ENABLE', '2019-09-05 08:50:16', '2019-09-05 13:01:47'),
 (22, 'User', 'fa fa-user', 'admin/master/user', '0', '21', '', 'ENABLE', '2019-09-05 08:51:03', '2019-09-05 08:58:57'),
-(23, 'Proyek', 'fa fa-archive', 'admin/project', '1', '0', '', 'ENABLE', '2019-09-05 12:59:18', '2019-09-05 13:00:23'),
+(23, 'Project', 'fa fa-archive', 'admin/project', '1', '0', '', 'ENABLE', '2019-09-05 12:59:18', '2019-09-05 13:00:23'),
 (24, 'Blog', 'fa fa-newspaper-o', 'admin/blog', '2', '0', '', 'ENABLE', '2019-09-05 13:01:21', '2019-09-05 13:02:30'),
 (25, 'Pengaturan', 'fa fa-cog', '#', '5', '0', '', 'ENABLE', '2019-09-05 13:06:20', '2019-09-05 13:08:32'),
 (26, 'Halaman', 'fa fa-link', 'master/page', '0', '25', '', 'ENABLE', '2019-09-05 13:07:23', NULL),
@@ -870,7 +871,43 @@ CREATE TABLE `tbl_investor` (
 INSERT INTO `tbl_investor` (`id`, `name`, `email`, `address`, `phone`, `status`, `created_at`, `updated_at`) VALUES
 (2, 'Bagus Andika', 'procw57@gmail.com', 'Disini aja', '0821723124', 'ENABLE', '2019-09-04 00:00:00', '2019-09-05 00:00:00'),
 (6, 'User Ke 2', 'user@gmail.com', NULL, NULL, 'ENABLE', '2019-09-05 12:19:49', '2019-09-05 12:19:49'),
-(7, 'User Ke 3', 'userke3@gmail.com', NULL, NULL, 'ENABLE', '2019-09-05 12:23:01', '2019-09-05 12:23:01');
+(7, 'User Ke 3', 'userke3@gmail.com', NULL, NULL, 'ENABLE', '2019-09-05 12:23:01', '2019-09-05 12:23:01'),
+(8, 'Aang Muammar Zein', 'amuammarzein@gmail.com', NULL, NULL, 'ENABLE', '2019-09-06 10:13:58', '2019-09-06 10:13:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_project`
+--
+
+CREATE TABLE `tbl_project` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `title` varchar(225) DEFAULT NULL,
+  `slug` varchar(225) NOT NULL,
+  `harga` int(125) DEFAULT NULL,
+  `unit` int(125) DEFAULT NULL,
+  `total_harga` int(125) DEFAULT NULL,
+  `periode` int(125) DEFAULT NULL,
+  `return` int(125) DEFAULT NULL,
+  `bagi_hasil` int(125) DEFAULT NULL,
+  `deskripsi` text DEFAULT NULL,
+  `url_map` text DEFAULT NULL,
+  `status` enum('ENABLE','DISABLE') DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_project_gambar`
+--
+
+CREATE TABLE `tbl_project_gambar` (
+  `id` int(11) NOT NULL,
+  `project_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -978,6 +1015,18 @@ ALTER TABLE `tbl_investor`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_project`
+--
+ALTER TABLE `tbl_project`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_project_gambar`
+--
+ALTER TABLE `tbl_project_gambar`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -1003,7 +1052,7 @@ ALTER TABLE `access_control`
 -- AUTO_INCREMENT for table `file`
 --
 ALTER TABLE `file`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
 
 --
 -- AUTO_INCREMENT for table `grafik`
@@ -1057,7 +1106,19 @@ ALTER TABLE `tbl_hows_work`
 -- AUTO_INCREMENT for table `tbl_investor`
 --
 ALTER TABLE `tbl_investor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `tbl_project`
+--
+ALTER TABLE `tbl_project`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tbl_project_gambar`
+--
+ALTER TABLE `tbl_project_gambar`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`

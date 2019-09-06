@@ -70,8 +70,16 @@
                                         </small>
                                     </td>
                                     <td>
-                                        <a href="<?= base_url('/proyek/view/asd') ?>"><button class="btn btn-info btn-xs"><i class="fa fa-eye"></i></button></a>
-                                        <a target="_blank" href="#"><button class="btn btn-primary btn-xs"><i class="fa fa-print"></i></button></a>
+                                        <a href="<?= base_url('/proyek/view/asd') ?>">
+                                            <button class="btn btn-info btn-xs">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        </a>
+                                        <a target="_blank" href="<?= base_url('invoice/payment/')?>asdkjshqw123897">
+                                            <button class="btn btn-primary btn-xs">
+                                                <i class="fa fa-print"></i>
+                                            </button>
+                                        </a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -90,8 +98,15 @@
                                         </small>
                                     </td>
                                     <td>
-                                        <a href="<?= base_url('/proyek/view/asd') ?>"><button class="btn btn-info btn-xs"><i class="fa fa-eye"></i></button></a>
-                                        <a target="_blank" href="#"><button class="btn btn-primary btn-xs"><i class="fa fa-print"></i></button></a>
+                                        <a href="<?= base_url('/proyek/view/asd') ?>">
+                                            <button class="btn btn-info btn-xs">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        <a target="_blank" href="<?= base_url('invoice/payment/')?>asdkjshqw123897">
+                                            <button class="btn btn-primary btn-xs">
+                                                <i class="fa fa-print"></i>
+                                            </button>
+                                        </a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -110,8 +125,15 @@
                                         </small>
                                     </td>
                                     <td>
-                                        <a href="<?= base_url('/proyek/view/asd') ?>"><button class="btn btn-info btn-xs"><i class="fa fa-eye"></i></button></a>
-                                        <a target="_blank" href="#"><button class="btn btn-primary btn-xs"><i class="fa fa-print"></i></button></a>
+                                        <a href="<?= base_url('/proyek/view/asd') ?>">
+                                            <button class="btn btn-info btn-xs">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        <a target="_blank" href="<?= base_url('invoice/payment/')?>asdkjshqw123897">
+                                            <button class="btn btn-primary btn-xs">
+                                                <i class="fa fa-print"></i>
+                                            </button>
+                                        </a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -130,8 +152,15 @@
                                         </small>
                                     </td>
                                     <td>
-                                        <a href="<?= base_url('/proyek/view/asd') ?>"><button class="btn btn-info btn-xs"><i class="fa fa-eye"></i></button></a>
-                                        <a target="_blank" href="#"><button class="btn btn-primary btn-xs"><i class="fa fa-print"></i></button></a>
+                                        <a href="<?= base_url('/proyek/view/asd') ?>">
+                                            <button class="btn btn-info btn-xs">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        <a target="_blank" href="<?= base_url('invoice/payment/')?>asdkjshqw123897">
+                                            <button class="btn btn-primary btn-xs">
+                                                <i class="fa fa-print"></i>
+                                            </button>
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>

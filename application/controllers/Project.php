@@ -19,4 +19,7 @@ class Project extends MY_Controller {
         $this->template->load('template/template','project/create', $data); 
 	}
 	
+	public function invest(){
+        header('Location: '.base_url('invoice/payment/').'asdasdqw341231234');
+	}
 }

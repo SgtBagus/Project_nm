@@ -53,6 +53,9 @@
               </div>
             </div>
           </div>
+          <button type="button" class="btn btn-block btn-primary btn-lg round" data-toggle="modal" data-target="#modal-invest">
+            <i class="fa fa-credit-card"></i> Lakukan nvestasi 
+          </button>
         </div>
         <div class="col-md-4">
           <div class="row" align="center" style="margin-top: -20px">
@@ -63,6 +66,11 @@
               Harga :
               <h2><b>Rp 4,800,000 / Unit</b></h2>
               Sisa Slot : <b>120</b>
+            </div>
+            <div class="box-body" align="center">
+              <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-invest">
+                <i class="fa fa-credit-card"></i> Lakukan Investasi 
+              </button>
             </div>
           </div>
           <div class="alert alert-success alert-dismissible round status-alert" align="center">
@@ -82,7 +90,7 @@
                   <small>Lokasi : <b>Iwo Jima Pasific</b></small>
                 </div>
               </div>
-            </div>
+            </div> 
           </div>
           <div class="row">
             <div class="col-md-12">
@@ -194,6 +202,32 @@
     </section>
   </div>
 </div>
+
+<div class="modal modal-default fade" id="modal-invest" style="display: none;">
+  <div class="modal-dialog round">
+    <div class="modal-content round">
+      <div class="modal-header top-round bg-green">
+        <h4 class="modal-title" align="center"><i class="fa fa-credit-card"></i> Investasi Sekarang</h4>
+      </div>
+      <div class="modal-body">
+        <?php
+        if($this->session->userdata('session_sop') == true){
+          $this->load->view('modals/invest_form');
+        } else if($this->session->userdata('session_sop') == ""){
+          ?>
+          <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-ban"></i> Perhatian!</h4>
+            Mohon untuk Melakukan Login Masuk Terlebih Dahulu !
+          </div>
+          <?php $this->load->view('modals/login_form');
+        }
+        ?>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
   $(function () {
     var ctx = document.getElementById("myChart");
