@@ -21,6 +21,7 @@ class Project extends MY_Controller {
 		$this->form_validation->set_error_delimiters('<li>', '</li>');
 		$this->form_validation->set_rules('dt[title]', '<strong>Judul Proyek</strong> Tidak Boleh Kosong', 'required');
 		$this->form_validation->set_rules('dt[slug]', '<strong>Slug Proyek</strong> Tidak Boleh Kosong', 'required');
+
 		$supported_file = array(
 			'jpg', 'jpeg', 'png'
 		);
@@ -35,6 +36,24 @@ class Project extends MY_Controller {
 			} 	
 		}
 
+
+		$image_detail_row = count($_FILES["file_many"]['name']);
+		if($image_detail_row > 6){
+			$this->form_validation->set_rules('file[image_detail]', '<strong>Detail Gambar </strong> Maksimal Berjumlah 6 File', 'required');
+		}
+
+		if($_FILES["file_many"]["name"][0] != null){
+			for ($i=0; $i < $image_detail_row; $i++) {
+				$src_file_name_detail = $_FILES["file_many"]["name"][$i];
+				if($src_file_name_detail){
+					$ext_detail = strtolower(pathinfo($src_file_name_detail, PATHINFO_EXTENSION)); 
+					if (!in_array($ext_detail, $supported_file)) {
+						$this->form_validation->set_rules('file[image_detail]', '<strong>Detail Gambar </strong> Harus berformat PNG, JPG, JPEG semuanya', 'required');
+					} 	
+				}
+			}
+		}
+		
 		$this->form_validation->set_rules('dt[harga]', '<strong>Harga Proyek</strong> Tidak Boleh Kosong', 'required');
 		$this->form_validation->set_rules('dt[unit]', '<strong>Unit</strong> Tidak Boleh Kosong', 'required');
 		$this->form_validation->set_rules('dt[total_harga]', '<strong>Total Harga</strong> Tidak Boleh Kosong', 'required');
@@ -59,11 +78,12 @@ class Project extends MY_Controller {
 			$dt['status'] = "ENABLE";
 
 			$slug_folder = $dt['slug'];
+
+			mkdir('webfile/project/'.$slug_folder, 0777, true);
 			$str = $this->db->insert('tbl_project', $dt);
 			$last_id = $this->db->insert_id();	    
 			if (!empty($_FILES['file']['name'])){
-				mkdir('webfile/project/'.$slug_folder, 0777, true);
-				$dir  = "webfile/project/".$slug_folder;
+				$dir  = "webfile/project/".$slug_folder."/";
 				$config['upload_path']          = $dir;
 				$config['allowed_types']        = '*';
 				$config['file_name']           = md5('smartsoftstudio').rand(1000,100000);
@@ -87,7 +107,49 @@ class Project extends MY_Controller {
 					$str = $this->db->insert('file', $data); 
 				}
 			}
-			$this->alert->alertsuccess('Success Send Data');   
+
+			if (!empty($_FILES['file_many']['name'])){
+				$countfiles = count($_FILES['file_many']['name']);
+
+				for($i=0;$i<$countfiles;$i++){
+
+					if(!empty($_FILES['file_many']['name'][$i])){
+
+						$_FILES['file']['name'] = $_FILES['file_many']['name'][$i];
+						$_FILES['file']['type'] = $_FILES['file_many']['type'][$i];
+						$_FILES['file']['tmp_name'] = $_FILES['file_many']['tmp_name'][$i];
+						$_FILES['file']['error'] = $_FILES['file_many']['error'][$i];
+						$_FILES['file']['size'] = $_FILES['file_many']['size'][$i];
+
+						$dir  = "webfile/project/".$slug_folder."/";
+						$config['upload_path']          = $dir;
+						$config['allowed_types']        = '*';
+						$config['file_name']           = md5('smartsoftstudio').rand(1000,100000);
+
+						$this->load->library('upload',$config); 
+
+						if (!$this->upload->do_upload('file')){
+							$error = $this->upload->display_errors();
+							$this->alert->alertdanger($error);		
+						}else{
+							$file = $this->upload->data();
+							$data = array(
+								'id' => '',
+								'name'=> $file['file_name'],
+								'mime'=> $file['file_type'],
+								'dir'=> $dir.$file['file_name'],
+								'table'=> 'tbl_project_gambar',
+								'table_id'=> $last_id,
+								'status'=>'ENABLE',
+								'created_at'=>date('Y-m-d H:i:s')
+							);
+							$str = $this->db->insert('file', $data); 
+						}
+					}
+
+				}
+				$this->alert->alertsuccess('Success Send Data');   
+			}
 		}
 	}
 
@@ -98,19 +160,29 @@ class Project extends MY_Controller {
 		}
 
 		header('Content-Type: application/json');
-		$this->datatables->select('id,user_id,title,harga,slug,unit,total_harga,periode,return,bagi_hasil,deskripsi,url_map,status');
-		$this->datatables->where('status',$status);
-		$this->datatables->from('tbl_project');
+		$this->datatables->select('a.id,u.name,a.title,a.harga,a.unit,a.total_harga,a.periode,a.return,a.bagi_hasil,a.deskripsi,a.url_map,a.status');
+		$this->datatables->join('user u','u.id=a.user_id','inner');
+		$this->datatables->from('tbl_project a');
+		$this->datatables->where('a.status',$status);
 		if($status=="ENABLE"){
-			$this->datatables->add_column('view', '<div class="btn-group"><button type="button" class="btn btn-sm btn-primary" onclick="edit($1)"><i class="fa fa-pencil"></i> Edit</button></div>', 'id');
+			$this->datatables->add_column('view', '<div class="btn-group"><button type="button" class="btn btn-sm btn-primary" onclick="view($1)"><i class="fa fa-eye"></i> Detail</button></div>', 'id');
 		}else{
-			$this->datatables->add_column('view', '<div class="btn-group"><button type="button" class="btn btn-sm btn-primary" onclick="edit($1)"><i class="fa fa-pencil"></i> Edit</button><button type="button" onclick="hapus($1)" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i> Hapus</button></div>', 'id');
+			$this->datatables->add_column('view', '<div class="btn-group"><button type="button" class="btn btn-sm btn-primary" onclick="view($1)"><i class="fa fa-eye"></i> Detail</button><button type="button" onclick="hapus($1)" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i> Hapus</button></div>', 'id');
 		}
 		echo $this->datatables->generate();
 	}
 
+	public function view($id){
+		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('id'=>$id));
+		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_project'));
+		$data['file_detail'] = $this->mymodel->selectWhere('file',array('table_id'=>$id,'table'=>'tbl_project_gambar'));
+		$data['page_name'] = "Project";
+		$this->template->load('admin/template/template','admin/project/view',$data);
+	}
+
 	public function edit($id){
-		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('id'=>$id));$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_project'));$data['page_name'] = "tbl_project";
+		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('id'=>$id));
+		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_project'));$data['page_name'] = "tbl_project";
 		$this->template->load('template/template','master/tbl_project/edit-tbl_project',$data);
 	}
 

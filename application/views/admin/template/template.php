@@ -73,6 +73,10 @@ if($this->session->userdata('session_sop')=="") {
       }
     }
 
+    function formatNumber(num) {
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
+
     idleLogout();
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
@@ -233,10 +237,6 @@ if($this->session->userdata('session_sop')=="") {
   <script src="<?= base_url('assets/') ?>bower_components/ckeditor/ckeditor.js"></script> 
   <script src="<?= base_url('assets/') ?>custom/number-separator.js"></script>
   <script type="text/javascript">
-    
-    function formatNumber(num) {
-      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-    }
 
     $(document).ready(function(){
       $('#user-data-autocomplete').autocomplete({
@@ -366,6 +366,24 @@ if($this->session->userdata('session_sop')=="") {
         reader.readAsDataURL(input.files[0]);
       }
     };
+
+    $("#btnFile-many").click(function() {
+      document.getElementById('uploadFile').click();
+    });
+
+
+    $("#btnFile-many_edit").click(function() {
+      document.getElementById('uploadFile').click();
+      $('#detail_image_open #detail_image_edit').remove();
+    });
+
+    $("#uploadFile").change(function(){
+      var total_file=document.getElementById("uploadFile").files.length;
+      for(var i=0;i<total_file;i++){
+        $('#detail_image_open').before('<tr><td><img src="'+URL.createObjectURL(event.target.files[i])+'" class="round" alt="User Image" height="150px" style="margin: 15px"></td><td>'+event.target.files[i].name+'</td></tr>');
+      }
+      $("#btnFile-many").html('<i class="fa fa-file"></i> Pilih Gambar Kembali (<b>'+total_file+'</b> telah Terpilih)');
+    });
   </script>
 </body>
 </html>

@@ -16,7 +16,8 @@
             </h5>
           </div>
           <?php $data['data_edit'] = ''; 
-           $data['file'] = ''; 
+          $data['file'] = ''; 
+          $data['file_detail'] = ''; 
           $this->load->view('admin/project/_form', $data) ?>
         </div>
       </div>

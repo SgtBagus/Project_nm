@@ -91,7 +91,7 @@
     var table = '<table class="table table-bordered" id="mytable">'+
     '     <thead>'+
     '     <tr class="bg-success">'+
-    '       <th style="width:20px">No</th>'+'<th>Pembuat</th>'+'<th>Title</th>'+'<th>Slug</th>'+'<th>Harga</th>'+'<th>Unit</th>'+'<th>Total Harga</th>'+'<th>Periode</th>'+'<th>Return</th>'+'<th>Bagi Hasil</th>'+'<th style="width:150px">Status</th>'+
+    '       <th style="width:20px">No</th>'+'<th>Pembuat</th>'+'<th>Title</th>'+'<th>Harga</th>'+'<th>Unit</th>'+'<th>Total Harga</th>'+'<th>Periode</th>'+'<th>Return</th>'+'<th>Bagi Hasil</th>'+'<th style="width:150px">Status</th>'+
     '       <th style="width:150px"></th>'+
     '     </tr>'+
     '     </thead>'+
@@ -119,15 +119,33 @@
       serverSide: true,
       ajax: {"url": "<?= base_url('admin/project/json?status=') ?>"+status, "type": "POST"},
       columns: [
-      {"data": "id","orderable": false},{"data": "user_id"},{"data": "title"},{"data": "slug"},{"data": "harga"},{"data": "unit"},{"data": "total_harga"},{"data": "periode"},{"data": "return"},{"data": "bagi_hasil"},
+      {"data": "id","orderable": false},{"data": "name"},{"data": "title"},{"data": "harga"},{"data": "unit"},{"data": "total_harga"},{"data": "periode"},{"data": "return"},{"data": "bagi_hasil"},
       {"data": "status"},
       {   "data": "view",
       "orderable": false
     }
     ],
     order: [[1, 'asc']],
-    columnDefs : [
-    { targets : [9],
+    columnDefs : [{ 
+      targets : [3, 5],
+      "render": function (data, type, row) {
+        return "Rp "+formatNumber(data)+"";
+      },
+    },
+    { 
+      targets : [7],
+      "render": function (data, type, row) {
+        return data+" % per Tahun";
+      },
+    },
+    { 
+      targets : [6, 8],
+      "render": function (data, type, row) {
+        return data+" Tahun";
+      },
+    },
+    { 
+      targets : [9],
       render : function (data, type, row, meta) {
         if(row['status']=='ENABLE'){
           var htmls = '<a href="<?= base_url('admin/project/status/') ?>'+row['id']+'/DISABLE">'+
@@ -140,8 +158,7 @@
         }
         return htmls;
       }
-    }
-    ],
+    }],
 
     rowCallback: function(row, data, iDisplayIndex) {
       var info = this.fnPagingInfo();
@@ -158,6 +175,10 @@
   function edit(id) {
     location.href = "<?= base_url('admin/project/edit/') ?>"+id;
   }         
+
+  function view(id) {
+    location.href = "<?= base_url('admin/project/view/') ?>"+id;
+  }        
 
   function hapus(id) {
     $("#modal-delete").modal('show');
