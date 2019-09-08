@@ -5,8 +5,9 @@ class Home extends MY_Controller {
 	}
 
 	public function index(){
-		$data['page_name'] = "home";
-        $this->template->load('template/template','index',$data); 
+		$data['tbl_project'] = $this->db->limit(3)->get('tbl_project')->result_array();
+		$data['file'] = $this->mymodel->selectWhere('file',array('table'=>'tbl_project'));
+        $this->template->load('template/template','index', $data); 
 	}
 	
 }

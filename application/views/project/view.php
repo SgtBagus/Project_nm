@@ -4,14 +4,33 @@
       <div class="row">
         <div class="col-md-8">
           <h1>
-            <b>Jeruk Gerga</b>
+            <b><?= $tbl_project['title'] ?></b>
           </h1>
         </div>
       </div>
       <div class="row">
         <div class="col-md-8">
-          <img src="<?= base_url('webfile/project') ?>/b308be49-af1a-4b20-b639-98eafb121ec6.jpeg" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%" class="round">
+          <?php if($file['dir']){ ?>
+            <img src="<?= base_url().$file['dir'] ?>" class="round" id="main_image" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%">
+          <?php } else { ?>
+            <img src="<?= base_url('webfile/project/default.jpg')?>" class="round" id="main_image" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%">
+          <?php } ?>
           <br><br>
+          <div class="row">
+            <?php
+            if($file_detail){
+              $i = 1;
+              foreach($file_detail as $img){
+                ?>
+                <div class="col-md-2">
+                  <img src="<?= base_url().$img['dir']?>" class="round" id="detail_image-<?=$i?>" alt="User Image" width="100%" height="85px" style="border-radius: 15px">
+                </div>
+                <?php
+                $i++;
+              }
+            }?>
+          </div>
+          <br>
           <div class="box box-solid round">
             <div class="box-body" align="center">
               <div class="row">
@@ -32,7 +51,7 @@
                   Periode :
                 </div>
                 <div class="col-md-6" align="left">
-                  <b>3 tahun</b>
+                  <b><?= $tbl_project['periode'] ?> tahun</b>
                 </div>
               </div>
               <div class="row">
@@ -40,7 +59,7 @@
                   Return yang didapat :
                 </div>
                 <div class="col-md-6" align="left">
-                  <b>20% per tahun</b>
+                  <b><?= $tbl_project['return'] ?>% per tahun</b>
                 </div>
               </div>
               <div class="row">
@@ -48,7 +67,7 @@
                   Periode Bagi Hasil :
                 </div>
                 <div class="col-md-6" align="left">
-                  <b>1 tahun</b>
+                  <b><?= $tbl_project['bagi_hasil'] ?> tahun</b>
                 </div>
               </div>
             </div>
@@ -56,16 +75,16 @@
           <button type="button" class="btn btn-block btn-primary btn-lg round" data-toggle="modal" data-target="#modal-invest">
             <i class="fa fa-credit-card"></i> Lakukan nvestasi 
           </button>
+          <br>
         </div>
         <div class="col-md-4">
           <div class="row" align="center" style="margin-top: -20px">
-            <h2>Slot Unit : <b>200</b></h2>
+            <h2>Slot Unit : <b><?= $tbl_project['unit'] ?></b></h2>
           </div>
           <div class="box box-solid round">
             <div class="box-body" align="center">
               Harga :
               <h2><b>Rp 4,800,000 / Unit</b></h2>
-              Sisa Slot : <b>120</b>
             </div>
             <div class="box-body" align="center">
               <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-invest">
@@ -77,17 +96,17 @@
             <i class="fa fa-check-circle"></i> <b>Masih Dibuka</b>
           </div>
           <div style="margin: 5px">
-            Proyek dimulai <b>12-02-2019</b> oleh:
+            Proyek dimulai <b><?= date("d-m-Y", strtotime($tbl_project['created_at']))  ?></b> oleh:
           </div>
           <div class="box box-solid round">
             <div class="box-body">
               <div class="row">
                 <div class="col-md-4 col-xs-12 col-6 mb-md-0 mb-5" align="center">
-                  <img src="https://thumbs.dreamstime.com/b/cherry-blossom-minimalist-background-design-87781656.jpg" alt="Second slide" style="height: 100px; width: 100px" class="round">
+                  <img src="<?= base_url().$user_image['dir'] ?>" alt="Second slide" style="height: 100px; width: 100px" class="round">
                 </div>
                 <div class="col-md-8 col-xs-12 col-6 mb-md-0 mb-5">
-                  <h3>Sakamoto Company</h3>
-                  <small>Lokasi : <b>Iwo Jima Pasific</b></small>
+                  <h3><?= $user['name'] ?> </h3>
+                  <small>Mendaftar pada : <b><?= date("d-m-Y", strtotime($user['created_at']))  ?></b></small>
                 </div>
               </div>
             </div> 
@@ -116,7 +135,7 @@
                   <div class="tab-pane active" id="tab_detail_1">
                     <div class="row">
                       <div class="col-md-12">
-                        <span><!-- react-text: 244 -->Telur merupakan sumber makanan sehat dengan kandungan protein tinggi, mineral dan 13 vitamin penting. Dengan harga yang relatif terjangkau, telur menjadi sumber protein yang cocok untuk dikonsumsi oleh masyarakat Indonesi di berbagai lapisan.&nbsp;<!-- /react-text --><br></span><span><!-- react-text: 247 -->&nbsp;<!-- /react-text --><br></span><span><!-- react-text: 250 -->Namun saat ini sentra terbesar produksi telur terbesar di Indonesia berada di wilayah Jawa Timur dan yang mensuplai kebutuhan telur wilayah lain bahkan sampai keluar Pulau Jawa. WIlayah-wilayah lain masih belum merata produksinya, padahal sebagian besar dari wilayah-wilayah ini punya potensi yang tinggi sebagai sentra produksi telur yang besar.<!-- /react-text --><br></span><span><!-- react-text: 253 -->&nbsp;<!-- /react-text --><br></span><span><!-- react-text: 256 -->Nusa Tenggara Barat merupakan salah satu propinsi yang 80 % pasokan telur nya berasal dari Jawa dan Bali. Dengan angka prosentase yang sangat tinggi tersebut membuat provinsi NTB mempunyai ketergantungan yang sangat tinggi ini untuk pasokan telur dari luar wilayahnya. Sehingga bila ada permasalahan produksi dan harga terlur dari Jawa dan Bali, akan langsung berdampak secara significant.<!-- /react-text --><br></span><span><!-- react-text: 259 -->&nbsp;<!-- /react-text --><br></span><span><!-- react-text: 262 -->Dalam rangka mengurangi tingkat ketergantungan pasokan telur ayam di wilayah NTB, iGrow bekerja sama dengan para kelompok tani di NTB, terdorong untuk dapat menyalurkan dana masyarakat membiayai para peternak ayam petelur agar mereka memperoleh tambahan modal untuk meningkatkan kapasitas produksi nya dengan penambahan jumlah ayam petelur nya.&nbsp;<!-- /react-text --><br></span><span><!-- react-text: 265 -->&nbsp;<!-- /react-text --><br></span><span><!-- react-text: 268 -->Proyek telur kali ini bekerja sama dengan kelompok tani Gemilang Sarea Farm di Sumbawa, Nusa Tenggara Barat. Proyek ini juga didukung oleh Pemerintah Provinsi NTB dari sisi penyediaan pasar dan juga dukungan operasional.&nbsp;<!-- /react-text --><br></span><span><!-- react-text: 271 -->&nbsp;<!-- /react-text --><br></span><span><!-- react-text: 274 -->Para sponsor dapat ikut membiayainya dengan productivity per unit senilai Rp.4.000.000,-&nbsp; atau setara dengan 259 kg telur. Masa kontrak untuk komoditas ini adalah selama 3 tahun dengan tingkat margin di angka sekitar 18 % per tahun.<!-- /react-text --><br></span><span><!-- react-text: 277 -->&nbsp;<!-- /react-text --><br></span><span><!-- react-text: 280 -->Semoga dengan makin bertambahnya jumlah peternak ayam petelur di wilayah NTB secara bertahap akan meningkatkan jumlah pasokan telur dari peternak lokal dan dapat mengurangi ketergantungan dari wilayah lain untuk masa yang akan datang.<!-- /react-text --><br></span>
+                        <?= $tbl_project['deskripsi'] ?>
                       </div>
                     </div>
                   </div>
@@ -229,6 +248,26 @@
 </div>
 
 <script type="text/javascript">
+
+
+  <?php
+  if($file_detail){
+    $i = 1;
+    foreach($file_detail as $img){
+      ?>
+
+      $('#detail_image-<?=$i?>').click(function() {
+        var main_src = $('#main_image').attr('src');
+        var detail_src = $('#detail_image-<?=$i?>').attr('src');
+
+        $('#detail_image-<?=$i?>').attr('src',main_src);
+        $('#main_image').attr('src',detail_src);
+      });
+      <?php
+    }
+  }
+  ?>
+
   $(function () {
     var ctx = document.getElementById("myChart");
 
@@ -285,21 +324,21 @@
         }]
       },
       tooltips: {
-       callbacks: {
-        label: function(t, d) {
-          var xLabel = d.datasets[t.datasetIndex].label;
-          var yLabel = "Rp "+ formatNumber(t.yLabel) + ',-';
-          return xLabel + ': ' + yLabel;
+        callbacks: {
+          label: function(t, d) {
+            var xLabel = d.datasets[t.datasetIndex].label;
+            var yLabel = "Rp "+ formatNumber(t.yLabel) + ',-';
+            return xLabel + ': ' + yLabel;
+          }
         }
-      }
-    },
-  }
+      },
+    }
 
-  var myLineChart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: options
+    var myLineChart = new Chart(ctx, {
+      type: 'line',
+      data: data,
+      options: options
+    });
   });
-});
 
 </script>

@@ -91,8 +91,8 @@
     var table = '<table class="table table-bordered" id="mytable">'+
     '     <thead>'+
     '     <tr class="bg-success">'+
-    '       <th style="width:20px">No</th>'+'<th>Pembuat</th>'+'<th>Title</th>'+'<th>Harga</th>'+'<th>Unit</th>'+'<th>Total Harga</th>'+'<th>Periode</th>'+'<th>Return</th>'+'<th>Bagi Hasil</th>'+'<th style="width:150px">Status</th>'+
-    '       <th style="width:150px"></th>'+
+    '       <th style="width:20px">No</th>'+'<th>Pembuat</th>'+'<th>Title</th>'+'<th>Harga</th>'+'<th>Unit</th>'+'<th>Total Harga</th>'+'<th>Periode</th>'+'<th>Return</th>'+'<th>Bagi Hasil</th>'+'<th style="width:150px">Public</th>'+'<th style="width:150px">Status</th>'+
+    '       <th></th>'+
     '     </tr>'+
     '     </thead>'+
     '     <tbody>'+
@@ -120,6 +120,7 @@
       ajax: {"url": "<?= base_url('admin/project/json?status=') ?>"+status, "type": "POST"},
       columns: [
       {"data": "id","orderable": false},{"data": "name"},{"data": "title"},{"data": "harga"},{"data": "unit"},{"data": "total_harga"},{"data": "periode"},{"data": "return"},{"data": "bagi_hasil"},
+      {"data": "public"},
       {"data": "status"},
       {   "data": "view",
       "orderable": false
@@ -147,13 +148,28 @@
     { 
       targets : [9],
       render : function (data, type, row, meta) {
+        if(row['public']=='ENABLE'){
+          var htmls = '<a href="<?= base_url('admin/project/publicStatus/') ?>'+row['id']+'/DISABLE">'+
+          '    <button type="button" class="btn btn-sm btn-sm btn-success"><i class="fa fa-check-circle"></i> ENABLE</button>'+
+          '</a>';
+        }else{
+          var htmls = '<a href="<?= base_url('admin/project/publicStatus/') ?>'+row['id']+'/ENABLE">'+
+          '    <button type="button" class="btn btn-sm btn-sm btn-danger"><i class="fa fa-ban"></i> DISABLE</button>'+
+          '</a>';
+        }
+        return htmls;
+      }
+    },
+    { 
+      targets : [10],
+      render : function (data, type, row, meta) {
         if(row['status']=='ENABLE'){
           var htmls = '<a href="<?= base_url('admin/project/status/') ?>'+row['id']+'/DISABLE">'+
-          '    <button type="button" class="btn btn-sm btn-sm btn-success"><i class="fa fa-home"></i> ENABLE</button>'+
+          '    <button type="button" class="btn btn-sm btn-sm btn-success"><i class="fa fa-check-circle"></i> ENABLE</button>'+
           '</a>';
         }else{
           var htmls = '<a href="<?= base_url('admin/project/status/') ?>'+row['id']+'/ENABLE">'+
-          '    <button type="button" class="btn btn-sm btn-sm btn-danger"><i class="fa fa-home"></i> DISABLE</button>'+
+          '    <button type="button" class="btn btn-sm btn-sm btn-danger"><i class="fa fa-ban"></i> DISABLE</button>'+
           '</a>';
         }
         return htmls;

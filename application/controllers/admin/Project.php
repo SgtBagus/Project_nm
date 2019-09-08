@@ -17,7 +17,6 @@ class Project extends MY_Controller {
 
 	public function validate(){
 
-
 		$this->form_validation->set_error_delimiters('<li>', '</li>');
 		$this->form_validation->set_rules('dt[title]', '<strong>Judul Proyek</strong> Tidak Boleh Kosong', 'required');
 		$this->form_validation->set_rules('dt[slug]', '<strong>Slug Proyek</strong> Tidak Boleh Kosong', 'required');
@@ -75,6 +74,7 @@ class Project extends MY_Controller {
 			$dt['unit'] = str_replace( ',', '', $dt['unit'] );
 			$dt['total_harga'] = str_replace( ',', '', $dt['total_harga'] );
 			$dt['created_at'] = date('Y-m-d H:i:s');
+			$dt['public'] = "ENABLE";
 			$dt['status'] = "ENABLE";
 
 			$slug_folder = $dt['slug'];
@@ -160,20 +160,32 @@ class Project extends MY_Controller {
 		}
 
 		header('Content-Type: application/json');
-		$this->datatables->select('a.id,u.name,a.title,a.harga,a.unit,a.total_harga,a.periode,a.return,a.bagi_hasil,a.deskripsi,a.url_map,a.status');
+		$this->datatables->select('a.id,u.name,a.title,a.harga,a.unit,a.total_harga,a.periode,a.return,a.bagi_hasil,a.deskripsi,a.url_map,a.public,a.status');
 		$this->datatables->join('user u','u.id=a.user_id','inner');
 		$this->datatables->from('tbl_project a');
 		$this->datatables->where('a.status',$status);
 		if($status=="ENABLE"){
-			$this->datatables->add_column('view', '<div class="btn-group"><button type="button" class="btn btn-sm btn-primary" onclick="view($1)"><i class="fa fa-eye"></i> Detail</button></div>', 'id');
+			$this->datatables->add_column('view', '<div class="btn-group"><button type="button" class="btn btn-sm btn-info" onclick="view($1)"><i class="fa fa-eye"></i></button><button type="button" class="btn btn-sm btn-primary" onclick="edit($1)"><i class="fa fa-edit"></i></button></div>', 'id');
 		}else{
-			$this->datatables->add_column('view', '<div class="btn-group"><button type="button" class="btn btn-sm btn-primary" onclick="view($1)"><i class="fa fa-eye"></i> Detail</button><button type="button" onclick="hapus($1)" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i> Hapus</button></div>', 'id');
+			$this->datatables->add_column('view', '<div class="btn-group"><button type="button" class="btn btn-sm btn-info" onclick="view($1)"><i class="fa fa-eye"></i></button><button type="button" class="btn btn-sm btn-primary" onclick="edit($1)"><i class="fa fa-edit"></i></button><button type="button" onclick="hapus($1)" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i></button></div>', 'id');
 		}
+		echo $this->datatables->generate();
+	}
+
+	public function investor_json($id){
+		header('Content-Type: application/json');
+		$this->datatables->select('a.id,inv.name,a.investor_id,a.unit,a.total_harga');
+		$this->datatables->join('tbl_investor inv','inv.id=a.investor_id','inner');
+		$this->datatables->from('tbl_project_invest a');
+		$this->datatables->where('a.project_id',$id);
+		$this->datatables->add_column('terima', '<div class="btn-group"><button type="button" class="btn btn-sm btn-primary" onclick="approve($1)"><i class="fa fa-check-circle"></i></button><button type="button" class="btn btn-sm btn-danger" onclick="reject($1)"><i class="fa fa-ban"></i></button></div>', 'id');
 		echo $this->datatables->generate();
 	}
 
 	public function view($id){
 		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('id'=>$id));
+		$data['user'] = $this->mymodel->selectDataone('user',array('id'=>$data['tbl_project']['user_id']));
+		$data['user_image'] = $this->mymodel->selectDataone('file',array('table_id'=>$data['user']['id'],'table'=>'user'));
 		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_project'));
 		$data['file_detail'] = $this->mymodel->selectWhere('file',array('table_id'=>$id,'table'=>'tbl_project_gambar'));
 		$data['page_name'] = "Project";
@@ -182,70 +194,184 @@ class Project extends MY_Controller {
 
 	public function edit($id){
 		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('id'=>$id));
-		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_project'));$data['page_name'] = "tbl_project";
-		$this->template->load('template/template','master/tbl_project/edit-tbl_project',$data);
+		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_project'));
+		$data['file_detail'] = $this->mymodel->selectWhere('file',array('table_id'=>$id,'table'=>'tbl_project_gambar'));
+		$data['page_name'] = "Project";
+		$this->template->load('admin/template/template','admin/project/edit',$data);
 	}
 
 	public function update(){
+
 		$this->form_validation->set_error_delimiters('<li>', '</li>');
 		$this->validate();
 
 		if ($this->form_validation->run() == FALSE){
 			$this->alert->alertdanger(validation_errors());     
 		}else{
-			$id = $this->input->post('id', TRUE);
+			$project_name = $this->mymodel->selectDataone('tbl_project', array('id' => $_POST['dt']['id']));
+			$project_gambar_master = $this->mymodel->selectDataone('file', array('table_id' => $_POST['dt']['id'], 'table' => 'tbl_project'));
+			$project_gambar_detail = $this->mymodel->selectWhere('file', array('table_id' => $_POST['dt']['id'], 'table' => 'tbl_project_gambar'));
+
+			if($project_name['slug'] != $_POST['dt']['slug']){
+				mkdir('webfile/project/'.$_POST['dt']['slug'], 0777, true);
+				rename($project_gambar_master['dir'], 'webfile/project/'.$_POST['dt']['slug'].'/'.$project_gambar_master['name']);
+
+				$file['dir'] = 'webfile/project/'.$_POST['dt']['slug'].'/'.$project_gambar_master['name'];
+				$this->mymodel->updateData('file', $file , array('id'=>$project_gambar_master['id']));
+
+				foreach($project_gambar_detail as $file_detail){ 
+					rename($file_detail['dir'], 'webfile/project/'.$_POST['dt']['slug'].'/'.$file_detail['name']);
+
+					$file_detail['dir'] = 'webfile/project/'.$_POST['dt']['slug'].'/'.$file_detail['name'];
+					$this->mymodel->updateData('file', $file_detail , array('id'=>$file_detail['id']));
+				}
+
+				rmdir('webfile/project/'.$project_name['slug']); 
+			}
+
 			if (!empty($_FILES['file']['name'])){
-				$dir  = "webfile/";
+				$this->mymodel->deleteData('file',  array('table_id'=>$_POST['dt']['id'], 'table'=>'tbl_project' ));
+				$dir  = "webfile/project/".$project_name['slug']."/";
+				if($project_name['slug'] != $_POST['dt']['slug']){
+					unlink('webfile/project/'.$_POST['dt']['slug'].'/'.$project_gambar_master['name']); 
+					$dir  = "webfile/project/".$_POST['dt']['slug']."/";
+				}
+
 				$config['upload_path']          = $dir;
 				$config['allowed_types']        = '*';
 				$config['file_name']           = md5('smartsoftstudio').rand(1000,100000);
+
 				$this->load->library('upload', $config);
-				if ( ! $this->upload->do_upload('file')){
+				if (!$this->upload->do_upload('file')){
 					$error = $this->upload->display_errors();
 					$this->alert->alertdanger($error);		
 				}else{
 					$file = $this->upload->data();
 					$data = array(
+						'id' => '',
 						'name'=> $file['file_name'],
 						'mime'=> $file['file_type'],
-						// 'size'=> $file['file_size'],
 						'dir'=> $dir.$file['file_name'],
 						'table'=> 'tbl_project',
-						'table_id'=> $id,
-						'updated_at'=>date('Y-m-d H:i:s')
+						'table_id'=> $_POST['dt']['id'],
+						'status'=>'ENABLE',
+						'created_at'=>date('Y-m-d H:i:s')
 					);
-					$file = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_project'));
-					@unlink($file['dir']);
-					if($file==""){
-						$this->mymodel->insertData('file', $data);
-					}else{
-						$this->mymodel->updateData('file', $data , array('id'=>$file['id']));
-					}
-					$dt = $_POST['dt'];
-					$dt['updated_at'] = date("Y-m-d H:i:s");
-					$this->mymodel->updateData('tbl_project', $dt , array('id'=>$id));
-					$this->alert->alertsuccess('Success Update Data');  
+					$str = $this->db->insert('file', $data); 
 				}
-			}else{
-				$dt = $_POST['dt'];
-				$dt['updated_at'] = date("Y-m-d H:i:s");
-				$this->mymodel->updateData('tbl_project', $dt , array('id'=>$id));
-				$this->alert->alertsuccess('Success Update Data');  
 			}
+
+			if($_POST['remove_image'] == '1'){
+				$this->mymodel->deleteData('file',  array('table_id'=>$_POST['dt']['id'], 'table'=>'tbl_project_gambar' ));
+
+				if($project_name['slug'] != $_POST['dt']['slug']){
+					foreach($project_gambar_detail as $gambar_detail){ 
+						unlink('webfile/project/'.$_POST['dt']['slug'].'/'.$gambar_detail['name']); 
+					}
+				}
+
+				if (!empty($_FILES['file_many']['name'])){
+					$countfiles = count($_FILES['file_many']['name']);
+
+					for($i=0;$i<$countfiles;$i++){
+
+						if(!empty($_FILES['file_many']['name'][$i])){
+
+							$_FILES['file']['name'] = $_FILES['file_many']['name'][$i];
+							$_FILES['file']['type'] = $_FILES['file_many']['type'][$i];
+							$_FILES['file']['tmp_name'] = $_FILES['file_many']['tmp_name'][$i];
+							$_FILES['file']['error'] = $_FILES['file_many']['error'][$i];
+							$_FILES['file']['size'] = $_FILES['file_many']['size'][$i];
+
+							$dir  = "webfile/project/".$project_name['slug']."/";
+
+							if($project_name['slug'] != $_POST['dt']['slug']){
+								$dir  = "webfile/project/".$_POST['dt']['slug']."/";
+							}
+
+							$config['upload_path']          = $dir;
+							$config['allowed_types']        = '*';
+							$config['file_name']           = md5('smartsoftstudio').rand(1000,100000);
+
+							$this->load->library('upload',$config); 
+
+							if (!$this->upload->do_upload('file')){
+								$error = $this->upload->display_errors();
+								$this->alert->alertdanger($error);		
+							}else{
+								$file = $this->upload->data();
+								$data = array(
+									'id' => '',
+									'name'=> $file['file_name'],
+									'mime'=> $file['file_type'],
+									'dir'=> $dir.$file['file_name'],
+									'table'=> 'tbl_project_gambar',
+									'table_id'=> $_POST['dt']['id'],
+									'status'=>'ENABLE',
+									'created_at'=>date('Y-m-d H:i:s')
+								);
+								$str = $this->db->insert('file', $data); 
+							}
+						}
+					}
+				}
+			}
+			$dt = $_POST['dt'];
+			$dt['updated_at'] = date("Y-m-d H:i:s");
+			$this->mymodel->updateData('tbl_project', $dt , array('id'=>$_POST['dt']['id']));
+			$this->alert->alertsuccess('Success Update Data');  
 		}
 	}
 
 	public function delete(){
-		$id = $this->input->post('id', TRUE);$file = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_project'));
-		@unlink($file['dir']);
+		$id = $this->input->post('id', TRUE);
+
+		$project_slug = $this->mymodel->selectDataone('tbl_project', array('id' => $id));
+		
+		$files = glob('webfile/project/'.$project_slug['slug'].'/*'); 
+		foreach($files as $file){ 
+			if(is_file($file))
+				unlink($file); 
+		}
+
+		rmdir('webfile/project/'.$project_slug['slug']); 
+
 		$this->mymodel->deleteData('file',  array('table_id'=>$id,'table'=>'tbl_project'));
+		$this->mymodel->deleteData('file',  array('table_id'=>$id,'table'=>'tbl_project_gambar'));
 		$this->mymodel->deleteData('tbl_project',  array('id'=>$id));$this->alert->alertdanger('Success Delete Data');     
 	}
 
+
 	public function status($id,$status){
 		$this->mymodel->updateData('tbl_project',array('status'=>$status),array('id'=>$id));
-		redirect('master/Tbl_project');
+		header('Location: '.base_url('admin/project'));
 	}
+
+	public function statusView_disable($id){
+		$this->mymodel->updateData('tbl_project',array('status'=>'DISABLE'),array('id'=>$id));
+		header('Location: '.base_url('admin/project/view/'.$id));
+	}
+
+	public function statusView_enable($id){
+		$this->mymodel->updateData('tbl_project',array('status'=>'ENABLE'),array('id'=>$id));
+		header('Location: '.base_url('admin/project/view/'.$id));
+	}
+
+	public function publicStatus($id,$status){
+		$this->mymodel->updateData('tbl_project',array('public'=>$status),array('id'=>$id));
+		header('Location: '.base_url('admin/project'));
+	}
+
+	public function statusPublic_disable($id){
+		$this->mymodel->updateData('tbl_project',array('public'=>'DISABLE'),array('id'=>$id));
+		header('Location: '.base_url('admin/project/view/'.$id));
+	}
+
+	public function statusPublic_enable($id){
+		$this->mymodel->updateData('tbl_project',array('public'=>'ENABLE'),array('id'=>$id));
+		header('Location: '.base_url('admin/project/view/'.$id));
+	}
+
 }
 
 ?>

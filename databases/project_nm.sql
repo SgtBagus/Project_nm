@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 07, 2019 at 01:53 PM
+-- Generation Time: Sep 08, 2019 at 11:22 AM
 -- Server version: 10.1.39-MariaDB
 -- PHP Version: 7.3.5
 
@@ -640,10 +640,8 @@ INSERT INTO `file` (`id`, `name`, `mime`, `dir`, `table`, `table_id`, `status`, 
 (184, '6950c16c9bcc6995f376b297f163175929730.png', 'image/png', 'webfile/users/6950c16c9bcc6995f376b297f163175929730.png', 'user', 14, 'ENABLE', '2019-09-05 12:56:42', NULL),
 (185, '6950c16c9bcc6995f376b297f163175952937.jpeg', 'image/jpeg', 'webfile/users/6950c16c9bcc6995f376b297f163175952937.jpeg', 'user', 15, 'ENABLE', '2019-09-05 12:57:38', NULL),
 (186, 'default.png', 'image/png', 'webfile/users/default.png', 'tbl_investor', 8, 'ENABLE', '2019-09-06 10:13:58', '2019-09-06 10:13:58'),
-(187, '6950c16c9bcc6995f376b297f163175962915.jpg', 'image/jpeg', 'webfile/project/project-ke-1/6950c16c9bcc6995f376b297f163175962915.jpg', 'tbl_project', 1, 'ENABLE', '2019-09-07 17:06:31', NULL),
-(188, '6950c16c9bcc6995f376b297f1631759629151.jpg', 'image/jpeg', 'webfile/project/project-ke-1/6950c16c9bcc6995f376b297f1631759629151.jpg', 'tbl_project_gambar', 1, 'ENABLE', '2019-09-07 17:06:31', NULL),
-(189, '6950c16c9bcc6995f376b297f1631759629152.jpg', 'image/jpeg', 'webfile/project/project-ke-1/6950c16c9bcc6995f376b297f1631759629152.jpg', 'tbl_project_gambar', 1, 'ENABLE', '2019-09-07 17:06:31', NULL),
-(190, '6950c16c9bcc6995f376b297f163175962915.png', 'image/png', 'webfile/project/project-ke-1/6950c16c9bcc6995f376b297f163175962915.png', 'tbl_project_gambar', 1, 'ENABLE', '2019-09-07 17:06:32', NULL);
+(207, '6950c16c9bcc6995f376b297f163175935337.jpg', 'image/png', 'webfile/project/project-ke-1/6950c16c9bcc6995f376b297f163175935337.jpg', 'tbl_project', 1, 'ENABLE', '2019-09-08 13:00:54', NULL),
+(208, '6950c16c9bcc6995f376b297f163175935337.PNG', 'image/png', 'webfile/project/project-ke-1/6950c16c9bcc6995f376b297f163175935337.PNG', 'tbl_project_gambar', 1, 'ENABLE', '2019-09-08 13:00:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -897,6 +895,7 @@ CREATE TABLE `tbl_project` (
   `bagi_hasil` int(125) DEFAULT NULL,
   `deskripsi` text,
   `url_map` text,
+  `public` enum('ENABLE','DISABLE') NOT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
@@ -906,8 +905,32 @@ CREATE TABLE `tbl_project` (
 -- Dumping data for table `tbl_project`
 --
 
-INSERT INTO `tbl_project` (`id`, `user_id`, `title`, `slug`, `harga`, `unit`, `total_harga`, `periode`, `return`, `bagi_hasil`, `deskripsi`, `url_map`, `status`, `created_at`, `updated_at`) VALUES
-(1, 13, 'Project Ke 1', 'project-ke-1', 2000000, 400, 800000000, 1, 15, 3, '<p>Mencoba Membuat <b>Project </b>Baru</p>', '', 'ENABLE', '2019-09-07 17:06:31', NULL);
+INSERT INTO `tbl_project` (`id`, `user_id`, `title`, `slug`, `harga`, `unit`, `total_harga`, `periode`, `return`, `bagi_hasil`, `deskripsi`, `url_map`, `public`, `status`, `created_at`, `updated_at`) VALUES
+(1, 13, 'Project Ke 1', 'project-ke-1', 2000000, 338, 676000000, 1, 15, 3, '<p>Mencoba Membuat <b>Project </b>Baru</p>', '', 'ENABLE', 'ENABLE', '2019-09-07 17:06:31', '2019-09-08 13:00:54');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_project_invest`
+--
+
+CREATE TABLE `tbl_project_invest` (
+  `id` int(11) NOT NULL,
+  `project_id` int(11) DEFAULT NULL,
+  `investor_id` int(11) DEFAULT NULL,
+  `unit` int(11) DEFAULT NULL,
+  `total_harga` int(11) DEFAULT NULL,
+  `status` enum('ENABLE','DISABLE') DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_project_invest`
+--
+
+INSERT INTO `tbl_project_invest` (`id`, `project_id`, `investor_id`, `unit`, `total_harga`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 2, 4000000, 'ENABLE', '2019-09-08 00:00:00', '2019-09-08 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1021,6 +1044,12 @@ ALTER TABLE `tbl_project`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_project_invest`
+--
+ALTER TABLE `tbl_project_invest`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -1046,7 +1075,7 @@ ALTER TABLE `access_control`
 -- AUTO_INCREMENT for table `file`
 --
 ALTER TABLE `file`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=191;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
 
 --
 -- AUTO_INCREMENT for table `grafik`
@@ -1106,6 +1135,12 @@ ALTER TABLE `tbl_investor`
 -- AUTO_INCREMENT for table `tbl_project`
 --
 ALTER TABLE `tbl_project`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tbl_project_invest`
+--
+ALTER TABLE `tbl_project_invest`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --

@@ -13,6 +13,7 @@ if($data_edit){
     <div class="form-group">
       <label for="inputEmail3" class="col-sm-3 control-label">Judul Proyek*</label>
       <div class="col-sm-9">
+        <?php if($data_edit){echo '<input type="hidden" name="dt[id]" value="'.$data_edit['id'].'">'; }  ?>
         <input type="text" class="form-control" placeholder="Masukan Judul Proyek ..." name="dt[title]" id="judul" <?php if($data_edit){echo "value='".$data_edit['title']."'"; }  ?>> 
       </div>
     </div>
@@ -72,16 +73,20 @@ if($data_edit){
                       $i++;
                     }
                   }?>
+                </tbody>
+                <tfoot>
                   <td colspan="2" align="center" id="btn_image_add">
                     <?php if($file_detail){ ?>
                       <button type="button" class="btn btn-sm btn-primary" id="btnFile-many_edit"><i class="fa fa-file"></i> Ubah Detail Gambar</button>
+                      <button type="button" class="btn btn-sm btn-danger" id="btnFile-many_delete"><i class="fa fa-trash"></i> Hapus Semua Gambar</button>
                     <?php } else {?>
                       <button type="button" class="btn btn-sm btn-primary" id="btnFile-many"><i class="fa fa-file"></i> Masukan Gambar Lainnya</button>
                     <?php } ?>
                     <input type="file" id="uploadFile" name="file_many[]" style="display: none" multiple accept="image/x-png,image/jpeg,image/jpg" />
-                    <p class="help-block">Detail Gambar Bisa Multi Select</p>
+                    <input type="hidden" value="0" name="remove_image" id="remove_image">
+                    <p class="help-block" id="note_image">Detail Gambar Bisa Multi Select</p>
                   </td>
-                </tbody>
+                </tfoot>
               </table>
             </div>
           </div>
