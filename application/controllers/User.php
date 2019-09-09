@@ -23,9 +23,7 @@ class User extends MY_Controller {
 	}
 
 	public function register_proses(){
-
 		$this->validate();
-
 		if ($this->form_validation->run() == FALSE){
 			$this->alert->alertdanger(validation_errors());     
 		}else{

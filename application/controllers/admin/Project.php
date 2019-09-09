@@ -200,6 +200,20 @@ class Project extends MY_Controller {
 		$this->template->load('admin/template/template','admin/project/edit',$data);
 	}
 
+	public function editImage($id){
+		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('id'=>$id));
+		$data['file_detail'] = $this->mymodel->selectWhere('file',array('table_id'=>$id,'table'=>'tbl_project_gambar'));
+		$data['page_name'] = "Project";
+		$this->template->load('admin/template/template','admin/project/editImage',$data);
+	}
+
+	public function editOneImage($id){
+		$data['file_detail'] = $this->mymodel->selectDataone('file',array('id'=>$id,'table'=>'tbl_project_gambar'));
+		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project', array('id'=>$data['file_detail']['table_id']));
+		$data['page_name'] = "Project";
+		$this->template->load('admin/template/template','admin/project/editOneImage',$data);
+	}
+
 	public function update(){
 
 		$this->form_validation->set_error_delimiters('<li>', '</li>');
@@ -238,7 +252,7 @@ class Project extends MY_Controller {
 				}
 
 				$config['upload_path']          = $dir;
-				$config['allowed_types']        = '*';
+				$config['allowed_types']        = '*'; 
 				$config['file_name']           = md5('smartsoftstudio').rand(1000,100000);
 
 				$this->load->library('upload', $config);
@@ -261,61 +275,61 @@ class Project extends MY_Controller {
 				}
 			}
 
-			if($_POST['remove_image'] == '1'){
-				$this->mymodel->deleteData('file',  array('table_id'=>$_POST['dt']['id'], 'table'=>'tbl_project_gambar' ));
+			// if($_POST['remove_image'] == '1'){
+			// 	$this->mymodel->deleteData('file',  array('table_id'=>$_POST['dt']['id'], 'table'=>'tbl_project_gambar' ));
 
-				if($project_name['slug'] != $_POST['dt']['slug']){
-					foreach($project_gambar_detail as $gambar_detail){ 
-						unlink('webfile/project/'.$_POST['dt']['slug'].'/'.$gambar_detail['name']); 
-					}
-				}
+			// 	if($project_name['slug'] != $_POST['dt']['slug']){
+			// 		foreach($project_gambar_detail as $gambar_detail){ 
+			// 			unlink('webfile/project/'.$_POST['dt']['slug'].'/'.$gambar_detail['name']); 
+			// 		}
+			// 	}
 
-				if (!empty($_FILES['file_many']['name'])){
-					$countfiles = count($_FILES['file_many']['name']);
+			// 	if (!empty($_FILES['file_many']['name'])){
+			// 		$countfiles = count($_FILES['file_many']['name']);
 
-					for($i=0;$i<$countfiles;$i++){
+			// 		for($i=0;$i<$countfiles;$i++){
 
-						if(!empty($_FILES['file_many']['name'][$i])){
+			// 			if(!empty($_FILES['file_many']['name'][$i])){
 
-							$_FILES['file']['name'] = $_FILES['file_many']['name'][$i];
-							$_FILES['file']['type'] = $_FILES['file_many']['type'][$i];
-							$_FILES['file']['tmp_name'] = $_FILES['file_many']['tmp_name'][$i];
-							$_FILES['file']['error'] = $_FILES['file_many']['error'][$i];
-							$_FILES['file']['size'] = $_FILES['file_many']['size'][$i];
+			// 				$_FILES['file']['name'] = $_FILES['file_many']['name'][$i];
+			// 				$_FILES['file']['type'] = $_FILES['file_many']['type'][$i];
+			// 				$_FILES['file']['tmp_name'] = $_FILES['file_many']['tmp_name'][$i];
+			// 				$_FILES['file']['error'] = $_FILES['file_many']['error'][$i];
+			// 				$_FILES['file']['size'] = $_FILES['file_many']['size'][$i];
 
-							$dir  = "webfile/project/".$project_name['slug']."/";
+			// 				$dir  = "webfile/project/".$project_name['slug']."/";
 
-							if($project_name['slug'] != $_POST['dt']['slug']){
-								$dir  = "webfile/project/".$_POST['dt']['slug']."/";
-							}
+			// 				if($project_name['slug'] != $_POST['dt']['slug']){
+			// 					$dir  = "webfile/project/".$_POST['dt']['slug']."/";
+			// 				}
 
-							$config['upload_path']          = $dir;
-							$config['allowed_types']        = '*';
-							$config['file_name']           = md5('smartsoftstudio').rand(1000,100000);
+			// 				$config['upload_path']          = $dir;
+			// 				$config['allowed_types']        = '*';
+			// 				$config['file_name']           = md5('smartsoftstudio').rand(1000,100000);
 
-							$this->load->library('upload',$config); 
+			// 				$this->load->library('upload',$config); 
 
-							if (!$this->upload->do_upload('file')){
-								$error = $this->upload->display_errors();
-								$this->alert->alertdanger($error);		
-							}else{
-								$file = $this->upload->data();
-								$data = array(
-									'id' => '',
-									'name'=> $file['file_name'],
-									'mime'=> $file['file_type'],
-									'dir'=> $dir.$file['file_name'],
-									'table'=> 'tbl_project_gambar',
-									'table_id'=> $_POST['dt']['id'],
-									'status'=>'ENABLE',
-									'created_at'=>date('Y-m-d H:i:s')
-								);
-								$str = $this->db->insert('file', $data); 
-							}
-						}
-					}
-				}
-			}
+			// 				if (!$this->upload->do_upload('file')){
+			// 					$error = $this->upload->display_errors();
+			// 					$this->alert->alertdanger($error);		
+			// 				}else{
+			// 					$file = $this->upload->data();
+			// 					$data = array(
+			// 						'id' => '',
+			// 						'name'=> $file['file_name'],
+			// 						'mime'=> $file['file_type'],
+			// 						'dir'=> $dir.$file['file_name'],
+			// 						'table'=> 'tbl_project_gambar',
+			// 						'table_id'=> $_POST['dt']['id'],
+			// 						'status'=>'ENABLE',
+			// 						'created_at'=>date('Y-m-d H:i:s')
+			// 					);
+			// 					$str = $this->db->insert('file', $data); 
+			// 				}
+			// 			}
+			// 		}
+			// 	}
+			// }
 			$dt = $_POST['dt'];
 			$dt['updated_at'] = date("Y-m-d H:i:s");
 			$this->mymodel->updateData('tbl_project', $dt , array('id'=>$_POST['dt']['id']));
@@ -341,6 +355,99 @@ class Project extends MY_Controller {
 		$this->mymodel->deleteData('tbl_project',  array('id'=>$id));$this->alert->alertdanger('Success Delete Data');     
 	}
 
+	public function add_image($id){
+		$project_name = $this->mymodel->selectDataone('tbl_project', array('id' => $id));
+
+		$project_image = $this->mymodel->selectWithQuery("SELECT count(id) as count from file WHERE table_id = '$id' AND file.table = 'tbl_project_gambar'");
+
+		if($project_image[0]['count'] < 6){
+			if (!empty($_FILES['file']['name'])){
+				$dir  = "webfile/project/".$project_name['slug']."/";
+				$config['upload_path']          = $dir;
+				$config['allowed_types']        = '*';
+				$config['file_name']           = md5('smartsoftstudio').rand(1000,100000);
+
+				$this->load->library('upload', $config);
+				if (!$this->upload->do_upload('file')){
+					$error = $this->upload->display_errors();
+					$this->alert->alertdanger($error);		
+				}else{
+					$file = $this->upload->data();
+					$data = array(
+						'id' => '',
+						'name'=> $file['file_name'],
+						'mime'=> $file['file_type'],
+						'dir'=> $dir.$file['file_name'],
+						'table'=> 'tbl_project_gambar',
+						'table_id'=> $id,
+						'status'=>'ENABLE',
+						'created_at'=>date('Y-m-d H:i:s')
+					);
+					$str = $this->db->insert('file', $data); 
+				}
+			}
+			header('Location: '.base_url('admin/project/editImage/'.$id));
+		}else{
+			$this->alert->alertdanger('<strong>Detail Gambar</strong> Tidak bisa lebih dari 6 Gambar');   
+			return false;  
+		}
+	}
+
+	public function edit_images($id){
+
+		$file_dir = $this->mymodel->selectDataone('file', array('id' => $id));
+
+		$project_slug = $this->mymodel->selectDataone('tbl_project', array('id' => $file_dir['table_id']));
+		if (!empty($_FILES['file']['name'])){
+			$dir  = "webfile/project/".$project_slug['slug']."/";
+			$config['upload_path']          = $dir;
+			$config['allowed_types']        = '*';
+			$config['file_name']           = md5('smartsoftstudio').rand(1000,100000);
+			$this->load->library('upload', $config);
+			if ( ! $this->upload->do_upload('file')){
+				$error = $this->upload->display_errors();
+				$this->alert->alertdanger($error);		
+			}else{
+				$file = $this->upload->data();
+
+				$data = array(
+					'name'=> $file['file_name'],
+					'mime'=> $file['file_type'],
+					'dir'=> $dir.$file['file_name'],
+					'table'=> 'tbl_project_gambar',
+					'table_id'=> $project_slug['id'],
+					'updated_at'=>date('Y-m-d H:i:s')
+				);
+
+				@unlink($file_dir['dir']);
+
+				$this->mymodel->updateData('file', $data , array('id'=>$id));
+
+				$this->alert->alertsuccess('Success Update Data');  
+				header('Location: '.base_url('admin/project/editImage/'.$project_slug['id']));
+			}
+		}
+	}
+
+	public function delete_image($id){
+		$file_dir = $this->mymodel->selectDataone('file', array('id' => $id));
+		$project_slug = $this->mymodel->selectDataone('tbl_project', array('id' => $file_dir['table_id']));
+		@unlink($file_dir['dir']);
+
+		$this->mymodel->deleteData('file',  array('id'=>$id));
+		header('Location: '.base_url('admin/project/editImage/'.$project_slug['id']));
+	}
+
+	public function delete_Allimage($id){
+		$project = $this->mymodel->selectDataone('tbl_project',  array('id'=>$id));
+		$file_dir = $this->mymodel->selectWhere('file', array('table_id' => $id, 'table' => 'tbl_project_gambar'));
+		foreach($file_dir as $dir){ 
+			unlink($dir['dir']); 
+		}
+
+		$this->mymodel->deleteData('file',  array('table_id'=>$id,'table'=>'tbl_project_gambar'));
+		header('Location: '.base_url('admin/project/editImage/'.$project['id']));
+	}
 
 	public function status($id,$status){
 		$this->mymodel->updateData('tbl_project',array('status'=>$status),array('id'=>$id));

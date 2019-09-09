@@ -17,14 +17,14 @@ if($this->session->userdata('session_sop')=="") {
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-12" align="center">
-                                    <img src="https://png.pngtree.com/png-vector/20190625/ourlarge/pngtree-business-male-user-avatar-vector-png-image_1511454.jpg" class="img-circle" alt="User Image" width="100px" height="100px">
+                                    <img src="<?= base_url().$file['dir']?>" class="img-circle" alt="User Image" width="100px" height="100px">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="<?= base_url('/dashboard/account') ?>/edit/">
+                            <a href="<?= base_url('/dashboard/account') ?>">
                                 <button type="submit" class="btn btn-block btn-primary btn-md round"><i class="fa fa-edit"></i> Ubah Profil</button>
                             </a>
                         </div>
@@ -60,7 +60,13 @@ if($this->session->userdata('session_sop')=="") {
                 </div>
                 <div class="col-md-9 col-sm-6 col-xs-12">
                     <?php 
+                        $data['user'] = $user;
+                        $data['file'] = $file;
+                        
                     if($content == 'dashboard'){
+                        $data['invest'] = $invest;
+                        $data['total_harga'] = $total_harga;
+                        $data['total_project'] = $total_project;
                         $this->load->view('dashboard/dashboard');
                     }else if($content == 'notif'){
                         $this->load->view('dashboard/notif');

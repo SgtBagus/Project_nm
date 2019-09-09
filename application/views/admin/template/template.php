@@ -346,7 +346,7 @@ if($this->session->userdata('session_sop')=="") {
 
       return ribuan;
     }
-
+ 
     $("#btnFile").click(function() {
       document.getElementById('imageFile').click();
     });
@@ -370,20 +370,7 @@ if($this->session->userdata('session_sop')=="") {
     $("#btnFile-many").click(function() {
       document.getElementById('uploadFile').click();
     });
-
-
-    $("#btnFile-many_edit").click(function() {
-      document.getElementById('uploadFile').click();
-    });
-
-    $("#btnFile-many_delete").click(function() {  
-      $('#detail_image_open #detail_image_edit').remove();
-      $('#remove_image').val(1);
-      $('#note_image').text('Detail Gambar DiHapus !');
-      $('#btnFile-many_edit').hide();
-      $('#btnFile-many_delete').hide();
-    });
-
+    
     $("#uploadFile").change(function(){
       $('#detail_image_open #detail_image_edit').remove();
       $('#note_image').text('Detail Gambar Diubah !');
@@ -392,10 +379,7 @@ if($this->session->userdata('session_sop')=="") {
       for(var i=0;i<total_file;i++){
         $('#detail_image_open').append('<tr id="detail_image_edit"><td><img src="'+URL.createObjectURL(event.target.files[i])+'" class="round" alt="User Image" height="150px" style="margin: 15px"></td><td>'+event.target.files[i].name+'</td></tr>');
       }
-      $('#btnFile-many_edit').hide();
-      $('#btnFile-many_delete').hide();
       $("#btnFile-many").html('<i class="fa fa-file"></i> Pilih Gambar Kembali (<b>'+total_file+'</b> telah Terpilih)');
-      $('#remove_image').val(1);
     });
   </script>
 </body>

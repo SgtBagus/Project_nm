@@ -269,7 +269,6 @@
     $i = 1;
     foreach($file_detail as $img){
       ?>
-
       $('#detail_image-<?=$i?>').click(function() {
         var main_src = $('#main_image').attr('src');
         var detail_src = $('#detail_image-<?=$i?>').attr('src');
@@ -277,7 +276,9 @@
         $('#detail_image-<?=$i?>').attr('src',main_src);
         $('#main_image').attr('src',detail_src);
       });
+
       <?php
+      $i++;
     }
   }
   ?>

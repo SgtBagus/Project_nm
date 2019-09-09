@@ -32,12 +32,12 @@ if($data_edit){
             if($file){
               if($file['dir']!=""){
                 ?>
-                <img src="<?= base_url().$file['dir'] ?>" class="round" alt="User Image" width="100%" height="250px" id="preview_image">
+                <img src="<?= base_url().$file['dir'] ?>" alt="User Image" width="100%" height="250px" id="preview_image">
                 <?php
               } 
             } else{
               ?>
-              <img src="https://cdn.lifehack.org/wp-content/uploads/2013/04/33.jpg" class="round" alt="User Image" width="100%" height="250px" id="preview_image">
+              <img src="<?= base_url('webfile/project/default.jpg') ?>" alt="User Image" width="100%" height="250px" id="preview_image">
               <?php
             }?>
           </div>
@@ -50,44 +50,41 @@ if($data_edit){
         <div class="row">
           <div class="col-md-12">
             <div class="box-body">
-              <table class="table table-bordered" style="width: 100%">
-                <thead style="font-weight: bold;">
-                  <tr>
-                    <th style="width: 300px">Gambar</th>
-                    <th>Nama File</th>
-                  </tr>
-                </thead>
-                <tbody id="detail_image_open">
-                  <?php
-                  if($file_detail){
-                    $i = 1;
-                    foreach($file_detail as $img){
-                      ?>
-                      <tr id="detail_image_edit">
-                        <td>
-                          <img src="<?= base_url().$img['dir']?>" class="round" alt="User Image" height="150px" style="margin: 15px">
-                        </td>
-                        <td>Gambar Ke-<?= $i ?></td>
-                      </tr>
-                      <?php
-                      $i++;
-                    }
-                  }?>
-                </tbody>
-                <tfoot>
-                  <td colspan="2" align="center" id="btn_image_add">
-                    <?php if($file_detail){ ?>
-                      <button type="button" class="btn btn-sm btn-primary" id="btnFile-many_edit"><i class="fa fa-file"></i> Ubah Detail Gambar</button>
-                      <button type="button" class="btn btn-sm btn-danger" id="btnFile-many_delete"><i class="fa fa-trash"></i> Hapus Semua Gambar</button>
-                    <?php } else {?>
-                      <button type="button" class="btn btn-sm btn-primary" id="btnFile-many"><i class="fa fa-file"></i> Masukan Gambar Lainnya</button>
-                    <?php } ?>
-                    <input type="file" id="uploadFile" name="file_many[]" style="display: none" multiple accept="image/x-png,image/jpeg,image/jpg" />
-                    <input type="hidden" value="0" name="remove_image" id="remove_image">
-                    <p class="help-block" id="note_image">Detail Gambar Bisa Multi Select</p>
-                  </td>
-                </tfoot>
-              </table>
+              <?php
+              if($file_detail){
+                ?>
+                <div class="row">
+                  <div class="col-md-6">
+                    <a href="<?= base_url('admin/project/editImage/').$data_edit['id'] ?>">
+                      <button type="button" class="btn btn-sm btn-success"><i class="fa fa-file"></i> Ubah Detail Gambar</button>
+                    </a>
+                  </div>
+                </div>
+              <?php } else {?>
+                <table class="table table-bordered" style="width: 100%">
+                  <thead style="font-weight: bold;">
+                    <tr>
+                      <th style="width: 300px">Gambar</th>
+                      <th>Nama File</th>
+                    </tr>
+                  </thead>
+                  <tbody id="detail_image_open">
+                  </tbody>
+                  <tfoot>
+                    <td colspan="2" align="center" id="btn_image_add">
+                      <?php if($file_detail){ ?>
+                        <button type="button" class="btn btn-sm btn-primary"  data-toggle="modal" data-target="#modal-add-image"><i class="fa fa-file"></i> Tambah Gambar Detail</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-delete-image"><i class="fa fa-trash"></i> Hapus Semua Gambar</button>
+                      <?php } else {?>
+                        <button type="button" class="btn btn-sm btn-primary" id="btnFile-many"><i class="fa fa-file"></i> Masukan Gambar Lainnya</button>
+                        <input type="file" id="uploadFile" name="file_many[]" style="display: none" multiple accept="image/x-png,image/jpeg,image/jpg" />
+                        <p class="help-block" id="note_image">Detail Gambar Bisa Multi Select</p>
+                      <?php } ?>
+                    </td>
+                  </tfoot>
+                </table>
+                <?php
+              }?>
             </div>
           </div>
         </div>

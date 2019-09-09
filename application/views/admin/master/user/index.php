@@ -227,7 +227,7 @@
 
   function edit(id) {
     $("#editsite").modal('show');
-    $("#data-update").load('<?= base_url('admin/master/user/edit') ?>/'+id);
+    $("#data-update").load('<?= base_url('admin/master/user/edit') ?>/'+id); 
   }
 
 

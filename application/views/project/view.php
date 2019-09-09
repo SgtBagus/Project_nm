@@ -84,8 +84,8 @@
           <div class="box box-solid round">
             <div class="box-body" align="center">
               Harga :
-              <h2><b>Rp 4,800,000 / Unit</b></h2>
-            </div>
+              <h2><b>Rp <?= number_format($tbl_project['harga'],0,',','.') ?>,- / Unit</b></h2>
+            </div> 
             <div class="box-body" align="center">
               <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-invest">
                 <i class="fa fa-credit-card"></i> Lakukan Investasi 
@@ -264,6 +264,7 @@
         $('#main_image').attr('src',detail_src);
       });
       <?php
+      $i++;
     }
   }
   ?>
