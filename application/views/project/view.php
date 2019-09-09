@@ -72,7 +72,7 @@
               </div>
             </div>
           </div>
-          <button type="button" class="btn btn-block btn-primary btn-lg round" data-toggle="modal" data-target="#modal-invest">
+          <button type="button" class="btn btn-block btn-primary btn-lg round" data-toggle="modal" data-target="#modal-invest" <?php if($tbl_project['status']=='DISABLE'){ echo "disabled"; }?> >
             <i class="fa fa-credit-card"></i> Lakukan nvestasi 
           </button>
           <br>
@@ -87,14 +87,22 @@
               <h2><b>Rp <?= number_format($tbl_project['harga'],0,',','.') ?>,- / Unit</b></h2>
             </div> 
             <div class="box-body" align="center">
-              <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-invest">
+              <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-invest" <?php if($tbl_project['status']=='DISABLE'){ echo "disabled"; }?> >
                 <i class="fa fa-credit-card"></i> Lakukan Investasi 
               </button>
             </div>
           </div>
-          <div class="alert alert-success alert-dismissible round status-alert" align="center">
+          <?php
+          if($tbl_project['status']=='ENABLE'){
+            echo '<div class="alert alert-success alert-dismissible round status-alert" align="center">
             <i class="fa fa-check-circle"></i> <b>Masih Dibuka</b>
-          </div>
+            </div>';
+          }else{
+            echo '<div class="alert alert-danger alert-dismissible round status-alert" align="center">
+            <i class="fa fa-ban"></i> <b>Sudah Ditutup</b>
+            </div>';
+          }
+          ?>
           <div style="margin: 5px">
             Proyek dimulai <b><?= date("d-m-Y", strtotime($tbl_project['created_at']))  ?></b> oleh:
           </div>

@@ -65,7 +65,7 @@
 				if (str.indexOf("success") != -1){
 					form.find(".show_error").hide().html(response).slideDown("fast");
 					setTimeout(function(){ 
-						
+            			location.href = '<?= base_url("/admin/project/editImage/").$tbl_project['id'] ?>';
 					}, 1000);
 
 					$(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);

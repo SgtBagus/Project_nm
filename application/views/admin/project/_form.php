@@ -51,7 +51,7 @@ if($data_edit){
           <div class="col-md-12">
             <div class="box-body">
               <?php
-              if($file_detail){
+              if($data_edit){
                 ?>
                 <div class="row">
                   <div class="col-md-6">

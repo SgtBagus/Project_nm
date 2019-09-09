@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 09, 2019 at 10:07 AM
+-- Generation Time: Sep 09, 2019 at 11:06 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.6
 
@@ -634,7 +634,7 @@ CREATE TABLE `file` (
 
 INSERT INTO `file` (`id`, `name`, `mime`, `dir`, `table`, `table_id`, `status`, `created_at`, `updated_at`) VALUES
 (179, '6950c16c9bcc6995f376b297f163175963555.png', 'image/png', 'webfile/users/6950c16c9bcc6995f376b297f163175963555.png', 'tbl_investor', 2, 'ENABLE', '2019-09-04 15:08:01', '2019-09-09 14:19:32'),
-(180, '6950c16c9bcc6995f376b297f163175998660.jpg', 'image/jpeg', 'webfile/users/6950c16c9bcc6995f376b297f163175998660.jpg', 'user', 13, 'ENABLE', '2019-09-04 15:08:01', '2019-09-05 09:18:14'),
+(180, '6950c16c9bcc6995f376b297f163175910001.png', 'image/png', 'webfile/users/6950c16c9bcc6995f376b297f163175910001.png', 'user', 13, 'ENABLE', '2019-09-04 15:08:01', '2019-09-09 15:40:14'),
 (182, 'default.png', 'image/png', 'webfile/users/default.png', 'tbl_investor', 6, 'ENABLE', '2019-09-05 12:19:49', '2019-09-05 12:19:49'),
 (183, 'default.png', 'image/png', 'webfile/users/default.png', 'tbl_investor', 7, 'ENABLE', '2019-09-05 12:23:01', '2019-09-05 12:23:01'),
 (184, '6950c16c9bcc6995f376b297f163175929730.png', 'image/png', 'webfile/users/6950c16c9bcc6995f376b297f163175929730.png', 'user', 14, 'ENABLE', '2019-09-05 12:56:42', NULL),
@@ -642,7 +642,10 @@ INSERT INTO `file` (`id`, `name`, `mime`, `dir`, `table`, `table_id`, `status`, 
 (186, 'default.png', 'image/png', 'webfile/users/default.png', 'tbl_investor', 8, 'ENABLE', '2019-09-06 10:13:58', '2019-09-06 10:13:58'),
 (207, '6950c16c9bcc6995f376b297f163175935337.jpg', 'image/png', 'webfile/project/project-ke-1/6950c16c9bcc6995f376b297f163175935337.jpg', 'tbl_project', 1, 'ENABLE', '2019-09-08 13:00:54', NULL),
 (208, '6950c16c9bcc6995f376b297f163175935337.PNG', 'image/png', 'webfile/project/project-ke-1/6950c16c9bcc6995f376b297f163175935337.PNG', 'tbl_project_gambar', 1, 'ENABLE', '2019-09-08 13:00:54', NULL),
-(209, '6950c16c9bcc6995f376b297f16317594340.jpeg', 'image/png', 'webfile/project/project-ke-2-dengan-mutli-imput-baru/6950c16c9bcc6995f376b297f16317594340.jpeg', 'tbl_project', 2, 'ENABLE', '2019-09-09 09:26:03', NULL);
+(209, '6950c16c9bcc6995f376b297f16317594340.jpeg', 'image/png', 'webfile/project/project-ke-2-dengan-mutli-imput-baru/6950c16c9bcc6995f376b297f16317594340.jpeg', 'tbl_project', 2, 'ENABLE', '2019-09-09 09:26:03', NULL),
+(218, '6950c16c9bcc6995f376b297f163175926824.png', 'image/png', 'webfile/project/project-ke-2-dengan-mutli-imput-baru/6950c16c9bcc6995f376b297f163175926824.png', 'tbl_project_gambar', 2, 'ENABLE', '2019-09-09 16:01:43', NULL),
+(219, '6950c16c9bcc6995f376b297f163175980996.png', 'image/png', 'webfile/project/project-ke-2-dengan-mutli-imput-baru/6950c16c9bcc6995f376b297f163175980996.png', 'tbl_project_gambar', 2, 'ENABLE', '2019-09-09 16:02:29', NULL),
+(220, '6950c16c9bcc6995f376b297f163175982881.jpeg', 'image/jpeg', 'webfile/project/project-ke-2-dengan-mutli-imput-baru/6950c16c9bcc6995f376b297f163175982881.jpeg', 'tbl_project_gambar', 2, 'ENABLE', '2019-09-09 16:03:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -959,7 +962,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `nip`, `name`, `email`, `password`, `role_id`, `desc`, `status`, `created_at`, `updated_at`, `telepon`) VALUES
-(13, 'bagus', 'Bagus', 'bagus@gmail.com', '17b38fc02fd7e92f3edeb6318e3066d8', 17, 'gkdshagdsj', '0', '2019-07-02 09:55:20', '2019-09-05 09:18:15', '085'),
+(13, 'bagus', 'Bagus', 'bagus@gmail.com', '17b38fc02fd7e92f3edeb6318e3066d8', 17, 'gkdshagdsj', '0', '2019-07-02 09:55:20', '2019-09-09 15:40:14', '085'),
 (14, 'Admin', 'Super Admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 17, 'Super Admin', '0', '2019-09-05 12:56:42', NULL, ''),
 (15, 'Mitra', 'Mitra', 'mitra@gmail.com', '92706ba4fd3022cede6d1610b17a0d2d', 18, 'Mitra', '0', '2019-09-05 12:57:38', '2019-09-05 13:11:56', '');
 
@@ -1077,7 +1080,7 @@ ALTER TABLE `access_control`
 -- AUTO_INCREMENT for table `file`
 --
 ALTER TABLE `file`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=218;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
 
 --
 -- AUTO_INCREMENT for table `grafik`

@@ -389,6 +389,7 @@ class Project extends MY_Controller {
 						'created_at'=>date('Y-m-d H:i:s')
 					);
 					$str = $this->db->insert('file', $data); 
+					header('Location: '.base_url('admin/project/editImage/'.$id));
 				}
 			}
 			header('Location: '.base_url('admin/project/editImage/'.$id));
