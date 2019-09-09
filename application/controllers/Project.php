@@ -5,7 +5,7 @@ class Project extends MY_Controller {
 	}
 
 	public function index(){
-		$data['tbl_project'] = $this->mymodel->selectData('tbl_project');
+		$data['tbl_project'] = $this->mymodel->selectWhere('tbl_project', array('public' => 'ENABLE', 'status' => 'ENABLE' ));
 		$data['file'] = $this->mymodel->selectWhere('file',array('table'=>'tbl_project'));
 		$this->template->load('template/template','project/index',$data); 
 	}

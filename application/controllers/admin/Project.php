@@ -164,6 +164,11 @@ class Project extends MY_Controller {
 		$this->datatables->join('user u','u.id=a.user_id','inner');
 		$this->datatables->from('tbl_project a');
 		$this->datatables->where('a.status',$status);
+
+		if($this->session->userdata('role_id') == '18'){
+			$this->datatables->where('a.user_id', $this->session->userdata('id'));			
+		}
+
 		if($status=="ENABLE"){
 			$this->datatables->add_column('view', '<div class="btn-group"><button type="button" class="btn btn-sm btn-info" onclick="view($1)"><i class="fa fa-eye"></i></button><button type="button" class="btn btn-sm btn-primary" onclick="edit($1)"><i class="fa fa-edit"></i></button></div>', 'id');
 		}else{
