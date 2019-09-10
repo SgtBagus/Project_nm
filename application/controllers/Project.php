@@ -7,18 +7,19 @@ class Project extends MY_Controller {
 	public function index(){
 		$data['tbl_project'] = $this->mymodel->selectWhere('tbl_project', array('public' => 'ENABLE'));
 		$data['file'] = $this->mymodel->selectWhere('file',array('table'=>'tbl_project'));
-		$this->template->load('template/template','project/index',$data); 
+		$this->template->load('template/template','project/index',$data);
 	}
 
 	public function view($slug){
 		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('slug'=>$slug));
+		$data['tbl_project_return'] = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$data['tbl_project']['id'], 'public' => 'ENABLE'));
 		$data['user'] = $this->mymodel->selectDataone('user',array('id'=>$data['tbl_project']['user_id']));
 		$data['user_image'] = $this->mymodel->selectDataone('file',array('table_id'=>$data['user']['id'],'table'=>'user'));
 		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$data['tbl_project']['id'],'table'=>'tbl_project'));
 		$data['file_detail'] = $this->mymodel->selectWhere('file',array('table_id'=>$data['tbl_project']['id'],'table'=>'tbl_project_gambar'));
 
 		if($data['tbl_project']){
-			$this->template->load('template/template','project/view', $data); 
+			$this->template->load('template/template','project/view', $data);
 		}else{
 			$this->load->view('errors/html/error_404');
 			return false;

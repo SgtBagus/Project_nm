@@ -1,7 +1,7 @@
 <div class="content-wrapper">
   <div class="container">
     <section class="content">
-      <div class="row" align="center"> 
+      <div class="row" align="center">
         <h1><i class="fa fa-archive"></i> Proyek Pendanaan </h1>
         <small>Setiap bibit yang Anda biayai, berarti juga bermanfaat untuk kesejahteraan petani dan kebaikan alam.</small>
       </div>
@@ -16,27 +16,27 @@
                 <div class="radio">
                   <label style="margin-right: 5px">
                     <input type="radio" name="filter" id="optionsRadios1" value="filter 1" checked="true">
-                    Semua Proyek 
+                    Semua Proyek
                   </label>
 
                   <label style="margin-right: 5px">
                     <input type="radio" name="filter" id="optionsRadios1" value="filter 1">
-                    Baru Berjalan  
+                    Baru Berjalan
                   </label>
 
                   <label style="margin-right: 5px">
                     <input type="radio" name="filter" id="optionsRadios1" value="filter 1">
-                    Lama Berjalan 
+                    Lama Berjalan
                   </label>
 
                   <label style="margin-right: 5px">
                     <input type="radio" name="filter" id="optionsRadios1" value="filter 1">
-                    Return Terbesar 
+                    Return Terbesar
                   </label>
 
                   <label style="margin-right: 5px">
                     <input type="radio" name="filter" id="optionsRadios1" value="filter 1">
-                    Proyek Terbaik 
+                    Proyek Terbaik
                   </label>
                 </div>
               </div>
@@ -57,11 +57,12 @@
                   </h2>
                   <h5 align="center">
                     <?php $user = $this->mymodel->selectDataone('user', array('id'=>$row['user_id'])); ?>
+                    <?php $return = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$row['id'], 'public' => 'ENABLE')); ?>
                     Oleh : <b><?= $user['name'] ?></b>
                     <hr>
-                    Return : <b><?= $row['return'] ?>% Per Tahun</b>
-                    <hr>
                     Periode Kontrak : <b><?= $row['periode'] ?> Tahun</b>
+                    <hr>
+                    Return Tahun ke <b><?=$return['tahun']?></b> : <b><?= $return['return_tahun'] ?></b>  % per Tahun
                     <hr>
                     Stok : <b><?= $row['unit'] ?></b>
                     <hr>

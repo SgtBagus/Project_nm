@@ -1,4 +1,4 @@
-<?php 
+<?php
 $action = base_url('admin/project/store');
 
 if($data_edit){
@@ -14,7 +14,7 @@ if($data_edit){
       <label for="inputEmail3" class="col-sm-3 control-label">Judul Proyek*</label>
       <div class="col-sm-9">
         <?php if($data_edit){echo '<input type="hidden" name="dt[id]" value="'.$data_edit['id'].'">'; }  ?>
-        <input type="text" class="form-control" placeholder="Masukan Judul Proyek ..." name="dt[title]" id="judul" <?php if($data_edit){echo "value='".$data_edit['title']."'"; }  ?>> 
+        <input type="text" class="form-control" placeholder="Masukan Judul Proyek ..." name="dt[title]" id="judul" <?php if($data_edit){echo "value='".$data_edit['title']."'"; }  ?>>
       </div>
     </div>
     <div class="form-group">
@@ -26,7 +26,7 @@ if($data_edit){
     <div class="form-group">
       <label for="inputEmail3" class="col-sm-3 control-label">Gambar Proyek</label>
       <div class="col-sm-9">
-        <div class="row"> 
+        <div class="row">
           <div class="col-md-4 col-xs-12">
             <?php
             if($file){
@@ -34,7 +34,7 @@ if($data_edit){
                 ?>
                 <img src="<?= base_url().$file['dir'] ?>" alt="User Image" width="100%" height="250px" id="preview_image">
                 <?php
-              } 
+              }
             } else{
               ?>
               <img src="<?= base_url('webfile/project/default.jpg') ?>" alt="User Image" width="100%" height="250px" id="preview_image">
@@ -95,7 +95,7 @@ if($data_edit){
       <div class="col-sm-5">
         <div class="input-group">
           <div class="input-group-addon">
-            <i class="fa fa-money"></i> Rp. 
+            <i class="fa fa-money"></i> Rp.
           </div>
           <input type="text" name="dt[harga]" id="harga_proyek" class="number-separator form-control" placeholder="Masukan Nominal uang.." <?php if($data_edit){echo "value='".number_format($data_edit['harga'],0,',',',')."'"; }  ?>>
         </div>
@@ -112,43 +112,25 @@ if($data_edit){
       <div class="col-sm-9">
         <div class="input-group">
           <div class="input-group-addon">
-            <i class="fa fa-money"></i> Rp. 
+            <i class="fa fa-money"></i> Rp.
           </div>
           <input type="text" name="dt[total_harga]" id="total_proyek" class="number-separator form-control" readonly="true">
         </div>
       </div>
     </div>
     <div class="form-group">
-      <label for="inputEmail3" class="col-sm-3 control-label">Detail* : </label>
+    <?php if($data_edit){ ?>
+      <label for="inputEmail3" class="col-sm-3 control-label">Return Proyek*</label>
       <div class="col-sm-9">
-        <div class="form-group">
-          <label for="inputEmail3" class="col-sm-3 control-label">Periode*</label>
-          <div class="col-sm-9">
-            <div class="input-group">
-              <input type="number" class="form-control" name="dt[periode]" <?php if($data_edit){echo "value='".$data_edit['periode']."'"; }  ?>>
-              <span class="input-group-addon">Tahun</span>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputEmail3" class="col-sm-3 control-label">Return Didapat*</label>
-          <div class="col-sm-9">
-            <div class="input-group">
-              <input type="number" class="form-control" name="dt[return]" <?php if($data_edit){echo "value='".$data_edit['return']."'"; }  ?>>
-              <span class="input-group-addon">% Per tahun</span>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputEmail3" class="col-sm-3 control-label">Periode Bagi Hasil*</label>
-          <div class="col-sm-9">
-            <div class="input-group">
-              <input type="number" class="form-control" name="dt[bagi_hasil]" <?php if($data_edit){echo "value='".$data_edit['bagi_hasil']."'"; }  ?>>
-              <span class="input-group-addon">Tahun</span>
-            </div>
+        <div class="row">
+          <div class="col-md-6">
+            <a href="<?= base_url('admin/project/viewReturn/').$data_edit['id'] ?>">
+              <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Ubah Detail Return Proyek</button>
+            </a>
           </div>
         </div>
       </div>
+    <?php } ?>
     </div>
     <div class="form-group">
       <label for="inputEmail3" class="col-sm-2 control-label">Deskripsi </label>
@@ -166,7 +148,7 @@ if($data_edit){
   </div>
   <div class="box-footer" align="right">
     <a href="<?= base_url('admin/project') ?> ">
-      <button type="button" class="btn btn-info"><i class="fa fa-arrow-left"></i> Kembali</button>
+      <button type="button" class="btn btn-info"><i class="fa fa-archive"></i> Data Proyek</button>
     </a>
     <?php if($data_edit){ ?>
       <button type="submit" class="btn btn-primary btn-send" ><i class="fa fa-edit"></i> Edit</button>
@@ -202,7 +184,7 @@ if($data_edit){
       if($('#unit_proyek').val() != null){
         var harga = parseFloat($('#harga_proyek').val().replace(/,/g, ''));
         var unit = $('#unit_proyek').val();
-        $('#total_proyek').val(formatNumber(harga*unit));        
+        $('#total_proyek').val(formatNumber(harga*unit));
       }
     })
 
@@ -210,7 +192,7 @@ if($data_edit){
       if($('#harga_proyek').val() != null){
         var harga = parseFloat($('#harga_proyek').val().replace(/,/g, ''));
         var unit = $('#unit_proyek').val();
-        $('#total_proyek').val(formatNumber(harga*unit));        
+        $('#total_proyek').val(formatNumber(harga*unit));
       }
     })
   });
@@ -235,8 +217,8 @@ if($data_edit){
         var str = response;
         if (str.indexOf("success") != -1){
           form.find(".show_error").hide().html(response).slideDown("fast");
-          setTimeout(function(){ 
-            window.location.href = "<?= base_url('admin/project') ?>"; 
+          setTimeout(function(){
+            window.location.href = "<?= base_url('admin/project') ?>";
           }, 1000);
 
           $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);

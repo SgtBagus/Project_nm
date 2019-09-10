@@ -8,7 +8,26 @@
   </section>
   <section class="content">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-12">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">Data Investor</h3>
+          </div>
+          <div class="panel-body">
+            <div class="show_error"></div>
+            <div class="table-responsive">
+              <div id="load-table"></div>
+            </div>
+          </div>
+          <div class="box-footer" align="center">
+            <button type="button" class="btn btn-danger btn-send"><i class="fa fa-ban"></i> Tolak Semua</button>
+            <button type="button" class="btn btn-primary btn-send" ><i class="fa fa-check-circle"></i> Terima Semua</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
         <div class="box">
           <div class="box-body">
             <div class="row">
@@ -23,7 +42,7 @@
                   <?php
                   if($file_detail){
                     $i = 1;
-                    foreach($file_detail as $img){ 
+                    foreach($file_detail as $img){
                       ?>
                       <div class="col-md-2">
                         <img src="<?= base_url().$img['dir']?>" id="detail_image-<?=$i?>" alt="User Image" width="100%" height="85px" style="border-radius: 15px">
@@ -54,14 +73,6 @@
                       </div>
                       <div class="col-md-6" align="left">
                         <b><?= $tbl_project['periode'] ?> tahun</b>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6" align="right">
-                        Return yang didapat :
-                      </div>
-                      <div class="col-md-6" align="left">
-                        <b><?= $tbl_project['return'] ?> % per tahun</b>
                       </div>
                     </div>
                     <div class="row">
@@ -105,7 +116,7 @@
                       echo '<button type="button" class="btn btn-block btn-sm btn-sm btn-danger" onclick="statusDisable('.$tbl_project['id'].')"><i class="fa fa-ban"></i> DISABLE</button>';
                     }else{
                       echo '<button type="button" class="btn btn-block btn-sm btn-sm btn-success" onclick="statusEnable('.$tbl_project['id'].')"><i class="fa fa-check-circle"></i> ENABLE</button>';
-                    } 
+                    }
                     ?>
                   </div>
                 </div>
@@ -123,7 +134,7 @@
                         <small>Mendaftar pada : <b><?= date("d-m-Y", strtotime($user['created_at']))  ?></b></small>
                       </div>
                     </div>
-                  </div> 
+                  </div>
                 </div>
                 <div class="row">
                   <div class="col-md-12">
@@ -242,23 +253,6 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">Data Investor</h3>
-          </div>
-          <div class="panel-body">
-            <div class="show_error"></div>
-            <div class="table-responsive">
-              <div id="load-table"></div>
-            </div>
-          </div>
-          <div class="box-footer" align="center">
-            <button type="button" class="btn btn-danger btn-send"><i class="fa fa-ban"></i> Tolak Semua</button>
-            <button type="button" class="btn btn-primary btn-send" ><i class="fa fa-check-circle"></i> Terima Semua</button>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 </div>
@@ -325,13 +319,13 @@
       {"data": "terima","orderable": false}
       ],
       order: [[1, 'asc']],
-      columnDefs : [{ 
+      columnDefs : [{
         targets : [4],
         "render": function (data, type, row) {
           return "Rp "+formatNumber(data)+"";
         },
       },
-      { 
+      {
         targets : [4],
         render : function (data, type, row, meta) {
           var htmls = '<a href="<?= base_url('admin/investor/view/') ?>'+data+'" target="_black">'+
@@ -428,18 +422,18 @@
 
   function statusDisable(id) {
     location.href = "<?= base_url('admin/project/statusView_disable/') ?>"+id;
-  }         
+  }
 
   function statusEnable(id) {
     location.href = "<?= base_url('admin/project/statusView_enable/') ?>"+id;
-  }    
+  }
 
   function publicDisable(id) {
     location.href = "<?= base_url('admin/project/statusPublic_disable/') ?>"+id;
-  }         
+  }
 
   function publicEnable(id) {
     location.href = "<?= base_url('admin/project/statusPublic_enable/') ?>"+id;
-  }           
+  }
 
 </script>

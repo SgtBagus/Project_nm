@@ -1,4 +1,4 @@
-<?php 
+<?php
 if($this->session->userdata('session_sop')=="") {
   header('Location: '.base_url('admin/login'));
 }else{
@@ -12,7 +12,7 @@ if($this->session->userdata('session_sop')=="") {
 <html>
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title><?= TITLE_APPLICATION  ?></title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="<?= base_url('assets/') ?>bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -33,7 +33,7 @@ if($this->session->userdata('session_sop')=="") {
   <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
   <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
- 
+
   <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/main.css">
   <script src="<?= base_url('assets/') ?>bower_components/jquery/dist/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -58,9 +58,9 @@ if($this->session->userdata('session_sop')=="") {
       var t;
       window.onload = resetTimer;
       window.onmousemove = resetTimer;
-      window.onmousedown = resetTimer; 
-      window.onclick = resetTimer;     
-      window.onscroll = resetTimer;    
+      window.onmousedown = resetTimer;
+      window.onclick = resetTimer;
+      window.onscroll = resetTimer;
       window.onkeypress = resetTimer;
 
       function logout() {
@@ -152,7 +152,7 @@ if($this->session->userdata('session_sop')=="") {
         </form>
 
         <ul class="sidebar-menu" data-widget="tree">
-          <?php 
+          <?php
           $role = $this->mymodel->selectDataone('role',['id'=>$this->session->userdata('role_id')]);
           $jsonmenu = json_decode($role['menu']);
           $this->db->order_by('urutan asc');
@@ -234,7 +234,7 @@ if($this->session->userdata('session_sop')=="") {
   <script src="<?= base_url('assets/') ?>dist/js/pages/dashboard.js"></script>
   <script src="<?= base_url('assets/') ?>dist/js/demo.js"></script>
   <script src="<?= base_url('assets/') ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-  <script src="<?= base_url('assets/') ?>bower_components/ckeditor/ckeditor.js"></script> 
+  <script src="<?= base_url('assets/') ?>bower_components/ckeditor/ckeditor.js"></script>
   <script src="<?= base_url('assets/') ?>custom/number-separator.js"></script>
   <script type="text/javascript">
 
@@ -263,7 +263,7 @@ if($this->session->userdata('session_sop')=="") {
     function slugify(string) {
       return string.toString().trim().toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]+/g, "").replace(/\-\-+/g, "-").replace(/^-+/, "").replace(/-+$/, "");
     }
-    
+
     $('.select2').select2();
     $('.tgl').datepicker({
       autoclose: true,
@@ -280,6 +280,24 @@ if($this->session->userdata('session_sop')=="") {
         'info'        : true,
         'autoWidth'   : false
       })
+      $('#datatable').DataTable({
+          "paging"      : true,
+          "lengthChange": true,
+          "searching"   : true,
+          "ordering"    : true,
+          "info"        : false,
+          "scrollY": true,
+          "language": {
+            "search": "<b> Pencarian : </b>",
+            "zeroRecords": function () {
+              return "<img src='https://icon-library.net/images/no-data-icon/no-data-icon-20.jpg' width='100px' height='100px'><p><b>Tidak Ada Data</b><p>";
+            },
+            "paginate": {
+              "previous": "Sebelumnya",
+              "next" : "Selanjutnya"
+            }
+          },
+        });
     });
 
     function startTime() {
@@ -346,7 +364,7 @@ if($this->session->userdata('session_sop')=="") {
 
       return ribuan;
     }
- 
+
     $("#btnFile").click(function() {
       document.getElementById('imageFile').click();
     });
@@ -370,7 +388,7 @@ if($this->session->userdata('session_sop')=="") {
     $("#btnFile-many").click(function() {
       document.getElementById('uploadFile').click();
     });
-    
+
     $("#uploadFile").change(function(){
       $('#detail_image_open #detail_image_edit').remove();
       $('#note_image').text('Detail Gambar Diubah !');

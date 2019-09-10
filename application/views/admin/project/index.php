@@ -12,30 +12,119 @@
         <div class="box">
           <div class="box-header">
             <div class="row">
-              <div class="col-md-6">
-                <select onchange="loadtable(this.value)" id="select-status" style="width: 150px" class="form-control">
-                  <option value="ENABLE">ENABLE</option>
-                  <option value="DISABLE">DISABLE</option>
-                </select>
-              </div>
-              <div class="col-md-6">
-                <div class="pull-right">          
+              <div class="col-md-12">
+                <div class="pull-right">
                   <a href="<?= base_url('admin/project/create') ?>">
-                    <button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Project</button> 
+                    <button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Project</button>
                   </a>
                   <a href="<?= base_url('fitur/ekspor/tbl_project') ?>" target="_blank">
-                    <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Ekspor Project</button> 
+                    <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Ekspor Project</button>
                   </a>
                   <button type="button" class="btn btn-sm btn-info" onclick="$('#modal-impor').modal()"><i class="fa fa-file-excel-o"></i> Import Project</button>
                 </div>
-              </div>  
+              </div>
             </div>
           </div>
           <div class="box-body">
             <div class="show_error"></div>
-            <div class="table-responsive">
-              <div id="load-table"></div>
-            </div>
+            <table id="datatable" class="table table-bordered table-striped" >
+              <thead>
+                <tr class="bg-success">
+                  <th style="width:20px">No</th>
+                  <th>Pembuat</th>
+                  <th>Title</th>
+                  <th>Harga</th>
+                  <th>Unit</th>
+                  <th>Total Harga</th>
+                  <th>Periode</th>
+                  <th>Return per Tahun</th>
+                  <th>Bagi Hasil</th>
+                  <th style="width:150px">Public</th>
+                  <th style="width:150px">Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                  $i = 1; foreach ($tbl_project as $row) {
+                  $user =  $this->mymodel->selectDataOne('user', array('id' => $row['user_id'] ));
+                  $return = $this->mymodel->selectWithQuery("SELECT count(id) as return_row FROM tbl_project_return WHERE project_id = $row[id] ");
+                ?>
+                <tr>
+                  <td><?= $i ?></td>
+                  <td>
+                    <?= $user['name'] ?>
+                  </td>
+                  <td><?= $row['title'] ?></td>
+                  <td>Rp <?= number_format($row['harga'],0,',','.') ?>,-</td>
+                  <td><?= $row['unit'] ?></td>
+                  <td>Rp <?= number_format($row['total_harga'],0,',','.') ?>,-</td>
+                  <td>
+                    <?php if (!$row['periode']) {
+                      echo "<p class='help-block'><i>Kosong</i></p>";
+                    }else {
+                      echo $row['periode']." Tahun";
+                    }?>
+                  </td>
+                  <td>
+                    <a href="<?= base_url('admin/project/viewReturn/').$row['id'] ?>">
+                      <button type="button" class="btn btn-sm btn-sm btn-info"><i class="fa fa-eye"></i> Lihat Detail Return</button>
+                    </a>
+                  </td>
+                  <td>
+                    <?php if (!$row['bagi_hasil']) {
+                      echo "<p class='help-block'><i>Kosong</i></p>";
+                    }else {
+                      echo $row['bagi_hasil']." Tahun";
+                    }?>
+                  </td>
+                  <td>
+                    <?php if($row['public']=='ENABLE'){?>
+                      <a href="<?= base_url('admin/project/publicStatus/').$row['id'] ?>/DISABLE">
+                        <button type="button" class="btn btn-sm btn-sm btn-success" <?php if(!$return[0]['return_row']) { echo "disabled"; }?>>
+                          <i class="fa fa-check-circle"></i> ENABLE
+                        </button>
+                      </a>
+                    <?php }else { ?>
+                      <a href="<?= base_url('admin/project/publicStatus/').$row['id'] ?>/ENABLE">
+                        <button type="button" class="btn btn-sm btn-sm btn-danger" <?php if(!$return[0]['return_row']) { echo "disabled"; }?>>
+                          <i class="fa fa-ban"></i> DISABLE
+                        </button>
+                      </a>
+                    <?php } if(!$return[0]['return_row']) { echo "<p class='help-block'><i>Mohon Untuk Melakukan Set pada Return per Tahun Terlebih Dahulu</i></p>"; } ?>
+                  </td>
+                  <td>
+                    <?php if($row['status']=='ENABLE'){?>
+                      <a href="<?= base_url('admin/project/status/').$row['id'] ?>/DISABLE">
+                        <button type="button" class="btn btn-sm btn-sm btn-success" <?php if(!$return[0]['return_row']) { echo "disabled"; }?>>
+                          <i class="fa fa-check-circle"></i> ENABLE
+                        </button>
+                      </a>
+                    <?php }else { ?>
+                      <a href="<?= base_url('admin/project/status/').$row['id'] ?>/ENABLE">
+                        <button type="button" class="btn btn-sm btn-sm btn-danger" <?php if(!$return[0]['return_row']) { echo "disabled"; }?>>
+                          <i class="fa fa-ban"></i> DISABLE
+                        </button>
+                      </a>
+                    <?php } if(!$return[0]['return_row']) { echo "<p class='help-block'><i>Mohon Untuk Melakukan Set pada Return per Tahun Terlebih Dahulu</i></p>"; } ?>
+                  </td>
+                  <td>
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-info" onclick="view(<?=$row['id']?>)">
+                        <i class="fa fa-eye"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-primary" onclick="edit(<?=$row['id']?>)">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button type="button" onclick="hapus(<?=$row['id']?>)" class="btn btn-sm btn-danger">
+                        <i class="fa fa-trash-o"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              <?php $i++; } ?>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -63,7 +152,7 @@
       </form>
     </div>
   </div>
-</div> 
+</div>
 <div class="modal fade" id="modal-impor">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -87,114 +176,16 @@
   </div>
 </div>
 <script type="text/javascript">
-  function loadtable(status) {
-    var table = '<table class="table table-bordered" id="mytable">'+
-    '     <thead>'+
-    '     <tr class="bg-success">'+
-    '       <th style="width:20px">No</th>'+'<th>Pembuat</th>'+'<th>Title</th>'+'<th>Harga</th>'+'<th>Unit</th>'+'<th>Total Harga</th>'+'<th>Periode</th>'+'<th>Return</th>'+'<th>Bagi Hasil</th>'+'<th style="width:150px">Public</th>'+'<th style="width:150px">Status</th>'+
-    '       <th></th>'+
-    '     </tr>'+
-    '     </thead>'+
-    '     <tbody>'+
-    '     </tbody>'+
-    ' </table>';
-
-    $("#load-table").html(table)
-
-    var t = $("#mytable").dataTable({
-      initComplete: function() {
-        var api = this.api();
-        $('#mytable_filter input')
-        .off('.DT')
-        .on('keyup.DT', function(e) {
-          if (e.keyCode == 13) {
-            api.search(this.value).draw();
-          }
-        });
-      },
-      oLanguage: {
-        sProcessing: "loading..."
-      },
-      processing: true,
-      serverSide: true,
-      ajax: {"url": "<?= base_url('admin/project/json?status=') ?>"+status, "type": "POST"},
-      columns: [
-      {"data": "id","orderable": false},{"data": "name"},{"data": "title"},{"data": "harga"},{"data": "unit"},{"data": "total_harga"},{"data": "periode"},{"data": "return"},{"data": "bagi_hasil"},
-      {"data": "public"},
-      {"data": "status"},
-      {   "data": "view",
-      "orderable": false
-    }
-    ],
-    order: [[1, 'asc']],
-    columnDefs : [{ 
-      targets : [3, 5],
-      "render": function (data, type, row) {
-        return "Rp "+formatNumber(data)+"";
-      },
-    },
-    { 
-      targets : [7],
-      "render": function (data, type, row) {
-        return data+" % per Tahun";
-      },
-    },
-    { 
-      targets : [6, 8],
-      "render": function (data, type, row) {
-        return data+" Tahun";
-      },
-    },
-    { 
-      targets : [9],
-      render : function (data, type, row, meta) {
-        if(row['public']=='ENABLE'){
-          var htmls = '<a href="<?= base_url('admin/project/publicStatus/') ?>'+row['id']+'/DISABLE">'+
-          '    <button type="button" class="btn btn-sm btn-sm btn-success"><i class="fa fa-check-circle"></i> ENABLE</button>'+
-          '</a>';
-        }else{
-          var htmls = '<a href="<?= base_url('admin/project/publicStatus/') ?>'+row['id']+'/ENABLE">'+
-          '    <button type="button" class="btn btn-sm btn-sm btn-danger"><i class="fa fa-ban"></i> DISABLE</button>'+
-          '</a>';
-        }
-        return htmls;
-      }
-    },
-    { 
-      targets : [10],
-      render : function (data, type, row, meta) {
-        if(row['status']=='ENABLE'){
-          var htmls = '<a href="<?= base_url('admin/project/status/') ?>'+row['id']+'/DISABLE">'+
-          '    <button type="button" class="btn btn-sm btn-sm btn-success"><i class="fa fa-check-circle"></i> ENABLE</button>'+
-          '</a>';
-        }else{
-          var htmls = '<a href="<?= base_url('admin/project/status/') ?>'+row['id']+'/ENABLE">'+
-          '    <button type="button" class="btn btn-sm btn-sm btn-danger"><i class="fa fa-ban"></i> DISABLE</button>'+
-          '</a>';
-        }
-        return htmls;
-      }
-    }],
-
-    rowCallback: function(row, data, iDisplayIndex) {
-      var info = this.fnPagingInfo();
-      var page = info.iPage;
-      var length = info.iLength;
-      var index = page * length + (iDisplayIndex + 1);
-      $('td:eq(0)', row).html(index);
-    }
-  });
-  }
 
   loadtable($("#select-status").val());
 
   function edit(id) {
     location.href = "<?= base_url('admin/project/edit/') ?>"+id;
-  }         
+  }
 
   function view(id) {
     location.href = "<?= base_url('admin/project/view/') ?>"+id;
-  }        
+  }
 
   function hapus(id) {
     $("#modal-delete").modal('show');
@@ -222,7 +213,7 @@
           $(".show_error").hide().html(response).slideDown("fast");
           $(".btn-send").removeClass("disabled").html('Yes, Delete it').attr('disabled',false);
         }else{
-          setTimeout(function(){ 
+          setTimeout(function(){
             $("#modal-delete").modal('hide');
           }, 1000);
           $(".show_error").hide().html(response).slideDown("fast");

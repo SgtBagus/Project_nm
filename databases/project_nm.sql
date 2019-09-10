@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Sep 09, 2019 at 11:06 AM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.6
+-- Host: 127.0.0.1
+-- Generation Time: Sep 10, 2019 at 08:00 AM
+-- Server version: 10.1.39-MariaDB
+-- PHP Version: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -572,8 +572,8 @@ INSERT INTO `access_control` (`id`, `folder`, `class`, `method`, `val`) VALUES
 CREATE TABLE `activity` (
   `ip` varchar(255) DEFAULT NULL,
   `link` varchar(255) DEFAULT NULL,
-  `get` longtext DEFAULT NULL,
-  `post` longtext DEFAULT NULL,
+  `get` longtext,
+  `post` longtext,
   `user_id` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -645,7 +645,11 @@ INSERT INTO `file` (`id`, `name`, `mime`, `dir`, `table`, `table_id`, `status`, 
 (209, '6950c16c9bcc6995f376b297f16317594340.jpeg', 'image/png', 'webfile/project/project-ke-2-dengan-mutli-imput-baru/6950c16c9bcc6995f376b297f16317594340.jpeg', 'tbl_project', 2, 'ENABLE', '2019-09-09 09:26:03', NULL),
 (218, '6950c16c9bcc6995f376b297f163175926824.png', 'image/png', 'webfile/project/project-ke-2-dengan-mutli-imput-baru/6950c16c9bcc6995f376b297f163175926824.png', 'tbl_project_gambar', 2, 'ENABLE', '2019-09-09 16:01:43', NULL),
 (219, '6950c16c9bcc6995f376b297f163175980996.png', 'image/png', 'webfile/project/project-ke-2-dengan-mutli-imput-baru/6950c16c9bcc6995f376b297f163175980996.png', 'tbl_project_gambar', 2, 'ENABLE', '2019-09-09 16:02:29', NULL),
-(220, '6950c16c9bcc6995f376b297f163175982881.jpeg', 'image/jpeg', 'webfile/project/project-ke-2-dengan-mutli-imput-baru/6950c16c9bcc6995f376b297f163175982881.jpeg', 'tbl_project_gambar', 2, 'ENABLE', '2019-09-09 16:03:47', NULL);
+(220, '6950c16c9bcc6995f376b297f163175982881.jpeg', 'image/jpeg', 'webfile/project/project-ke-2-dengan-mutli-imput-baru/6950c16c9bcc6995f376b297f163175982881.jpeg', 'tbl_project_gambar', 2, 'ENABLE', '2019-09-09 16:03:47', NULL),
+(222, '6950c16c9bcc6995f376b297f1631759281091.jpg', 'image/jpeg', 'webfile/project/proyek-dengan-input-return-baru/6950c16c9bcc6995f376b297f1631759281091.jpg', 'tbl_project_gambar', 3, 'ENABLE', '2019-09-10 09:34:24', NULL),
+(223, '6950c16c9bcc6995f376b297f1631759281092.jpg', 'image/jpeg', 'webfile/project/proyek-dengan-input-return-baru/6950c16c9bcc6995f376b297f1631759281092.jpg', 'tbl_project_gambar', 3, 'ENABLE', '2019-09-10 09:34:24', NULL),
+(224, '6950c16c9bcc6995f376b297f1631759281093.jpg', 'image/jpeg', 'webfile/project/proyek-dengan-input-return-baru/6950c16c9bcc6995f376b297f1631759281093.jpg', 'tbl_project_gambar', 3, 'ENABLE', '2019-09-10 09:34:24', NULL),
+(229, '6950c16c9bcc6995f376b297f163175964524.PNG', 'image/png', 'webfile/project/proyek-dengan-input-return-baru/6950c16c9bcc6995f376b297f163175964524.PNG', 'tbl_project', 3, 'ENABLE', '2019-09-10 11:47:16', NULL);
 
 -- --------------------------------------------------------
 
@@ -713,7 +717,7 @@ INSERT INTO `keys` (`id`, `user_id`, `key`, `level`, `ignore_limits`, `is_privat
 CREATE TABLE `konfig` (
   `id` int(11) NOT NULL,
   `slug` varchar(255) DEFAULT NULL,
-  `value` text DEFAULT NULL,
+  `value` text,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
@@ -749,13 +753,13 @@ CREATE TABLE `logs` (
   `id` int(11) NOT NULL,
   `uri` varchar(255) NOT NULL,
   `method` varchar(6) NOT NULL,
-  `params` text DEFAULT NULL,
+  `params` text,
   `api_key` varchar(40) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
   `time` int(11) NOT NULL,
   `rtime` float DEFAULT NULL,
   `authorized` varchar(1) NOT NULL,
-  `response_code` smallint(3) DEFAULT 0
+  `response_code` smallint(3) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -801,7 +805,7 @@ INSERT INTO `menu_master` (`id`, `name`, `icon`, `link`, `urutan`, `parent`, `no
 CREATE TABLE `report` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `query` longtext DEFAULT NULL,
+  `query` longtext,
   `header` varchar(255) DEFAULT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -818,7 +822,7 @@ CREATE TABLE `role` (
   `id` int(11) NOT NULL,
   `role` varchar(255) DEFAULT NULL,
   `status` enum('DISABLE','ENABLE') DEFAULT NULL,
-  `menu` text DEFAULT NULL,
+  `menu` text,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -840,7 +844,7 @@ INSERT INTO `role` (`id`, `role`, `status`, `menu`, `created_at`, `updated_at`) 
 CREATE TABLE `tbl_hows_work` (
   `id` int(11) NOT NULL,
   `title` varchar(225) DEFAULT NULL,
-  `value` text DEFAULT NULL,
+  `value` text,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
@@ -863,7 +867,7 @@ CREATE TABLE `tbl_investor` (
   `id` int(11) NOT NULL,
   `name` varchar(225) DEFAULT NULL,
   `email` varchar(225) DEFAULT NULL,
-  `address` text DEFAULT NULL,
+  `address` text,
   `phone` varchar(225) DEFAULT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -895,10 +899,9 @@ CREATE TABLE `tbl_project` (
   `unit` int(125) DEFAULT NULL,
   `total_harga` int(125) DEFAULT NULL,
   `periode` int(125) DEFAULT NULL,
-  `return` int(125) DEFAULT NULL,
   `bagi_hasil` int(125) DEFAULT NULL,
-  `deskripsi` text DEFAULT NULL,
-  `url_map` text DEFAULT NULL,
+  `deskripsi` text,
+  `url_map` text,
   `public` enum('ENABLE','DISABLE') NOT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -909,9 +912,10 @@ CREATE TABLE `tbl_project` (
 -- Dumping data for table `tbl_project`
 --
 
-INSERT INTO `tbl_project` (`id`, `user_id`, `title`, `slug`, `harga`, `unit`, `total_harga`, `periode`, `return`, `bagi_hasil`, `deskripsi`, `url_map`, `public`, `status`, `created_at`, `updated_at`) VALUES
-(1, 13, 'Project Ke 1', 'project-ke-1', 2000000, 338, 676000000, 1, 15, 3, '<p>Mencoba Membuat <b>Project </b>Baru</p>', '', 'ENABLE', 'ENABLE', '2019-09-07 17:06:31', '2019-09-08 13:00:54'),
-(2, 13, 'Project Ke 2 dengan mutli imput baru', 'project-ke-2-dengan-mutli-imput-baru', 2000000, 200, 400000000, 1, 12, 3, '<p>Multi <b>input</b> Baru</p>', '', 'ENABLE', 'ENABLE', '2019-09-09 09:26:03', NULL);
+INSERT INTO `tbl_project` (`id`, `user_id`, `title`, `slug`, `harga`, `unit`, `total_harga`, `periode`, `bagi_hasil`, `deskripsi`, `url_map`, `public`, `status`, `created_at`, `updated_at`) VALUES
+(1, 13, 'Project Ke 1', 'project-ke-1', 2000000, 338, 676000000, 4, 1, '<p>Mencoba Membuat <b>Project </b>Baru</p>', '', 'ENABLE', 'ENABLE', '2019-09-07 17:06:31', '2019-09-08 13:00:54'),
+(2, 13, 'Project Ke 2 dengan mutli imput baru', 'project-ke-2-dengan-mutli-imput-baru', 2000000, 200, 400000000, NULL, NULL, '<p>Multi <b>input</b> Baru</p>', '', 'DISABLE', 'DISABLE', '2019-09-09 09:26:03', NULL),
+(3, 13, 'Proyek dengan input return baru', 'proyek-dengan-input-return-baru', 1000000, 150, 150000000, 2, 1, '<p>Return Baru</p>', '', 'ENABLE', 'ENABLE', '2019-09-10 09:34:24', '2019-09-10 11:51:37');
 
 -- --------------------------------------------------------
 
@@ -936,6 +940,35 @@ CREATE TABLE `tbl_project_invest` (
 
 INSERT INTO `tbl_project_invest` (`id`, `project_id`, `investor_id`, `unit`, `total_harga`, `status`, `created_at`, `updated_at`) VALUES
 (1, 1, 2, 2, 4000000, 'ENABLE', '2019-09-08 00:00:00', '2019-09-08 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_project_return`
+--
+
+CREATE TABLE `tbl_project_return` (
+  `id` int(11) NOT NULL,
+  `project_id` int(11) DEFAULT NULL,
+  `tahun` int(11) NOT NULL,
+  `return_tahun` varchar(225) DEFAULT NULL,
+  `public` enum('ENABLE','DISABLE') NOT NULL,
+  `status` enum('ENABLE','DISABLE') DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_project_return`
+--
+
+INSERT INTO `tbl_project_return` (`id`, `project_id`, `tahun`, `return_tahun`, `public`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '10', 'DISABLE', 'ENABLE', '2019-09-10 00:00:00', '2019-09-10 10:58:42'),
+(2, 1, 2, '14', 'ENABLE', 'ENABLE', '2019-09-10 00:00:00', '2019-09-10 00:00:00'),
+(3, 1, 3, '12', 'DISABLE', 'ENABLE', '2019-09-10 00:00:00', '2019-09-10 00:00:00'),
+(4, 1, 4, '15', 'DISABLE', 'ENABLE', '2019-09-10 10:23:53', NULL),
+(5, 3, 1, '10', 'ENABLE', 'ENABLE', '2019-09-10 10:25:13', NULL),
+(7, 3, 2, '20', 'ENABLE', 'ENABLE', '2019-09-10 11:47:53', NULL);
 
 -- --------------------------------------------------------
 
@@ -1055,6 +1088,12 @@ ALTER TABLE `tbl_project_invest`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_project_return`
+--
+ALTER TABLE `tbl_project_return`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -1080,7 +1119,7 @@ ALTER TABLE `access_control`
 -- AUTO_INCREMENT for table `file`
 --
 ALTER TABLE `file`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=230;
 
 --
 -- AUTO_INCREMENT for table `grafik`
@@ -1140,13 +1179,19 @@ ALTER TABLE `tbl_investor`
 -- AUTO_INCREMENT for table `tbl_project`
 --
 ALTER TABLE `tbl_project`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_project_invest`
 --
 ALTER TABLE `tbl_project_invest`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tbl_project_return`
+--
+ALTER TABLE `tbl_project_return`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`

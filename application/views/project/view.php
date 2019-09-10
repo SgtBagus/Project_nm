@@ -56,10 +56,10 @@
               </div>
               <div class="row">
                 <div class="col-md-6" align="right">
-                  Return yang didapat :
+                  Return Tahun ke <b><?=$tbl_project_return['tahun']?></b> :
                 </div>
                 <div class="col-md-6" align="left">
-                  <b><?= $tbl_project['return'] ?>% per tahun</b>
+                  <b><?= $tbl_project_return['return_tahun'] ?></b>  % per Tahun
                 </div>
               </div>
               <div class="row">
@@ -73,7 +73,7 @@
             </div>
           </div>
           <button type="button" class="btn btn-block btn-primary btn-lg round" data-toggle="modal" data-target="#modal-invest" <?php if($tbl_project['status']=='DISABLE'){ echo "disabled"; }?> >
-            <i class="fa fa-credit-card"></i> Lakukan nvestasi 
+            <i class="fa fa-credit-card"></i> Lakukan nvestasi
           </button>
           <br>
         </div>
@@ -85,10 +85,10 @@
             <div class="box-body" align="center">
               Harga :
               <h2><b>Rp <?= number_format($tbl_project['harga'],0,',','.') ?>,- / Unit</b></h2>
-            </div> 
+            </div>
             <div class="box-body" align="center">
               <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-invest" <?php if($tbl_project['status']=='DISABLE'){ echo "disabled"; }?> >
-                <i class="fa fa-credit-card"></i> Lakukan Investasi 
+                <i class="fa fa-credit-card"></i> Lakukan Investasi
               </button>
             </div>
           </div>
@@ -117,7 +117,7 @@
                   <small>Mendaftar pada : <b><?= date("d-m-Y", strtotime($user['created_at']))  ?></b></small>
                 </div>
               </div>
-            </div> 
+            </div>
           </div>
           <div class="row">
             <div class="col-md-12">

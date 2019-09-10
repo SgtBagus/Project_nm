@@ -13,14 +13,14 @@
   </div>
 </div>
 <div class="content-wrapper">
-  <div class="container"> 
+  <div class="container">
     <section class="content">
       <div class="row">
         <div class="col-md-4 col-6 mb-md-0 mb-5">
           <div class="small-box bg-purple round">
             <div class="inner">
               <h4>Rata Rata Bagi Hasil</h4>
-              <h2><b>12 - 18%</b></h2> 
+              <h2><b>12 - 18%</b></h2>
             </div>
             <div class="icon">
               <i class="fa fa-inbox"></i>
@@ -31,7 +31,7 @@
           <div class="small-box bg-orange round">
             <div class="inner">
               <h4>Total Outstanding Pinjaman</h4>
-              <h2><b>Rp. 95.4 M</b></h2> 
+              <h2><b>Rp. 95.4 M</b></h2>
             </div>
             <div class="icon">
               <i class="fa fa-money"></i>
@@ -42,7 +42,7 @@
           <div class="small-box bg-green round">
             <div class="inner">
               <h4>Total Outstanding Pinjaman</h4>
-              <h2><b>Rp. 95.4 M</b></h2> 
+              <h2><b>Rp. 95.4 M</b></h2>
             </div>
             <div class="icon">
               <i class="fa fa-check"></i>
@@ -53,7 +53,7 @@
           <div class="small-box bg-yellow round">
             <div class="inner">
               <h4>Akumulasi Pinjaman Tersalurkan</h4>
-              <h2><b>Rp 136.5 M</b></h2> 
+              <h2><b>Rp 136.5 M</b></h2>
             </div>
             <div class="icon">
               <i class="fa fa-bar-chart"></i>
@@ -64,7 +64,7 @@
           <div class="small-box bg-red round">
             <div class="inner">
               <h4>Akumulasi Pinjaman 2019</h4>
-              <h2><b>Rp 40.5 M</b></h2> 
+              <h2><b>Rp 40.5 M</b></h2>
             </div>
             <div class="icon">
               <i class="fa fa-check-circle"></i>
@@ -75,7 +75,7 @@
           <div class="small-box bg-blue round">
             <div class="inner">
               <h4>Total Biaya</h4>
-              <h2><b>0.06%</b></h2> 
+              <h2><b>0.06%</b></h2>
             </div>
             <div class="icon">
               <i class="fa fa-handshake-o"></i>
@@ -142,11 +142,12 @@
                   </h2>
                   <h5 align="center">
                     <?php $user = $this->mymodel->selectDataone('user', array('id'=>$row['user_id'])); ?>
+                    <?php $return = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$row['id'], 'public' => 'ENABLE')); ?>
                     Oleh : <b><?= $user['name'] ?></b>
                     <hr>
-                    Return : <b><?= $row['return'] ?>% Per Tahun</b>
-                    <hr>
                     Periode Kontrak : <b><?= $row['periode'] ?> Tahun</b>
+                    <hr>
+                    Return Tahun ke <b><?=$return['tahun']?></b> : <b><?= $return['return_tahun'] ?></b>  % per Tahun
                     <hr>
                     Stok : <b><?= $row['unit'] ?></b>
                     <hr>
