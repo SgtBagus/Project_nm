@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2019 at 10:50 AM
+-- Generation Time: Sep 10, 2019 at 01:07 PM
 -- Server version: 10.1.39-MariaDB
 -- PHP Version: 7.3.5
 
@@ -920,7 +920,7 @@ INSERT INTO `tbl_project` (`id`, `user_id`, `title`, `slug`, `harga`, `unit`, `t
 (1, 13, 'Project Ke 1', 'project-ke-1', 2000000, 338, 676000000, 4, 1, '<p>Mencoba Membuat <b>Project </b>Baru</p>', '', 'ENABLE', 'ENABLE', '2019-09-07 17:06:31', '2019-09-08 13:00:54'),
 (2, 13, 'Project Ke 2 dengan mutli imput baru', 'project-ke-2-dengan-mutli-imput-baru', 2000000, 200, 400000000, NULL, NULL, '<p>Multi <b>input</b> Baru</p>', '', 'DISABLE', 'DISABLE', '2019-09-09 09:26:03', NULL),
 (3, 13, 'Proyek dengan input return baru', 'proyek-dengan-input-return-baru', 1000000, 150, 150000000, 2, 1, '<p>Return Baru</p>', '', 'ENABLE', 'ENABLE', '2019-09-10 09:34:24', '2019-09-10 11:51:37'),
-(4, 15, 'Project Milik mitra 2', 'project-milik-mitra-2', 2000000, 200, 400000000, 1, 1, '<p>Ini Milik Mitra</p>', '', 'ENABLE', 'ENABLE', '2019-09-10 15:13:08', NULL);
+(4, 15, 'Project Milik mitra 2', 'project-milik-mitra-2', 2000000, 195, 400000000, 1, 1, '<p>Ini Milik Mitra</p>', '', 'ENABLE', 'ENABLE', '2019-09-10 15:13:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -952,7 +952,8 @@ CREATE TABLE `tbl_project_invest` (
 --
 
 INSERT INTO `tbl_project_invest` (`id`, `code`, `project_id`, `investor_id`, `unit`, `total_harga`, `status_invest`, `status_pembayaran`, `tgl_konfirmasi`, `tgl_kadarluasa`, `metode_pembayaran`, `url_pembayaran`, `idTransaksiMidtrans`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'INV-1/20190910_2C', 1, 2, '2', '4000000', 'WAITING', NULL, NULL, NULL, NULL, NULL, NULL, 'ENABLE', '2019-09-10 00:00:00', '2019-09-10 00:00:00');
+(1, 'INV-1/20190910_2C', 1, 2, '2', '4000000', 'WAITING', NULL, NULL, NULL, NULL, NULL, NULL, 'ENABLE', '2019-09-10 00:00:00', '2019-09-10 00:00:00'),
+(4, 'INV-4/20190910_2C', 4, 2, '5', '24000000', 'WAITING', NULL, NULL, NULL, NULL, NULL, NULL, 'ENABLE', '2019-09-10 17:52:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -1199,7 +1200,7 @@ ALTER TABLE `tbl_project`
 -- AUTO_INCREMENT for table `tbl_project_invest`
 --
 ALTER TABLE `tbl_project_invest`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_project_return`

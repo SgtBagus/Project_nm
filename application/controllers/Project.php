@@ -26,7 +26,31 @@ class Project extends MY_Controller {
 		}
 	}
 
+	public function validate(){
+		$this->form_validation->set_rules('dt[unit]', '<strong>Jumlah Unit </strong> Tidak Boleh Kosong', 'required');
+		$this->form_validation->set_message('required', '%s');
+	}
+
 	public function invest(){
-		header('Location: '.base_url('invoice/payment/').'asdasdqw341231234');
+		$this->validate();
+		if ($this->form_validation->run() == FALSE){
+			$this->alert->alertdanger(validation_errors());
+		}else{
+			$dt = $_POST['dt'];
+			$dt['code'] = 'INV-'.$_POST['dt']['project_id'].'/'.date('Y').date('m').date('d').'_'.$this->session->userdata('id').'C';
+
+			$dt['investor_id'] = $this->session->userdata('id');
+			$dt['total_harga'] = str_replace( ',', '', $dt['total_harga'] );
+			$dt['status_invest'] = 'WAITING';
+			$dt['status'] = 'ENABLE';
+			$dt['created_at'] = date('Y-m-d H:i:s');
+			$this->db->insert('tbl_project_invest', $dt);
+			
+			$unit = $this->mymodel->selectDataOne('tbl_project', array('id' => $_POST['dt']['project_id']));
+			$minUnit['unit'] = $unit['unit']-$_POST['dt']['unit'];
+			$this->mymodel->updateData('tbl_project', $minUnit , array('id'=>$_POST['dt']['project_id']));
+
+			$this->alert->alertsuccess('Invistasi Telah Dikirim dan menunggu untuk dikonfirmasi oleh Admin');
+		}
 	}
 }

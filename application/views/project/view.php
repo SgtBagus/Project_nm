@@ -87,7 +87,7 @@
               <h2><b>Rp <?= number_format($tbl_project['harga'],0,',','.') ?>,- / Unit</b></h2>
             </div>
             <div class="box-body" align="center">
-              <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-invest" <?php if($tbl_project['status']=='DISABLE'){ echo "disabled"; }?> >
+              <button type="button" id="btn-invest" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-invest" <?php if($tbl_project['status']=='DISABLE'){ echo "disabled"; }?> >
                 <i class="fa fa-credit-card"></i> Lakukan Investasi
               </button>
             </div>
@@ -257,8 +257,13 @@
 
 <script type="text/javascript">
 
+  <?php if($this->session->userdata('session_sop')) {
+    if($this->session->userdata('role') != 'investor'){ ?>
+      $('#btn-invest').remove();
+      $('#modal-invest').remove();
+    <?php } 
+  }
 
-  <?php
   if($file_detail){
     $i = 1;
     foreach($file_detail as $img){
