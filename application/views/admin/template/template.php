@@ -281,23 +281,22 @@ if($this->session->userdata('session_sop')=="") {
         'autoWidth'   : false
       })
       $('#datatable').DataTable({
-          "paging"      : true,
-          "lengthChange": true,
-          "searching"   : true,
-          "ordering"    : true,
-          "info"        : false,
-          "scrollY": true,
-          "language": {
-            "search": "<b> Pencarian : </b>",
-            "zeroRecords": function () {
-              return "<img src='https://icon-library.net/images/no-data-icon/no-data-icon-20.jpg' width='100px' height='100px'><p><b>Tidak Ada Data</b><p>";
-            },
-            "paginate": {
-              "previous": "Sebelumnya",
-              "next" : "Selanjutnya"
-            }
+        "paging"      : true,
+        "lengthChange": true,
+        "searching"   : true,
+        "ordering"    : true,
+        "info"        : false,
+        "language": {
+          "search": "<b> Pencarian : </b>",
+          "zeroRecords": function () {
+            return "<img src='https://icon-library.net/images/no-data-icon/no-data-icon-20.jpg' width='100px' height='100px'><p><b>Tidak Ada Data</b><p>";
           },
-        });
+          "paginate": {
+            "previous": "Sebelumnya",
+            "next" : "Selanjutnya"
+          }
+        }
+      });
     });
 
     function startTime() {

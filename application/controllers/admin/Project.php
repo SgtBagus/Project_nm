@@ -62,9 +62,6 @@ class Project extends MY_Controller {
 		$this->form_validation->set_rules('dt[harga]', '<strong>Harga Proyek</strong> Tidak Boleh Kosong', 'required');
 		$this->form_validation->set_rules('dt[unit]', '<strong>Unit</strong> Tidak Boleh Kosong', 'required');
 		$this->form_validation->set_rules('dt[total_harga]', '<strong>Total Harga</strong> Tidak Boleh Kosong', 'required');
-		// $this->form_validation->set_rules('dt[periode]', 'Detail : <strong>Periode </strong> Tidak Boleh Kosong', 'required');
-		// $this->form_validation->set_rules('dt[return]', 'Detail : <strong>Return Didapat </strong> Tidak Boleh Kosong', 'required');
-		// $this->form_validation->set_rules('dt[bagi_hasil]', 'Detail : <strong>Periode Bagi Hasil</strong> Tidak Boleh Kosong', 'required');
 		$this->form_validation->set_message('required', '%s');
 	}
 
@@ -222,18 +219,9 @@ class Project extends MY_Controller {
 		}
 	}
 
-	public function investor_json($id){
-		header('Content-Type: application/json');
-		$this->datatables->select('a.id,inv.name,a.investor_id,a.unit,a.total_harga');
-		$this->datatables->join('tbl_investor inv','inv.id=a.investor_id','inner');
-		$this->datatables->from('tbl_project_invest a');
-		$this->datatables->where('a.project_id',$id);
-		$this->datatables->add_column('terima', '<div class="btn-group"><button type="button" class="btn btn-sm btn-primary" onclick="approve($1)"><i class="fa fa-check-circle"></i></button><button type="button" class="btn btn-sm btn-danger" onclick="reject($1)"><i class="fa fa-ban"></i></button></div>', 'id');
-		echo $this->datatables->generate();
-	}
-
 	public function view($id){
 		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('id'=>$id));
+		$data['tbl_project_invest'] = $this->mymodel->selectWhere('tbl_project_invest',array('project_id'=>$id));
 		$data['user'] = $this->mymodel->selectDataone('user',array('id'=>$data['tbl_project']['user_id']));
 		$data['user_image'] = $this->mymodel->selectDataone('file',array('table_id'=>$data['user']['id'],'table'=>'user'));
 		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_project'));
