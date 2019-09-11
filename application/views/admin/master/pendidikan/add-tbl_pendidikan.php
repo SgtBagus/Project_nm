@@ -1,84 +1,84 @@
 
 
 
-    <form method="POST" action="<?= base_url('admin/master/pendidikan/store') ?>" id="upload-create" enctype="multipart/form-data">
+<form method="POST" action="<?= base_url('admin/master/pendidikan/store') ?>" id="upload-create" enctype="multipart/form-data">
 
-                <div class="show_error"></div><div class="form-group">
+  <div class="show_error"></div><div class="form-group">
 
-                      <label for="form-value">Value</label>
+    <label for="form-value">Pendidikan</label>
 
-                      <input type="text" class="form-control" id="form-value" placeholder="Masukan Value" name="dt[value]">
+    <input type="text" class="form-control" id="form-value" placeholder="Masukan Pendidikan" name="dt[value]">
 
-                  </div>
-                <hr>
-         
+  </div>
+  <hr>
 
-                <button type="submit" class="btn btn-primary btn-send" ><i class="fa fa-save"></i> Save</button>
 
-                <button type="reset" class="btn btn-danger"><i class="fa fa-refresh"></i> Reset</button>
+  <button type="submit" class="btn btn-primary btn-send" ><i class="fa fa-save"></i> Save</button>
 
-             
+  <button type="reset" class="btn btn-danger"><i class="fa fa-refresh"></i> Reset</button>
 
 
 
-      </form>
+
+
+</form>
 
 
 
- 
-  <!-- /.content-wrapper -->
 
-  <script type="text/javascript">
+<!-- /.content-wrapper -->
 
-      $("#upload-create").submit(function(){
+<script type="text/javascript">
 
-            var form = $(this);
+  $("#upload-create").submit(function(){
 
-            var mydata = new FormData(this);
+    var form = $(this);
 
-            $.ajax({
+    var mydata = new FormData(this);
 
-                type: "POST",
+    $.ajax({
 
-                url: form.attr("action"),
+      type: "POST",
 
-                data: mydata,
+      url: form.attr("action"),
 
-                cache: false,
+      data: mydata,
 
-                contentType: false,
+      cache: false,
 
-                processData: false,
+      contentType: false,
 
-                beforeSend : function(){
+      processData: false,
 
-                    $(".btn-send").addClass("disabled").html("<i class='la la-spinner la-spin'></i>  Processing...").attr('disabled',true);
+      beforeSend : function(){
 
-                    form.find(".show_error").slideUp().html("");
+        $(".btn-send").addClass("disabled").html("<i class='la la-spinner la-spin'></i>  Processing...").attr('disabled',true);
 
-                },
+        form.find(".show_error").slideUp().html("");
 
-                success: function(response, textStatus, xhr) {
+      },
+
+      success: function(response, textStatus, xhr) {
 
                     // alert(mydata);
 
-                   var str = response;
+                    var str = response;
 
                     if (str.indexOf("success") != -1){
 
-                        form.find(".show_error").hide().html(response).slideDown("fast");
+                      form.find(".show_error").hide().html(response).slideDown("fast");
 
-                        setTimeout(function(){ 
+                      setTimeout(function(){ 
 
                            // window.location.href = "<?= base_url('admin/master/pendidikan') ?>";
-                          $("#load-table").html('');
-                          loadtable($("#select-status").val());
-                          $("#modal-form").modal('hide');
+                           $("#load-table").html('');
+                           loadtable($("#select-status").val());
+                           $("#modal-form").modal('hide');
 
 
-                        }, 1000);
+                         }, 1000);
 
-                        $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+                      $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
 
 
 
@@ -86,19 +86,19 @@
 
                     }else{
 
-                        form.find(".show_error").hide().html(response).slideDown("fast");
+                      form.find(".show_error").hide().html(response).slideDown("fast");
 
-                        $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+                      $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
 
-                        
+
 
                     }
 
-                },
+                  },
 
-                error: function(xhr, textStatus, errorThrown) {
+                  error: function(xhr, textStatus, errorThrown) {
 
-                  console.log(xhr);
+                    console.log(xhr);
 
                     $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
 
@@ -106,14 +106,14 @@
 
 
 
-                }
+                  }
 
-            });
+                });
 
-            return false;
+    return false;
 
     
 
-        });
+  });
 
-  </script>
+</script>

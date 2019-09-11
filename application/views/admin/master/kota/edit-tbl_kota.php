@@ -1,83 +1,91 @@
 
 
-  <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
 
 
 
-    <form method="POST" action="<?= base_url('admin/master/kota/update') ?>" id="upload-create" enctype="multipart/form-data">
+<form method="POST" action="<?= base_url('admin/master/kota/update') ?>" id="upload-create" enctype="multipart/form-data">
 
-    <input type="hidden" name="id" value="<?= $tbl_kota['id'] ?>">
-
-
-
-                <div class="show_error"></div><div class="form-group">
-
-                      <label for="form-provensi_id">Provensi Id</label>
-
-                      <input type="text" class="form-control" id="form-provensi_id" placeholder="Masukan Provensi Id" name="dt[provensi_id]" value="<?= $tbl_kota['provensi_id'] ?>">
-
-                  </div><div class="form-group">
-
-                      <label for="form-value">Value</label>
-
-                      <input type="text" class="form-control" id="form-value" placeholder="Masukan Value" name="dt[value]" value="<?= $tbl_kota['value'] ?>">
-
-                  </div>
-                <hr>
-
-                <button type="submit" class="btn btn-primary btn-send" ><i class="fa fa-save"></i> Save</button>
-
-                <button type="reset" class="btn btn-danger"><i class="fa fa-refresh"></i> Reset</button>
-
-             
-
-           
-      </form>
+  <input type="hidden" name="id" value="<?= $tbl_kota['id'] ?>">
 
 
-  <!-- /.content-wrapper -->
 
-  <script type="text/javascript">
+  <div class="show_error"></div><div class="form-group">
 
-      $("#upload-create").submit(function(){
+    <label for="form-provinsi_id">Provensi</label>
 
-            var form = $(this);
+    <select class="form-control select2" name="dt[provinsi_id]">
+      <option value="">--Pilih Tbl Provinsi--</option>
+      <?php
+      $tbl_provinsi = $this->mymodel->selectData("tbl_provinsi");
+      foreach ($tbl_provinsi as $key => $value) {
+        ?>
+        <option value="<?= $value['id'] ?>" <?php if($tbl_kota['provinsi_id'] == $value['id']){ echo "selected"; } ?> ><?= $value['value'] ?></option>
+      <?php } ?>
+    </select>
 
-            var mydata = new FormData(this);
+  </div><div class="form-group">
 
-            $.ajax({
+    <label for="form-value">Value</label>
 
-                type: "POST",
+    <input type="text" class="form-control" id="form-value" placeholder="Masukan Value" name="dt[value]" value="<?= $tbl_kota['value'] ?>">
 
-                url: form.attr("action"),
+  </div>
+  <hr>
 
-                data: mydata,
+  <button type="submit" class="btn btn-primary btn-send" ><i class="fa fa-save"></i> Save</button>
 
-                cache: false,
+  <button type="reset" class="btn btn-danger"><i class="fa fa-refresh"></i> Reset</button>
 
-                contentType: false,
+  
 
-                processData: false,
+  
+</form>
 
-                beforeSend : function(){
 
-                    $(".btn-send").addClass("disabled").html("<i class='la la-spinner la-spin'></i>  Processing...").attr('disabled',true);
+<!-- /.content-wrapper -->
 
-                    form.find(".show_error").slideUp().html("");
+<script type="text/javascript">
 
-                },
+  $("#upload-create").submit(function(){
 
-                success: function(response, textStatus, xhr) {
+    var form = $(this);
+
+    var mydata = new FormData(this);
+
+    $.ajax({
+
+      type: "POST",
+
+      url: form.attr("action"),
+
+      data: mydata,
+
+      cache: false,
+
+      contentType: false,
+
+      processData: false,
+
+      beforeSend : function(){
+
+        $(".btn-send").addClass("disabled").html("<i class='la la-spinner la-spin'></i>  Processing...").attr('disabled',true);
+
+        form.find(".show_error").slideUp().html("");
+
+      },
+
+      success: function(response, textStatus, xhr) {
 
                     // alert(mydata);
 
-                   var str = response;
+                    var str = response;
 
                     if (str.indexOf("success") != -1){
 
-                        form.find(".show_error").hide().html(response).slideDown("fast");
+                      form.find(".show_error").hide().html(response).slideDown("fast");
 
-                        setTimeout(function(){ 
+                      setTimeout(function(){ 
 
                           // window.location.href = "<?= base_url('admin/master/kota') ?>";
                           $("#load-table").html('');
@@ -86,7 +94,7 @@
 
                         }, 1000);
 
-                        $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+                      $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
 
 
 
@@ -94,19 +102,19 @@
 
                     }else{
 
-                        form.find(".show_error").hide().html(response).slideDown("fast");
+                      form.find(".show_error").hide().html(response).slideDown("fast");
 
-                        $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+                      $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
 
-                        
+                      
 
                     }
 
-                },
+                  },
 
-                error: function(xhr, textStatus, errorThrown) {
+                  error: function(xhr, textStatus, errorThrown) {
 
-                  console.log(xhr);
+                    console.log(xhr);
 
                     $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
 
@@ -114,14 +122,14 @@
 
 
 
-                }
+                  }
 
-            });
+                });
 
-            return false;
+    return false;
 
     
 
-        });
+  });
 
-  </script>
+</script>

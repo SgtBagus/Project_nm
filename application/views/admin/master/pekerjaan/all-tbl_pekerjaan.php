@@ -10,21 +10,15 @@
 
     <section class="content-header">
 
-      <h1>
-
-        Tbl Pekerjaan
-
-        <small>master</small>
-
-      </h1>
+      <h1>Pekerjaan</h1>
 
       <ol class="breadcrumb">
 
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
 
         <li><a href="#">master</a></li>
 
-        <li class="active">Tbl Pekerjaan</li>
+        <li class="active">Pekerjaan</li>
 
       </ol>
 
@@ -64,18 +58,18 @@
 
                   <div class="pull-right">          <a href="javascript::void(0)" onclick="create()">
 
-        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Tbl Pekerjaan</button> 
+        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Pekerjaan</button> 
 
       </a>
 
 
                   <a href="<?= base_url('fitur/ekspor/tbl_pekerjaan') ?>" target="_blank">
 
-                    <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Ekspor Tbl Pekerjaan</button> 
+                    <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Ekspor Pekerjaan</button> 
 
                   </a>
 
-                  <button type="button" class="btn btn-sm btn-info" onclick="$('#modal-impor').modal()"><i class="fa fa-file-excel-o"></i> Import Tbl Pekerjaan</button>
+                  <button type="button" class="btn btn-sm btn-info" onclick="$('#modal-impor').modal()"><i class="fa fa-file-excel-o"></i> Import Pekerjaan</button>
 
                   </div>
 
@@ -264,7 +258,7 @@
 
                    '     <tr class="bg-success">'+
 
-                   '       <th style="width:20px">No</th>'+'<th>Value</th>'+'       <th style="width:150px">Status</th>'+
+                   '       <th style="width:20px">No</th>'+'<th>Pekerjaan</th>'+'       <th style="width:150px">Status</th>'+
 
                    '       <th style="width:150px"></th>'+
 
@@ -402,7 +396,7 @@
             $("#load-form").html('loading...');
             
             $("#modal-form").modal();
-            $("#title-form").html('Edit Tbl Pekerjaan');
+            $("#title-form").html('Edit Pekerjaan');
             $("#load-form").load("<?= base_url('admin/master/pekerjaan/edit/') ?>"+id);
             
          }
@@ -412,7 +406,7 @@
 
             // location.href = "<?= base_url('admin/master/pekerjaan/edit/') ?>"+id;
             $("#modal-form").modal();
-            $("#title-form").html('Create Tbl Pekerjaan');
+            $("#title-form").html('Create Pekerjaan');
             $("#load-form").load("<?= base_url('admin/master/pekerjaan/create/') ?>");
             
          }

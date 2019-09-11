@@ -10,21 +10,16 @@
 
     <section class="content-header">
 
-      <h1>
-
-        Tbl Bank
-
-        <small>master</small>
-
+      <h1>Bank
       </h1>
 
       <ol class="breadcrumb">
 
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
 
         <li><a href="#">master</a></li>
 
-        <li class="active">Tbl Bank</li>
+        <li class="active">Bank</li>
 
       </ol>
 
@@ -64,18 +59,18 @@
 
                   <div class="pull-right">          <a href="javascript::void(0)" onclick="create()">
 
-        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Tbl Bank</button> 
+        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Bank</button> 
 
       </a>
 
 
                   <a href="<?= base_url('fitur/ekspor/tbl_bank') ?>" target="_blank">
 
-                    <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Ekspor Tbl Bank</button> 
+                    <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Ekspor Bank</button> 
 
                   </a>
 
-                  <button type="button" class="btn btn-sm btn-info" onclick="$('#modal-impor').modal()"><i class="fa fa-file-excel-o"></i> Import Tbl Bank</button>
+                  <button type="button" class="btn btn-sm btn-info" onclick="$('#modal-impor').modal()"><i class="fa fa-file-excel-o"></i> Import Bank</button>
 
                   </div>
 
@@ -212,7 +207,7 @@
 
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 
-          <h4 class="modal-title">Impor Tbl Bank</h4>
+          <h4 class="modal-title">Impor Bank</h4>
 
         </div>
 
@@ -264,7 +259,7 @@
 
                    '     <tr class="bg-success">'+
 
-                   '       <th style="width:20px">No</th>'+'<th>Value</th>'+'       <th style="width:150px">Status</th>'+
+                   '       <th style="width:20px">No</th>'+'<th>BANK</th>'+'       <th style="width:150px">Status</th>'+
 
                    '       <th style="width:150px"></th>'+
 
@@ -402,7 +397,7 @@
             $("#load-form").html('loading...');
             
             $("#modal-form").modal();
-            $("#title-form").html('Edit Tbl Bank');
+            $("#title-form").html('Edit Bank');
             $("#load-form").load("<?= base_url('admin/master/bank/edit/') ?>"+id);
             
          }
@@ -412,7 +407,7 @@
 
             // location.href = "<?= base_url('admin/master/bank/edit/') ?>"+id;
             $("#modal-form").modal();
-            $("#title-form").html('Create Tbl Bank');
+            $("#title-form").html('Create Bank');
             $("#load-form").load("<?= base_url('admin/master/bank/create/') ?>");
             
          }

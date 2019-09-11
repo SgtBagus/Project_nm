@@ -135,14 +135,15 @@ class Project extends MY_Controller {
 			$this->alert->alertdanger(validation_errors());
 		}else{
 			$dt = $_POST['dt'];
-			$dt['user_id'] = $this->session->userdata('id');
+			if($this->session->userdata('role_id') != '17'){
+				$dt['user_id'] = $this->session->userdata('id');	
+			}
 			$dt['harga'] = str_replace( ',', '', $dt['harga'] );
 			$dt['unit'] = str_replace( ',', '', $dt['unit'] );
 			$dt['total_harga'] = str_replace( ',', '', $dt['total_harga'] );
 			$dt['created_at'] = date('Y-m-d H:i:s');
 			$dt['public'] = "DISABLE";
 			$dt['status'] = "DISABLE";
-
 			$slug_folder = $dt['slug'];
 
 			mkdir('webfile/project/'.$slug_folder, 0777, true);
@@ -331,6 +332,11 @@ class Project extends MY_Controller {
 			}
 
 			$dt = $_POST['dt'];
+
+			if($this->session->userdata('role_id') != '17'){
+				$dt['user_id'] = $this->session->userdata('id');	
+			}
+
 			$dt['harga'] = str_replace( ',', '', $dt['harga'] );
 			$dt['unit'] = str_replace( ',', '', $dt['unit'] );
 			$dt['total_harga'] = str_replace( ',', '', $dt['total_harga'] );

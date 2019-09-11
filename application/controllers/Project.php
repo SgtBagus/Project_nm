@@ -37,20 +37,22 @@ class Project extends MY_Controller {
 			$this->alert->alertdanger(validation_errors());
 		}else{
 			$dt = $_POST['dt'];
-			$dt['code'] = 'INV-'.$_POST['dt']['project_id'].'/'.date('Y').date('m').date('d').'_'.$this->session->userdata('id').'C';
+			$dt['code'] = 'INV-'.$_POST['dt']['project_id'].'_'.date('Y').date('m').date('d').'_'.$this->session->userdata('id').'C';
 
 			$dt['investor_id'] = $this->session->userdata('id');
 			$dt['total_harga'] = str_replace( ',', '', $dt['total_harga'] );
 			$dt['status_invest'] = 'WAITING';
 			$dt['status'] = 'ENABLE';
 			$dt['created_at'] = date('Y-m-d H:i:s');
+			$dt['tgl_kadarluasa'] = date('Y-m-d H:i:s', time() + 86400);
 			$this->db->insert('tbl_project_invest', $dt);
 			
-			$unit = $this->mymodel->selectDataOne('tbl_project', array('id' => $_POST['dt']['project_id']));
-			$minUnit['unit'] = $unit['unit']-$_POST['dt']['unit'];
-			$this->mymodel->updateData('tbl_project', $minUnit , array('id'=>$_POST['dt']['project_id']));
+			// $unit = $this->mymodel->selectDataOne('tbl_project', array('id' => $_POST['dt']['project_id']));
+			// $minUnit['unit'] = $unit['unit']-$_POST['dt']['unit'];
+			// $this->mymodel->updateData('tbl_project', $minUnit , array('id'=>$_POST['dt']['project_id']));
 
-			$this->alert->alertsuccess('Invistasi Telah Dikirim dan menunggu untuk dikonfirmasi oleh Admin');
+			$this->alert->alertsuccess('Investasi Telah Dikirim dan menunggu untuk melakukan Pembayaran <br> Cek Proses Investasi di <a href="'.base_url('dashboard').'"> Dashboard</a>');
+			echo '<script type="text/javascript" language="Javascript">window.open("'.base_url('invoice/payment/').$dt['code'].'");</script>';
 		}
 	}
 }

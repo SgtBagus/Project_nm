@@ -91,36 +91,36 @@
         <div class="col-md-3 col-6 mb-md-0 mb-5">
           <div class="box box-solid round">
             <div class="box-body">
-              <h3 align="center"><i class="fa fa-info"></i> Lorem Ipsum</h3>
+              <h3 align="center"><i class="fa fa-info"></i> <?= $cara_pertama['title'] ?></h3>
               <br>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor commodo ullamcorper a lacus. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Augue ut lectus arcu bibendum at varius vel pharetra.</p>
+              <?= $cara_pertama['value'] ?>
             </div>
           </div>
         </div>
         <div class="col-md-3 col-6 mb-md-0 mb-5">
           <div class="box box-solid round">
             <div class="box-body">
-              <h3 align="center"><i class="fa fa-info"></i> Lorem Ipsum</h3>
+              <h3 align="center"><i class="fa fa-info"></i> <?= $cara_kedua['title'] ?></h3>
               <br>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor commodo ullamcorper a lacus. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Augue ut lectus arcu bibendum at varius vel pharetra.</p>
+              <?= $cara_kedua['value'] ?>
             </div>
           </div>
         </div>
         <div class="col-md-3 col-6 mb-md-0 mb-5">
           <div class="box box-solid round">
             <div class="box-body">
-              <h3 align="center"><i class="fa fa-info"></i> Lorem Ipsum</h3>
+              <h3 align="center"><i class="fa fa-info"></i> <?= $cara_ketiga['title'] ?></h3>
               <br>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor commodo ullamcorper a lacus. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Augue ut lectus arcu bibendum at varius vel pharetra.</p>
+              <?= $cara_ketiga['value'] ?>
             </div>
           </div>
         </div>
         <div class="col-md-3 col-6 mb-md-0 mb-5">
           <div class="box box-solid round">
             <div class="box-body">
-              <h3 align="center"><i class="fa fa-info"></i> Lorem Ipsum</h3>
+              <h3 align="center"><i class="fa fa-info"></i> <?= $cara_keempat['title'] ?></h3>
               <br>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor commodo ullamcorper a lacus. Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Augue ut lectus arcu bibendum at varius vel pharetra.</p>
+              <?= $cara_keempat['value'] ?>
             </div>
           </div>
         </div>
@@ -138,7 +138,7 @@
                   <?php $image_src = $this->mymodel->selectDataone('file', array('table'=>'tbl_project', 'table_id' => $row['id'])); ?>
                   <img style="height: 200px; width: 100%; object-fit: cover; display: inline;" src="<?= base_url().$image_src['dir']?>">
                   <h2 align="center">
-                    <?= $row['title'] ?>
+                    <?= strlen($row["title"]) > 15 ? substr($row["title"],0,15)."..." : $row["title"] ?>
                   </h2>
                   <h5 align="center">
                     <?php $user = $this->mymodel->selectDataone('user', array('id'=>$row['user_id'])); ?>

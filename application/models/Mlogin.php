@@ -31,6 +31,7 @@ class Mlogin extends CI_Model {
     $this->db->insert('file', $file);
     return $query;
   }
+  
 }  
 
 ?>

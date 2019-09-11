@@ -2,7 +2,7 @@
 if($this->session->userdata('session_sop')=="") {
   header('Location: '.base_url('admin/login'));
 }else{
-  if($this->session->userdata('role') == 'investor'){
+  if($this->session->userdata('role') == 'Investor'){
     $this->load->view('errors/html/error_404');
     return false;
   }

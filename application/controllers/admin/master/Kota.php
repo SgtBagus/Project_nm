@@ -42,7 +42,7 @@
 
 			$this->form_validation->set_error_delimiters('<li>', '</li>');
 
-	$this->form_validation->set_rules('dt[provensi_id]', '<strong>Provensi Id</strong>', 'required');
+	$this->form_validation->set_rules('dt[provinsi_id]', '<strong>Provensi Id</strong>', 'required');
 $this->form_validation->set_rules('dt[value]', '<strong>Value</strong>', 'required');
 	}
 
@@ -92,11 +92,13 @@ $this->form_validation->set_rules('dt[value]', '<strong>Value</strong>', 'requir
 
 			header('Content-Type: application/json');
 
-	        $this->datatables->select('id,provensi_id,value,status');
 
-	        $this->datatables->where('status',$status);
+			$this->datatables->select('a.id as id, b.value as provinsi_id, a.value as value, a.status as status');
+			$this->datatables->join('tbl_provinsi b','b.id=a.provinsi_id','inner');
 
-	        $this->datatables->from('tbl_kota');
+	        $this->datatables->where('a.status',$status);
+
+	        $this->datatables->from('tbl_kota a');
 
 	        if($status=="ENABLE"){
 

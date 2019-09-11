@@ -72,7 +72,7 @@
               </div>
             </div>
           </div>
-          <button type="button" class="btn btn-block btn-primary btn-lg round" data-toggle="modal" data-target="#modal-invest" <?php if($tbl_project['status']=='DISABLE'){ echo "disabled"; }?> >
+          <button type="button" id="btn-invest" class="btn btn-block btn-primary btn-lg round" data-toggle="modal" data-target="#modal-invest" <?php if($tbl_project['status']=='DISABLE'){ echo "disabled"; }?> >
             <i class="fa fa-credit-card"></i> Lakukan nvestasi
           </button>
           <br>
@@ -258,7 +258,7 @@
 <script type="text/javascript">
 
   <?php if($this->session->userdata('session_sop')) {
-    if($this->session->userdata('role') != 'investor'){ ?>
+    if($this->session->userdata('role') != 'Investor'){ ?>
       $('#btn-invest').remove();
       $('#modal-invest').remove();
     <?php } 

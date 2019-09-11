@@ -12,9 +12,9 @@
 
                 <div class="show_error"></div><div class="form-group">
 
-                      <label for="form-value">Value</label>
+                      <label for="form-value">Gaji</label>
 
-                      <input type="text" class="form-control" id="form-value" placeholder="Masukan Value" name="dt[value]" value="<?= $tbl_gaji['value'] ?>">
+                      <input type="text" class="form-control" id="form-value" placeholder="Masukan Gaji" name="dt[value]" value="<?= $tbl_gaji['value'] ?>">
 
                   </div>
                 <hr>

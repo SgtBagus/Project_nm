@@ -2,7 +2,7 @@
 if($this->session->userdata('session_sop')=="") {
     header('Location: '.base_url());
 }else{
-    if($this->session->userdata('role') != 'investor'){
+    if($this->session->userdata('role') != 'Investor'){
         header('Location: '.base_url('admin'));
     }
 }
@@ -40,10 +40,9 @@ if($this->session->userdata('session_sop')=="") {
                                                 <i class="fa fa-dashboard"></i> Dashboard
                                             </li>
                                         </a>
-                                        <a href="<?= base_url('dashboard/notif') ?>">
-                                            <li class="list-group-item a_black" style="margin-bottom: 5px;" id="notif">
-                                                <span class="badge bg-red">2</span>
-                                                <i class="fa fa-bell"></i> Notifikasi
+                                        <a href="<?= base_url('dashboard/invest') ?>">
+                                            <li class="list-group-item a_black" style="margin-bottom: 5px;" id="invest">
+                                                <i class="fa fa-bar-chart"></i> Investasi
                                             </li>
                                         </a>
                                         <a href="<?= base_url('dashboard/account') ?>">
@@ -64,12 +63,13 @@ if($this->session->userdata('session_sop')=="") {
                         $data['file'] = $file;
                         
                     if($content == 'dashboard'){
-                        $data['invest'] = $invest;
-                        $data['total_harga'] = $total_harga;
-                        $data['total_project'] = $total_project;
-                        $this->load->view('dashboard/dashboard');
-                    }else if($content == 'notif'){
-                        $this->load->view('dashboard/notif');
+                        $dashboard['invest_approve'] = $invest_approve;
+                        $dashboard['total_harga'] = $total_harga;
+                        $dashboard['total_project'] = $total_project;
+                        $this->load->view('dashboard/dashboard', $dashboard);
+                    }else if($content == 'invest'){
+                        $invest['invest'] = $invest;
+                        $this->load->view('dashboard/invest', $invest);
                     }else if($content == 'account'){
                         $this->load->view('dashboard/account');
                     }else{
@@ -85,8 +85,8 @@ if($this->session->userdata('session_sop')=="") {
     $(document).ready(function() {
         if('<?= $content ?>' == 'dashboard'){
             $("#dashboard").addClass("active");
-        }else if('<?= $content ?>' == 'notif'){
-            $("#notif").addClass("active");
+        }else if('<?= $content ?>' == 'invest'){
+            $("#invest").addClass("active");
         }else if('<?= $content ?>' == 'account'){
             $("#account").addClass("active");
         }

@@ -52,12 +52,12 @@ $this->session->set_userdata(array('url_session' => $actual_link));
               <li><a href="<?= base_url('project') ?>"><i class="fa fa-archive"></i> Proyek</a></li>
               <li><a href="<?= base_url('blog') ?>"><i class="fa fa-newspaper-o"></i> Blog</a></li>
               <!-- <li><a href="<?= base_url('dashboard/mitra') ?>"><i class="fa fa-users"></i> Jadi Mitra</a></li> -->
-              <li><a href="<?= base_url('info') ?>"><i class="fa fa-list"></i> Info Lainnya</a></li>
+              <li><a href="<?= base_url('info/view/tentang-aplikasi') ?>"><i class="fa fa-list"></i> Info Lainnya</a></li>
             </ul>
           </div>
           <?php
           if($this->session->userdata('session_sop') == true){
-            if($this->session->userdata('role') != 'investor'){
+            if($this->session->userdata('role') != 'Investor'){
               $photo = $this->mymodel->selectDataone('file', array('table'=>'user', 'table_id' => $this->session->userdata('id'))); 
             }else{
               $photo = $this->mymodel->selectDataone('file', array('table'=>'tbl_investor', 'table_id' => $this->session->userdata('id'))); 
@@ -74,7 +74,7 @@ $this->session->set_userdata(array('url_session' => $actual_link));
                     <li class="user-header">
                       <img src="<?= base_url().$photo['dir'] ?>" class="img-circle" alt="User Image">
                       <p>
-                        <?php echo $this->session->userdata('name'). ' - '.$this->session->userdata('role'); ?>
+                        <?php echo $this->session->userdata('name'). '<br><b>'.$this->session->userdata('role').'</b>'; ?>
                         <small><?php echo $this->session->userdata('email') ?></small>
                       </p>
                     </li>
@@ -217,7 +217,12 @@ $this->session->set_userdata(array('url_session' => $actual_link));
     );
 
     $('#datepicker').datepicker({
-      autoclose: true
+      dateFormat: "dd-mm-yy",
+      showOtherMonths: true,
+      selectOtherMonths: true,
+      autoclose: true,
+      changeMonth: true,
+      changeYear: true,
     });
 
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
@@ -248,6 +253,7 @@ $this->session->set_userdata(array('url_session' => $actual_link));
       "searching"   : true,
       "ordering"    : true,
       "info"        : false,
+      "scrollX": true,
       "scrollY": true,
       "language": {
         "search": "<b> Pencarian : </b>",
@@ -276,6 +282,46 @@ $this->session->set_userdata(array('url_session' => $actual_link));
 
       reader.onload = function(e) {
         $('#preview_image').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  };
+
+  $("#btnFile-KTP").click(function() {
+    document.getElementById('imageKTP').click();
+  });
+
+  $("#imageKTP").change(function() {
+    imageKTP(this);
+  });
+
+  function imageKTP(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        $('#preview_ktp').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  };
+
+  $("#btnFile-NPWP").click(function() {
+    document.getElementById('imageNPWP').click();
+  });
+
+  $("#imageNPWP").change(function() {
+    imageNPWP(this);
+  });
+
+  function imageNPWP(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        $('#preview_npwp').attr('src', e.target.result);
       }
 
       reader.readAsDataURL(input.files[0]);

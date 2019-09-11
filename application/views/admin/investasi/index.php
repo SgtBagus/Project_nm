@@ -21,14 +21,14 @@
                     <th>Project</th>
                     <th>Investor</th>
                     <th>Banyak Unit</th>
+                    <th>Harga per Unit</th>
                     <th>Total Harga</th>
-                    <th>Status Invest</th>
                     <th>Tgl Mengajukan</th>
-                    <th>Tgl Konfirmasi</th>
                     <th>Tgl Kadarluasa</th>
                     <th>Tgl Pembayaran</th>
-                    <th>Status Pembarayan</th>
                     <th>Metode</th>
+                    <th>Status Pembarayan</th>
+                    <th>Tgl Konfirmasi</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -38,40 +38,14 @@
                     $investor =  $this->mymodel->selectDataOne('tbl_investor', array('id' => $row_invest['investor_id'] ));?>
                     <tr>
                       <td><?= $i ?></td>
-                      <td><?= $row_invest['code'] ?></td>
+                      <td><b><?= $row_invest['code'] ?></b></td>
                       <td><?= $project['title'] ?></td>
                       <td><?= $investor['name'] ?></td>
                       <td><?= $row_invest['unit'] ?></td>
-                      <td>Rp <?= number_format($row_invest['total_harga'],0,',','.') ?>,-</td>
-                      <td>
-                        <?= $row_invest['status_invest'] ?>
-                        <div class="row" align="center">
-                          <button type="button" class="btn btn-sm btn-sm btn-primary"><i class="fa fa-check-circle"></i></button>
-                          <button type="button" class="btn btn-sm btn-sm btn-danger"><i class="fa fa-ban"></i></button>
-                        </div>
-                      </td>
-                      <td><?= date("d-m-Y", strtotime($row_invest['created_at']))  ?></td>
-                      <td>
-                        <?php if (!$row_invest['tgl_konfirmasi']) {
-                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
-                        }else {
-                          echo date("d-m-Y", strtotime($row_invest['tgl_konfirmasi']));
-                        }?>
-                      </td>
-                      <td>
-                        <?php if (!$row_invest['tgl_kadarluasa']) {
-                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
-                        }else {
-                          echo date("d-m-Y", strtotime($row_invest['tgl_kadarluasa']));
-                        }?>
-                      </td>
-                      <td>
-                        <?php if (!$row_invest['status_pembayaran']) {
-                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
-                        }else {
-                          echo $row_invest['status_pembayaran'];
-                        }?>
-                      </td>
+                      <td><b>Rp <?= number_format($project['harga'],0,',','.') ?></b></td>
+                      <td><b>Rp <?= number_format($row_invest['total_harga'],0,',','.') ?>,-</b></td>
+                      <td><?= date("d-m-Y H:i:s", strtotime($row_invest['created_at']))  ?></td>
+                      <td><?= date("d-m-Y H:i:s", strtotime($row_invest['tgl_kadarluasa'])) ?></td>
                       <td>
                         <?php if (!$row_invest['tgl_pembayaran']) {
                           echo "<p class='help-block'><i>Belum Tersedia</i></p>";
@@ -87,7 +61,30 @@
                         }?>
                       </td>
                       <td>
-                        <button type="button" class="btn btn-sm btn-sm btn-info"><i class="fa fa-print"></i> Invoice</button>
+                        <?php if ($row_invest['status_pembayaran'] == 'WAITING') {
+                          echo '<small class="label bg-yellow"><i class="fa fa-warning"> </i> Menunggu Dikonfirmasi </small>';
+                        }else if ($row_invest['status_pembayaran'] == 'APPROVE') {
+                          echo '<small class="label bg-primary"><i class="fa fa-check"> </i> Di Terima </small>';
+                        }else{
+                          echo '<small class="label bg-danger"><i class="fa fa-ban"> </i> Di Tolak </small>';
+                        }?>
+                        <hr>
+                        <div class="row" align="center">
+                          <button type="button" class="btn btn-sm btn-sm btn-primary"><i class="fa fa-check-circle"></i></button>
+                          <button type="button" class="btn btn-sm btn-sm btn-danger"><i class="fa fa-ban"></i></button>
+                        </div>
+                      </td>
+                      <td>
+                        <?php if (!$row_invest['tgl_konfirmasi']) {
+                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
+                        }else {
+                          echo date("d-m-Y", strtotime($row_invest['tgl_konfirmasi']));
+                        }?>
+                      </td>
+                      <td>
+                        <a href="<?= base_url('invoice/payment/').$row_invest['code']?>" target="_blank">
+                          <button type="button" class="btn btn-sm btn-sm btn-info"><i class="fa fa-print"></i> Invoice</button>
+                        </a>
                       </td>
                     </tr>
                     <?php $i++; }  ?>

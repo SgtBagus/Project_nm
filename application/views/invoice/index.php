@@ -23,13 +23,19 @@ data-client-key="SB-Mid-client-BwKVZAEn_uaPXdIe"></script>
                 <div class="box-header with-border">
                   <h3 class="box-title pull-left">Sisa Waktu</h3>
                   <h3 class="box-title pull-right">
-                    <button id="cetak" type="button" class="btn btn-success btn-sm round">
+                    <span type="button" class="btn-success btn-sm round">
                       <i class="fa fa-check"></i> Masih Ada
-                    </button>
+                    </span>
                   </h3>
                 </div>
                 <div class="box-body" align="center">
-                  <h1><b>24 : 21 : 13</b></h1>
+                  <?php if($invoice['status_pembayaran'] == "APPROVE") { ?>
+                    <h1><b>00 : 00 : 00</b></h1>
+                  <?php }else if($invoice['status_pembayaran'] == "REJECT") { ?>
+                    <h1><b>00 : 00 : 00</b></h1>
+                  <?php }else { ?>
+                    <h1><b id="countDownKadarluasa">00 : 00 : 00</b></h1>
+                  <?php } ?>
                 </div>
               </div>
             </div>
@@ -38,17 +44,17 @@ data-client-key="SB-Mid-client-BwKVZAEn_uaPXdIe"></script>
             <div class="col-md-12">
               <div class="box box-solid round">
                 <div class="box-header with-border">
-                  <h3 class="box-title pull-left">Total Donasi</h3>
+                  <h3 class="box-title pull-left">Total Investasi</h3>
                 </div>
                 <div class="box-body" align="center">
-                  <h1><b>Rp <?= number_format(46000000,0,',','.'); ?>,-</b></h1>
+                  <h1><b>Rp <?= number_format($invoice['total_harga'],0,',','.'); ?>,-</b></h1>
                 </div>
               </div>
             </div>
           </div>
-                      <a > <button  type="button" class="btn btn-warning btn-block btn-lg round">
-                        <i class="fa fa-credit-card"></i> Menunggu Pembayaran
-                      </button></a>
+          <span type="button" class="btn-block btn-primary btn-lg round" align="center">
+            <i class="fa fa-credit-card"></i> Bayar Sekarang
+          </span>
         </div>
         <div class="col-md-7 col-sm-7 col-xs-12">
           <div class="row">
@@ -57,63 +63,71 @@ data-client-key="SB-Mid-client-BwKVZAEn_uaPXdIe"></script>
                 <div class="box-header with-border">
                   <h3 class="box-title pull-left">Rincian Invoice</h3>
                   <h3 class="box-title pull-right">
-                    <button id="cetak" type="button" class="btn btn-primary btn-sm round">
+                    <span id="cetak" type="button" class="btn-primary btn-sm round">
                       <i class="fa fa-print"></i> Cetak Invoice
-                    </button>
+                    </span>
                   </h3>
                 </div>
                 <div class="box-body">
-                  <h3>Nama Donasi</h3>
+                  <h3>Nama Investasi</h3>
                   <table class="table table-bordered">
                     <tr>
                       <th>Kode Invoice</th>
-                      <th>asdasdqw341231234</th>
+                      <td><b><?= $invoice['code'] ?></b></td>
                     </tr>
                     <tr>
                       <th>Judul Proyek</th>
-                      <th>Pembudidayaan Sakura</th>
+                      <td><?= $project['title'] ?></td>
                     </tr>
                     <tr>
                       <th>Nama Pelanggan</th>
-                      <th>Bambang</th>
+                      <td><?= $investor['name'] ?></td>
                     </tr>
                     <tr>
                       <th>Email Pelanggan</th>
-                      <th>bambang@gmail.com</th>
+                      <td><?= $investor['email'] ?></td>
                     </tr>
                     <tr>
                       <th>No Telpon Pelanggan</th>
-                      <th>02812392012</th>
+                      <td><?= $investor['phone'] ?></td>
                     </tr>
                     <tr>
-                      <th>Tanggal Mendonasi</th>
-                      <th><?=date('Y-m-d H:i:s', strtotime('02-02-2019 23:13:12'))?></th>
+                      <th>Tanggal Mengajukan Pembayaran</th>
+                      <td><?=date('Y-m-d H:i:s', strtotime($invoice['created_at']))?></td>
                     </tr>
                     <tr>
                       <th>Tanggal Kadarluasa</th>
-                      <th><?=date('Y-m-d H:i:s', strtotime('02-02-2019 23:13:12'))?></th>
+                      <td><?=date('Y-m-d H:i:s', strtotime($invoice['tgl_kadarluasa']))?></td>
                     </tr>
                     <tr>
                       <th>Metode Pembayaran</th>
-                      <th>Payment Banking</th>
+                      <td>Payment Banking</td>
                     </tr>
                     <tr>
                       <th>Panduan Pembayaran</th>
-                      <th>
+                      <td>
                         <a href="#"class="btn btn-success btn-sm round" target="_blank">Download</a>
-                      </th>
+                      </td>
                     </tr>
                     <tr>
-                      <th>Total Donasi</th>
-                      <th>Rp <?= number_format(46000000,0,',','.'); ?>,-</th>
+                      <th>Total Unit</th>
+                      <td><b><?= $invoice['unit']; ?></b></td>
+                    </tr>
+                    <tr>
+                      <th>Harga per Unit</th>
+                      <td><b>Rp <?= number_format($project['harga'],0,',','.'); ?>,-</b></td>
+                    </tr>
+                    <tr>
+                      <th>Total Harga</th>
+                      <td><b>Rp <?= number_format($invoice['total_harga'],0,',','.'); ?>,-</b></td>
                     </tr>
                     <tr>
                       <th>Biaya Admin</th>
-                      <th>Rp <?= number_format(0,0,',','.'); ?>,-</th>
+                      <th><b>Rp <?= number_format(0,0,',','.'); ?>,-</b></th>
                     </tr>
                   </table>
                   <hr>
-                  <span> * Lakukan <b>Pembayaran</b> sesuai dengan nominal <b>Total Donasi</b> yang ada pada invoice ini.</span>
+                  <span> * Lakukan <b>Pembayaran</b> sesuai dengan nominal <b>Total Investasi</b> pada invoice ini.</span>
                 </div>
               </div>
             </div>
@@ -146,8 +160,6 @@ data-client-key="SB-Mid-client-BwKVZAEn_uaPXdIe"></script>
       function changeResult(type,data){
         $("#result-type").val(type);
         $("#result-data").val(JSON.stringify(data));
-        //resultType.innerHTML = type;
-        //resultData.innerHTML = JSON.stringify(data);
       }
 
       snap.pay(data, {
@@ -175,38 +187,34 @@ data-client-key="SB-Mid-client-BwKVZAEn_uaPXdIe"></script>
 
 </script>
 
-
-
-
-
 <script>
-	// Set the date we're counting down to
-	var countDownDate = new Date("<?=$expiredDate?>").getTime();
-	//alert(countDownDate);2018-09-07 16:29:17
-	//alert("2018-09-07 16:29:17");
-	// Update the count down every 1 second
-	var x = setInterval(function () {
+  // Set the date we're counting down to
+  var countDownDate = new Date("<?=$invoice['tgl_kadarluasa']?>").getTime();
+  //alert(countDownDate);2018-09-07 16:29:17
+  //alert("2018-09-07 16:29:17");
+  // Update the count down every 1 second
+  var x = setInterval(function () {
 
-		// Get todays date and time
-		var now = new Date().getTime();
+    // Get todays date and time
+    var now = new Date().getTime();
 
-		// Find the distance between now an the count down date
-		var distance = countDownDate - now;
+    // Find the distance between now an the count down date
+    var distance = countDownDate - now;
 
-		// Time calculations for days, hours, minutes and seconds
+    // Time calculations for days, hours, minutes and seconds
     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-		// Output the result in an element with id="demo"
-		document.getElementById("countDownKadarluasa").innerHTML = hours + " : " +minutes + " : " + seconds;
+    // Output the result in an element with id="demo"
+    document.getElementById("countDownKadarluasa").innerHTML = hours + " : " +minutes + " : " + seconds;
 
-		// If the count down is over, write some text
-		if (distance < 0) {
-			clearInterval(x);
-			document.getElementById("countDownKadarluasa").innerHTML = "Kadaluarsa";
-		}
-	}, 1000);
+    // If the count down is over, write some text
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("countDownKadarluasa").innerHTML = "Kadaluarsa";
+    }
+  }, 1000);
 </script>
 
 <script>

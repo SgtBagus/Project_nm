@@ -9,9 +9,9 @@ class Dashboard extends MY_Controller {
 		$data['user'] = $this->mymodel->selectDataOne('tbl_investor',  array('id' => $this->session->userdata('id')));
 		$data['file'] = $this->mymodel->selectDataOne('file',  array('table_id' => $data['user']['id'], 'table' => 'tbl_investor'));
 
-		$data['invest'] = $this->mymodel->selectData('tbl_project_invest', array('investor_id' => $this->session->userdata('id')));
-		$sum_harga = $this->mymodel->selectWithQuery("SELECT SUM(total_harga) as total_harga FROM tbl_project_invest WHERE investor_id = ".$this->session->userdata('id'));
-		$count_project = $this->mymodel->selectWithQuery("SELECT count(id) as total_prj FROM tbl_project_invest WHERE investor_id = ".$this->session->userdata('id'));
+		$data['invest_approve'] = $this->mymodel->selectWhere('tbl_project_invest', array('investor_id' => $this->session->userdata('id'), 'status_pembayaran' => 'APPROVE'));
+		$sum_harga = $this->mymodel->selectWithQuery("SELECT SUM(total_harga) as total_harga FROM tbl_project_invest WHERE investor_id = ".$this->session->userdata('id')." AND status_pembayaran = 'APPROVE'");
+		$count_project = $this->mymodel->selectWithQuery("SELECT count(id) as total_prj FROM tbl_project_invest WHERE investor_id = ".$this->session->userdata('id')." AND status_pembayaran = 'APPROVE'");
 
 		$data['total_harga'] = $sum_harga[0]['total_harga'];
 		$data['total_project'] = $count_project[0]['total_prj'];
@@ -28,11 +28,12 @@ class Dashboard extends MY_Controller {
 		$this->template->load('template/template','dashboard/index', $data);
 	}
 
-	public function notif(){
+	public function invest(){
+		$data['invest'] = $this->mymodel->selectWhere('tbl_project_invest', array('investor_id' => $this->session->userdata('id')));
 		$data['user'] = $this->mymodel->selectDataOne('tbl_investor',  array('id' => $this->session->userdata('id')));
 		$data['file'] = $this->mymodel->selectDataOne('file',  array('table_id' => $data['user']['id'], 'table' => 'tbl_investor'));
-		$data['title'] = "Notifikasi";
-		$data['content'] = "notif";
+		$data['title'] = "Investasi";
+		$data['content'] = "invest";
 		$this->template->load('template/template','dashboard/index', $data);
 	}	
 

@@ -10,12 +10,13 @@
 
     <section class="content-header">
 
-      <h1>Sumberdana</h1>
+      <h1>Sumber Dana</h1>
 
       <ol class="breadcrumb">
 
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Tbl Sumberdana</li>
+        <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">master</a></li>
+        <li class="active">Sumberdana</li>
 
       </ol>
 
@@ -55,18 +56,18 @@
 
                   <div class="pull-right">          <a href="javascript::void(0)" onclick="create()">
 
-        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Tbl Sumberdana</button> 
+        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Sumberdana</button> 
 
       </a>
 
 
                   <a href="<?= base_url('fitur/ekspor/tbl_sumberdana') ?>" target="_blank">
 
-                    <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Ekspor Tbl Sumberdana</button> 
+                    <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Ekspor Sumberdana</button> 
 
                   </a>
 
-                  <button type="button" class="btn btn-sm btn-info" onclick="$('#modal-impor').modal()"><i class="fa fa-file-excel-o"></i> Import Tbl Sumberdana</button>
+                  <button type="button" class="btn btn-sm btn-info" onclick="$('#modal-impor').modal()"><i class="fa fa-file-excel-o"></i> Import Sumberdana</button>
 
                   </div>
 
@@ -255,7 +256,7 @@
 
                    '     <tr class="bg-success">'+
 
-                   '       <th style="width:20px">No</th>'+'<th>Value</th>'+'       <th style="width:150px">Status</th>'+
+                   '       <th style="width:20px">No</th>'+'<th>Sumber Dana</th>'+'       <th style="width:150px">Status</th>'+
 
                    '       <th style="width:150px"></th>'+
 
@@ -393,7 +394,7 @@
             $("#load-form").html('loading...');
             
             $("#modal-form").modal();
-            $("#title-form").html('Edit Tbl Sumberdana');
+            $("#title-form").html('Edit Sumberdana');
             $("#load-form").load("<?= base_url('admin/master/sumberdana/edit/') ?>"+id);
             
          }
@@ -403,7 +404,7 @@
 
             // location.href = "<?= base_url('admin/master/sumberdana/edit/') ?>"+id;
             $("#modal-form").modal();
-            $("#title-form").html('Create Tbl Sumberdana');
+            $("#title-form").html('Create Sumberdana');
             $("#load-form").load("<?= base_url('admin/master/sumberdana/create/') ?>");
             
          }

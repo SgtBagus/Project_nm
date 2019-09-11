@@ -21,7 +21,7 @@ class Login extends MY_Controller {
             $this->session->set_userdata('id', $session['id']);
             $this->session->set_userdata('email', $session['email']);
             $this->session->set_userdata('name', $session['name']);
-            $this->session->set_userdata('role', 'investor');
+            $this->session->set_userdata('role', 'Investor');
             echo "success";
             return TRUE;
         } else {
@@ -35,31 +35,31 @@ class Login extends MY_Controller {
         $data = $google_data;
         $email = $data['email'];        
         $pass = '';
-        $cek = $this->mlogin->login($email, $pass);
-        $session = $this->mlogin->data($email, $pass);
+        $cek = $this->mlogin->login($email, $pass); 
+        $session = $this->mlogin->login($email,$pass);
         if ($cek > 0) {
             $this->session->set_userdata('session_sop', true);
             $this->session->set_userdata('id', $session['id']);
             $this->session->set_userdata('email', $session['email']);
             $this->session->set_userdata('name', $session['name']);
-            $this->session->set_userdata('role', 'investor');
+            $this->session->set_userdata('role', 'Investor');
             header("Location:".$this->session->userdata('url_session'));
         }else {
             $data = array(
-                'namaUser' => $data['name'],
-                'emailUser' => $data['email'],
+                'name' => $data['name'],
+                'email' => $data['email'],
                 'status' => 'ENABLE',
-                'created_at' => $this->dateToday,
+                'created_at' => date('Y-m-d H:i:s'),
             );
             $check = 0; 
             $check = $this->mlogin->userAddProcess($data);
             if($check > 0){
-                $session = $this->mlogin->data($email, $pass);
+                $session = $this->mlogin->login($email, $pass);
                 $this->session->set_userdata('session_sop', true);
                 $this->session->set_userdata('id', $session['id']);
                 $this->session->set_userdata('email', $session['email']);
                 $this->session->set_userdata('name', $session['name']);
-                $this->session->set_userdata('role', 'investor');
+                $this->session->set_userdata('role', 'Investor');
                 header("Location:".$this->session->userdata('url_session'));
             }
         }

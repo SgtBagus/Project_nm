@@ -19,6 +19,7 @@
           <i class="fa fa-money"></i> Rp. 
         </div>
         <input type="hidden" name="dt[project_id]" value="<?=$tbl_project['id']?>">
+        <input type="hidden" name="dt[harga]" value="<?=$tbl_project['harga']?>">
         <input type="text" name="dt[total_harga]" id="total_proyek" class="number-separator form-control" readonly="true"> 
       </div>
     </div>
@@ -48,15 +49,19 @@
 
     $('#unit_proyek').keyup(function(){
       if($('#unit_proyek').val() >= <?= $tbl_project['unit'] ?> ){
-        var unit = $('#unit_proyek').val(<?= $tbl_project['unit'] ?>);
+        $('#unit_proyek').val(<?= $tbl_project['unit'] ?>);
+        var hrg = '<?= $tbl_project['harga'] ?>'
+        var harga = parseFloat(hrg.replace(/,/g, ''));
+        var unit = $('#unit_proyek').val();
+        $('#total_proyek').val(formatNumber(harga*unit));    
       }else{
-        var harga = parseFloat('4800000'.replace(/,/g, ''));
+        var hrg = '<?= $tbl_project['harga'] ?>'
+        var harga = parseFloat(hrg.replace(/,/g, ''));
         var unit = $('#unit_proyek').val();
         $('#total_proyek').val(formatNumber(harga*unit));        
       }
     })
   });
-
 
   $("#invest-upload").submit(function(){
     var form = $(this);
@@ -78,7 +83,7 @@
         if (str.indexOf("success") != -1){
           form.find(".invest_error").hide().html(response).slideDown("fast");
           setTimeout(function(){
-            window.location.href = "<?= base_url('dashboard') ?>";
+            
           }, 1000);
 
           $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);

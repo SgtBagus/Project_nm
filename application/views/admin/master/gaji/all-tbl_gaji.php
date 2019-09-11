@@ -12,19 +12,17 @@
 
       <h1>
 
-        Tbl Gaji
-
-        <small>master</small>
+         Gaji
 
       </h1>
 
       <ol class="breadcrumb">
 
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
 
         <li><a href="#">master</a></li>
 
-        <li class="active">Tbl Gaji</li>
+        <li class="active">Gaji</li>
 
       </ol>
 
@@ -64,18 +62,18 @@
 
                   <div class="pull-right">          <a href="javascript::void(0)" onclick="create()">
 
-        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Tbl Gaji</button> 
+        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Gaji</button> 
 
       </a>
 
 
                   <a href="<?= base_url('fitur/ekspor/tbl_gaji') ?>" target="_blank">
 
-                    <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Ekspor Tbl Gaji</button> 
+                    <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Ekspor Gaji</button> 
 
                   </a>
 
-                  <button type="button" class="btn btn-sm btn-info" onclick="$('#modal-impor').modal()"><i class="fa fa-file-excel-o"></i> Import Tbl Gaji</button>
+                  <button type="button" class="btn btn-sm btn-info" onclick="$('#modal-impor').modal()"><i class="fa fa-file-excel-o"></i> Import Gaji</button>
 
                   </div>
 
@@ -264,7 +262,7 @@
 
                    '     <tr class="bg-success">'+
 
-                   '       <th style="width:20px">No</th>'+'<th>Value</th>'+'       <th style="width:150px">Status</th>'+
+                   '       <th style="width:20px">No</th>'+'<th>Gaji</th>'+'       <th style="width:150px">Status</th>'+
 
                    '       <th style="width:150px"></th>'+
 
@@ -402,7 +400,7 @@
             $("#load-form").html('loading...');
             
             $("#modal-form").modal();
-            $("#title-form").html('Edit Tbl Gaji');
+            $("#title-form").html('Edit Gaji');
             $("#load-form").load("<?= base_url('admin/master/gaji/edit/') ?>"+id);
             
          }
@@ -412,7 +410,7 @@
 
             // location.href = "<?= base_url('admin/master/gaji/edit/') ?>"+id;
             $("#modal-form").modal();
-            $("#title-form").html('Create Tbl Gaji');
+            $("#title-form").html('Create Gaji');
             $("#load-form").load("<?= base_url('admin/master/gaji/create/') ?>");
             
          }

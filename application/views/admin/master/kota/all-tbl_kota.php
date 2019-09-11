@@ -16,11 +16,11 @@
 
       <ol class="breadcrumb">
 
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
 
         <li><a href="#">master</a></li>
 
-        <li class="active">Tbl Kota</li>
+        <li class="active">Kota</li>
 
       </ol>
 
@@ -60,18 +60,18 @@
 
                   <div class="pull-right">          <a href="javascript::void(0)" onclick="create()">
 
-        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Tbl Kota</button> 
+        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Kota</button> 
 
       </a>
 
 
                   <a href="<?= base_url('fitur/ekspor/tbl_kota') ?>" target="_blank">
 
-                    <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Ekspor Tbl Kota</button> 
+                    <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Ekspor Kota</button> 
 
                   </a>
 
-                  <button type="button" class="btn btn-sm btn-info" onclick="$('#modal-impor').modal()"><i class="fa fa-file-excel-o"></i> Import Tbl Kota</button>
+                  <button type="button" class="btn btn-sm btn-info" onclick="$('#modal-impor').modal()"><i class="fa fa-file-excel-o"></i> Import Kota</button>
 
                   </div>
 
@@ -260,7 +260,7 @@
 
                    '     <tr class="bg-success">'+
 
-                   '       <th style="width:20px">No</th>'+'<th>Provensi Id</th>'+'<th>Value</th>'+'       <th style="width:150px">Status</th>'+
+                   '       <th style="width:20px">No</th>'+'<th>Provinsi</th>'+'<th>Value</th>'+'       <th style="width:150px">Status</th>'+
 
                    '       <th style="width:150px"></th>'+
 
@@ -316,7 +316,7 @@
 
                 columns: [
 
-                    {"data": "id","orderable": false},{"data": "provensi_id"},{"data": "value"},
+                    {"data": "id","orderable": false},{"data": "provinsi_id"},{"data": "value"},
 
                    {"data": "status"},
 
@@ -398,7 +398,7 @@
             $("#load-form").html('loading...');
             
             $("#modal-form").modal();
-            $("#title-form").html('Edit Tbl Kota');
+            $("#title-form").html('Edit Kota');
             $("#load-form").load("<?= base_url('admin/master/kota/edit/') ?>"+id);
             
          }
@@ -408,7 +408,7 @@
 
             // location.href = "<?= base_url('admin/master/kota/edit/') ?>"+id;
             $("#modal-form").modal();
-            $("#title-form").html('Create Tbl Kota');
+            $("#title-form").html('Create Kota');
             $("#load-form").load("<?= base_url('admin/master/kota/create/') ?>");
             
          }

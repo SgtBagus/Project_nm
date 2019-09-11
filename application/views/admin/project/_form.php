@@ -24,6 +24,24 @@ if($data_edit){
       </div>
     </div>
     <div class="form-group">
+      <label for="inputEmail3" class="col-sm-3 control-label">Hak Milik Proyek*</label>
+      <div class="col-sm-9">
+        <?php if($this->session->userdata('role_id') == '17'){ ?>
+          <select class="form-control select2" name="dt[user_id]" style="width: 100%">
+            <option value=""> Pilih Hak Milik Proyek </option>
+            <?php
+            $user = $this->mymodel->selectWhere("user", array('role_id' => '18'));
+            foreach ($user as $key => $value) {
+              ?>
+              <option value="<?= $value['id'] ?>" <?php if($data_edit){if($data_edit['user_id'] == $value['id']) { echo "selected"; }} ?> ><?= $value['name'] ?></option>
+            <?php } ?>
+          </select>
+        <?php } else { ?>
+            <input type="text" class="form-control" placeholder="Slug Proyek Diambil Sesuai Judul" name="dt[user_id]" value="<?= $this->session->userdata('name')?>" readonly>
+        <?php } ?>
+      </div>
+    </div>
+    <div class="form-group">
       <label for="inputEmail3" class="col-sm-3 control-label">Gambar Proyek</label>
       <div class="col-sm-9">
         <div class="row">
@@ -119,18 +137,18 @@ if($data_edit){
       </div>
     </div>
     <div class="form-group">
-    <?php if($data_edit){ ?>
-      <label for="inputEmail3" class="col-sm-3 control-label">Return Proyek*</label>
-      <div class="col-sm-9">
-        <div class="row">
-          <div class="col-md-6">
-            <a href="<?= base_url('admin/project/viewReturn/').$data_edit['id'] ?>">
-              <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Ubah Detail Return Proyek</button>
-            </a>
+      <?php if($data_edit){ ?>
+        <label for="inputEmail3" class="col-sm-3 control-label">Return Proyek*</label>
+        <div class="col-sm-9">
+          <div class="row">
+            <div class="col-md-6">
+              <a href="<?= base_url('admin/project/viewReturn/').$data_edit['id'] ?>">
+                <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> Ubah Detail Return Proyek</button>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    <?php } ?>
+      <?php } ?>
     </div>
     <div class="form-group">
       <label for="inputEmail3" class="col-sm-2 control-label">Deskripsi </label>
@@ -138,13 +156,13 @@ if($data_edit){
         <textarea class="textarea form-control" name="dt[deskripsi]"><?php if($data_edit){echo $data_edit['deskripsi']; }  ?></textarea>
       </div>
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="inputEmail3" class="col-sm-2 control-label">Url Google Maps </label>
       <div class="col-sm-10">
         <input type="text" class="form-control" name="dt[url_map]" <?php if($data_edit){echo $data_edit['url_map']; } ?>>
         <p class="help-block">Salin Url Lokasi anda melalui Google Maps untuk menampilkan peta Lokasi</p>
       </div>
-    </div>
+    </div> -->
   </div>
   <div class="box-footer" align="right">
     <a href="<?= base_url('admin/project') ?> ">

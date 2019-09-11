@@ -5,9 +5,9 @@
 
                 <div class="show_error"></div><div class="form-group">
 
-                      <label for="form-value">Value</label>
+                      <label for="form-value">Sumber Dana</label>
 
-                      <input type="text" class="form-control" id="form-value" placeholder="Masukan Value" name="dt[value]">
+                      <input type="text" class="form-control" id="form-value" placeholder="Masukan Sumber Dana" name="dt[value]">
 
                   </div>
                 <hr>
