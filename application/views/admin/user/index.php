@@ -1,6 +1,6 @@
 <div class="content-wrapper">
   <section class="content-header">
-    <h1> Master <small>user</small> </h1>
+    <h1> Users </h1>
     <ol class="breadcrumb">
       <li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
       <li class="active">User</li>
@@ -40,7 +40,7 @@
        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
        <h4 class="modal-title" id="myModalLabel">Add New User </h4>
      </div>
-     <form action="<?= base_url('admin/master/user/store') ?>" id="upload" enctype="multipart/form-data">
+     <form action="<?= base_url('admin/user/store') ?>" id="upload" enctype="multipart/form-data">
        <div class="modal-body">
         <div class="show_error"></div>
         <small>Username</small>
@@ -84,7 +84,7 @@
        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
        <h4 class="modal-title" id="myModalLabel">Edit User </h4>
      </div>
-     <form action="<?= base_url('admin/master/user/update') ?>" id="uploads" enctype="multipart/form-data">
+     <form action="<?= base_url('admin/user/update') ?>" id="uploads" enctype="multipart/form-data">
        <div class="modal-body" id="data-update">
 
        </div>
@@ -141,7 +141,7 @@
       },
       processing: true,
       serverSide: true,
-      ajax: {"url": "<?= base_url('admin/master/user/json') ?>/", "type": "POST"},
+      ajax: {"url": "<?= base_url('admin/user/json') ?>/", "type": "POST"},
       columns: [
       {"data": "id","orderable": false},
       {"data": ""},
@@ -227,7 +227,7 @@
 
   function edit(id) {
     $("#editsite").modal('show');
-    $("#data-update").load('<?= base_url('admin/master/user/edit') ?>/'+id); 
+    $("#data-update").load('<?= base_url('admin/user/edit') ?>/'+id); 
   }
 
 
@@ -268,7 +268,7 @@
   });
 
   function hapus(id) {
-    var url = "<?= base_url('admin/master/user/delete') ?>/"+id;
+    var url = "<?= base_url('admin/user/delete') ?>/"+id;
     if (confirm('Are you sure delete this data ?')) {
       window.location.href = url;
     } else {

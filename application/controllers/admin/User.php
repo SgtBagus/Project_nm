@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class User extends MY_Controller {
 	public function index(){
 		$this->data['page_name'] = 'User';
-		$this->template->load('admin/template/template','admin/master/user/index', $this->data);
+		$this->template->load('admin/template/template','admin/user/index', $this->data);
 	}
 
 	public function json(){
@@ -108,7 +108,7 @@ class User extends MY_Controller {
 	public function edit($id){
 		$data['user'] = $this->mymodel->selectDataone('user',array('id'=>$id));
 		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'user'));
-		$this->load->view('admin/master/user/user-edit',$data);
+		$this->load->view('admin/user/user-edit',$data);
 	}
 
 	public function editUser($id){
@@ -116,7 +116,7 @@ class User extends MY_Controller {
 		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'user'));
 		$data['page_name'] = 'master';
 		$data['id'] = $id;
-		$this->template->load('admin/template/template','admin/master/user/edit-user',$data);
+		$this->template->load('admin/template/template','admin/user/edit-user',$data);
 	}
 
 	public function updateUser(){
@@ -269,7 +269,7 @@ class User extends MY_Controller {
 		$this->session->set_flashdata('message', 'Success Delete Data');
 		$this->session->set_flashdata('class', 'success');
 
-        header('Location: '.base_url('admin/master/user'));
+        header('Location: '.base_url('admin/user'));
 	}
 
 	public function password_check($str){
@@ -283,6 +283,6 @@ class User extends MY_Controller {
 	
 	public function editUser_redirect($id){
 		$id = $this->template->sonEncode($id);
-        header('Location: '.base_url('admin/master/user/editUser/'.$id));
+        header('Location: '.base_url('admin/user/editUser/'.$id));
 	}
 }
