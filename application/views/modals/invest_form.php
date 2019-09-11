@@ -19,7 +19,7 @@
           <i class="fa fa-money"></i> Rp. 
         </div>
         <input type="hidden" name="dt[project_id]" value="<?=$tbl_project['id']?>">
-        <input type="text" name="dt[total_harga]" id="total_proyek" class="number-separator form-control" readonly="true">
+        <input type="text" name="dt[total_harga]" id="total_proyek" class="number-separator form-control" readonly="true"> 
       </div>
     </div>
   </div>

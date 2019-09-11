@@ -53,12 +53,24 @@
                   <?php $image_src = $this->mymodel->selectDataone('file', array('table'=>'tbl_project', 'table_id' => $row['id'])); ?>
                   <img style="height: 200px; width: 100%; object-fit: cover; display: inline;" src="<?= base_url().$image_src['dir']?>">
                   <h2 align="center">
-                    <?= $row['title'] ?>
+                    <?= strlen($row["title"]) > 15 ? substr($row["title"],0,15)."..." : $row["title"] ?>
                   </h2>
                   <h5 align="center">
                     <?php $user = $this->mymodel->selectDataone('user', array('id'=>$row['user_id'])); ?>
                     <?php $return = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$row['id'], 'public' => 'ENABLE')); ?>
                     Oleh : <b><?= $user['name'] ?></b>
+                    <hr>
+                    <?php
+                    if($row['status']=='ENABLE'){
+                      echo '<div class="alert alert-success alert-dismissible round status-alert" align="center">
+                      <i class="fa fa-check-circle"></i> <b>Masih Dibuka</b>
+                      </div>';
+                    }else{
+                      echo '<div class="alert alert-danger alert-dismissible round status-alert" align="center">
+                      <i class="fa fa-ban"></i> <b>Sudah Ditutup</b>
+                      </div>';
+                    }
+                    ?>
                     <hr>
                     Periode Kontrak : <b><?= $row['periode'] ?> Tahun</b>
                     <hr>

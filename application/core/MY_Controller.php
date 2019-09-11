@@ -21,8 +21,7 @@ abstract class MY_Controller extends CI_Controller{
 		$method = $this->router->method;
 
 		$role = $this->session->userdata('role_id');
-
-		$this->admin_url = "https://admin.karyastudio.com/";
+		
 		$this->google_url = $this->google->get_login_url();
 
 		if($folder==""){

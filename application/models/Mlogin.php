@@ -14,14 +14,22 @@ class Mlogin extends CI_Model {
     $user = $this->mymodel->selectDataone('tbl_investor',array('email'=>$email));
     return $user;
   }
-  
-  
-  public function data($email){
-    $email_special = htmlspecialchars($this->db->escape($email));    
-    $this->db->select('*');
-    $this->db->where("emailUser = $email_special"); 
-    $query = $this->db->get('tbl_user');
-    return $query->row();
+
+  public function userAddProcess($data){
+    $query = $this->db->insert('tbl_investor', $data);
+
+    $last_id = $this->db->insert_id();
+    $file = array(
+      'name' => 'default.png',
+      'mime' => 'image/png',
+      'dir' => 'webfile/investor/default.png',
+      'table' => 'tbl_investor',
+      'table_id' => $last_id,
+      'status' => 'ENABLE',
+      'created_at' => date('Y-m-d H:i:s')
+    );
+    $this->db->insert('file', $file);
+    return $query;
   }
 }  
 

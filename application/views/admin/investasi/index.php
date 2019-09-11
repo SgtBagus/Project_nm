@@ -23,9 +23,10 @@
                     <th>Banyak Unit</th>
                     <th>Total Harga</th>
                     <th>Status Invest</th>
-                    <th>Tgl Pembayaran</th>
+                    <th>Tgl Mengajukan</th>
                     <th>Tgl Konfirmasi</th>
                     <th>Tgl Kadarluasa</th>
+                    <th>Tgl Pembayaran</th>
                     <th>Status Pembarayan</th>
                     <th>Metode</th>
                     <th></th>
@@ -69,6 +70,13 @@
                           echo "<p class='help-block'><i>Belum Tersedia</i></p>";
                         }else {
                           echo $row_invest['status_pembayaran'];
+                        }?>
+                      </td>
+                      <td>
+                        <?php if (!$row_invest['tgl_pembayaran']) {
+                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
+                        }else {
+                          echo $row_invest['tgl_pembayaran'];
                         }?>
                       </td>
                       <td>

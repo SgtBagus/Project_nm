@@ -20,7 +20,7 @@ class Google {
 			)
 		);
   
-
+ 
 	}
 
 	public function get_login_url(){
