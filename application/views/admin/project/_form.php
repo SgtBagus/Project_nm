@@ -21,7 +21,7 @@ if($data_edit){
     <div class="form-group">
       <label for="inputEmail3" class="col-sm-3 control-label">Slug Proyek*</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" placeholder="Slug Proyek Diambil Sesuai Judul" name="dt[slug]" id="slug" <?php if($data_edit){echo "value='".$data_edit['slug']."'"; }  ?>>
+        <input type="text" class="form-control" placeholder="Slug Proyek Diambil Sesuai Judul" name="dt[slug]" id="slug" <?php if($data_edit){echo "value='".$data_edit['slug']."'"; }  ?> readonly>
       </div>
     </div>
     <div class="form-group">

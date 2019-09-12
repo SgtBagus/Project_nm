@@ -2,7 +2,7 @@
 class Project extends MY_Controller {
 	public function __construct(){
 		parent::__construct();
-	} 
+	}
 
 	public function index(){
 		$data['tbl_project'] = $this->mymodel->selectWhere('tbl_project', array('public' => 'ENABLE'));
@@ -13,7 +13,7 @@ class Project extends MY_Controller {
 	public function view($slug){
 		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('slug'=>$slug));
 		$data['tbl_project_return'] = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$data['tbl_project']['id'], 'public' => 'ENABLE'));
-		$data['tbl_project_return_grafik'] = $this->mymodel->selectWhere('tbl_project_return', array('project_id'=>$data['tbl_project']['id'], 'public' => 'ENABLE'));
+		$data['tbl_project_return_grafik'] = $this->mymodel->selectWhere('tbl_project_return', array('project_id'=>$data['tbl_project']['id']));
 
 		$data['user'] = $this->mymodel->selectDataone('user',array('id'=>$data['tbl_project']['user_id']));
 		$data['user_image'] = $this->mymodel->selectDataone('file',array('table_id'=>$data['user']['id'],'table'=>'user'));
@@ -50,7 +50,6 @@ class Project extends MY_Controller {
 				$query = $this->db->query("SELECT * FROM tbl_project_invest WHERE code='$res'")->result();
 	// echo "SELECT * FROM donasi WHERE kodeDonasi='$res'";
 				if(count($query)==0){
-		// echo 'TIDAK ADA';
 					break;
 				}else{
 		// echo 'ADA';
@@ -65,7 +64,7 @@ class Project extends MY_Controller {
 			$dt['tgl_kadarluasa'] = date('Y-m-d H:i:s', time() + 86400);
 			$dt['status'] = 'ENABLE';
 			$this->db->insert('tbl_project_invest', $dt);
-			
+
 			// $unit = $this->mymodel->selectDataOne('tbl_project', array('id' => $_POST['dt']['project_id']));
 			// $minUnit['unit'] = $unit['unit']-$_POST['dt']['unit'];
 			// $this->mymodel->updateData('tbl_project', $minUnit , array('id'=>$_POST['dt']['project_id']));

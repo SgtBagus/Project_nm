@@ -19,7 +19,7 @@ class Project extends MY_Controller {
 
 	public function create(){
 		$data['page_name'] = "Project";
-
+ 
 		if($this->session->userdata('role_id') == '17'){
 			$this->template->load('admin/template/template','admin/project/create', $data);
 		}else{
@@ -141,7 +141,7 @@ class Project extends MY_Controller {
 		}else{
 			$dt = $_POST['dt'];
 			if($this->session->userdata('role_id') != '17'){
-				$dt['user_id'] = $this->session->userdata('id');	
+				$dt['user_id'] = $this->session->userdata('id');
 			}
 			$dt['harga'] = str_replace( ',', '', $dt['harga'] );
 			$dt['unit'] = str_replace( ',', '', $dt['unit'] );
@@ -267,7 +267,7 @@ class Project extends MY_Controller {
 			$this->load->view('errors/html/error_404');
 			return false;
 		}
-		
+
 	}
 
 	public function edit($id){
@@ -379,7 +379,7 @@ class Project extends MY_Controller {
 			$dt = $_POST['dt'];
 
 			if($this->session->userdata('role_id') != '17'){
-				$dt['user_id'] = $this->session->userdata('id');	
+				$dt['user_id'] = $this->session->userdata('id');
 			}
 
 			$dt['harga'] = str_replace( ',', '', $dt['harga'] );
