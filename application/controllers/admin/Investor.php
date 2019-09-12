@@ -8,6 +8,7 @@ class Investor extends MY_Controller {
 
 	public function index(){
 		$data['page_name'] = "Investor";
+		$data['tbl_investor'] = $this->mymodel->selectData('tbl_investor');
 		$this->template->load('admin/template/template','admin/investor/index',$data);
 	}
 
@@ -18,10 +19,10 @@ class Investor extends MY_Controller {
 		$this->template->load('admin/template/template','admin/investor/view',$data);
 	}
 
-	public function create(){
-		$data['page_name'] = "Investor";
-		$this->template->load('admin/template/template','admin/investor/create',$data);
-	}
+	// public function create(){
+	// 	$data['page_name'] = "Investor";
+	// 	$this->template->load('admin/template/template','admin/investor/create',$data);
+	// }
 
 	public function validate(){
 		$this->form_validation->set_error_delimiters('<li>', '</li>');
@@ -82,19 +83,6 @@ class Investor extends MY_Controller {
 				$this->alert->alertsuccess('Success Send Data');
 			}
 		}
-	}
-
-	public function json(){
-		header('Content-Type: application/json');
-		$this->datatables->select('id,name,email,address,phone');
-		$this->datatables->from('tbl_investor');
-		$this->datatables->add_column('view', 
-			'<div class="btn-group">
-				<button type="button" class="btn btn-primary" onclick="view($1)"><i class="fa fa-eye"></i></button>
-				<button type="button" class="btn btn-info" onclick="edit($1)"><i class="fa fa-edit"></i></button>
-				<button type="button" class="btn btn-danger" onclick="hapus($1)"><i class="fa fa-trash"></i></button>
-			</div>', 'id');
-		echo $this->datatables->generate();
 	}
 
 	public function edit($id){

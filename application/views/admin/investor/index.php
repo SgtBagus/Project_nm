@@ -15,11 +15,11 @@
               <div class="col-md-6"> </div>
               <div class="col-md-6">
                 <div class="pull-right">          
-                  <a href="<?= base_url('admin/investor/create') ?>">
+                  <!-- <a href="<?= base_url('admin/investor/create') ?>">
                     <button type="button" class="btn btn-sm btn-success">
                       <i class="fa fa-plus"></i> Tambah Tbl Investor
                     </button> 
-                  </a>
+                  </a> -->
                   <a href="<?= base_url('fitur/ekspor/tbl_investor') ?>" target="_blank">
                     <button type="button" class="btn btn-sm btn-warning">
                       <i class="fa fa-file-excel-o"></i> Ekspor Tbl Investor
@@ -35,7 +35,104 @@
           <div class="box-body">
             <div class="show_error"></div>
             <div class="table-responsive">
-              <div id="load-table"></div>
+              <table id="datatable" class="table table-bordered table-striped" >
+                <thead>
+                  <tr class="bg-success">
+                    <th style="width:20px">No</th>
+                    <th>Nama</th>
+                    <th>Tanggal Lahir</th>
+                    <th>Jenis Kelamin</th>
+                    <th>Warga Negara</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Alamat</th>
+                    <th>Kode Pos</th>
+                    <th>No Rek</th>
+                    <th>Atas Nama</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $i = 1; foreach ($tbl_investor as $row) { ?>
+                    <tr>
+                      <td><?= $i ?></td>
+                      <td><?= $row['name'] ?></td>
+                      <td>
+                        <?php if (!$row['tgl_lahir']) {
+                          echo "<p class='help-block'><i>Kosong</i></p>";
+                        }else {
+                          echo date("d-m-Y", strtotime($row['tgl_lahir']));
+                        }?>
+                      </td>
+                      <td>
+                        <?php if (!$row['jk']) {
+                          echo "<p class='help-block'><i>Kosong</i></p>";
+                        }else {
+                          if($row['jk'] == 'L'){
+                            echo "Laki Laki";
+                          }else{
+                            echo "Perempuan";
+                          }
+                        }?>
+                      </td>
+                      <td>
+                        <?php if (!$row['wrg_negara']) {
+                          echo "<p class='help-block'><i>Kosong</i></p>";
+                        }else {
+                          echo $row['wrg_negara'];
+                        }?>
+                      </td>
+                      <td><?= $row['email'] ?></td>
+                      <td>
+                        <?php if (!$row['phone']) {
+                          echo "<p class='help-block'><i>Kosong</i></p>";
+                        }else {
+                          echo $row['phone'];
+                        }?>
+                      </td>
+                      <td>
+                        <?php if (!$row['alamat']) {
+                          echo "<p class='help-block'><i>Kosong</i></p>";
+                        }else {
+                          echo $row['alamat'];
+                        }?>
+                      </td>
+                      <td>
+                        <?php if (!$row['kode_pos']) {
+                          echo "<p class='help-block'><i>Kosong</i></p>";
+                        }else {
+                          echo $row['kode_pos'];
+                        }?>
+                      </td>
+                      <td>
+                        <?php if (!$row['no_rek']) {
+                          echo "<p class='help-block'><i>Kosong</i></p>";
+                        }else {
+                          echo $row['no_rek'];
+                        }?>
+                      </td>
+                      <td>
+                        <?php if (!$row['atas_nama']) {
+                          echo "<p class='help-block'><i>Kosong</i></p>";
+                        }else {
+                          echo $row['atas_nama'];
+                        }?>
+                      </td>
+                      <td>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-sm btn-info" onclick="view(<?=$row['id']?>)">
+                            <i class="fa fa-eye"></i>
+                          </button>
+                          <button type="button" onclick="hapus(<?=$row['id']?>)" class="btn btn-sm btn-danger">
+                            <i class="fa fa-trash-o"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <?php $i++; } ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -88,60 +185,6 @@
   </div>
 </div>
 <script type="text/javascript">
-  function loadtable(status) {
-
-    var table = '<table class="table table-bordered" id="mytable">'+
-    '     <thead>'+
-    '     <tr class="bg-success">'+
-    '       <th style="width:20px">No</th>'+'<th>Name</th>'+'<th>Email</th>'+'<th>Address</th>'+'<th>Phone</th>'+
-    '       <th style="width:150px"></th>'+
-    '     </tr>'+
-    '     </thead>'+
-    '     <tbody>'+
-    '     </tbody>'+
-
-    ' </table>';
-
-    $("#load-table").html(table)
-    
-    var t = $("#mytable").dataTable({
-      initComplete: function() {
-        var api = this.api();
-        $('#mytable_filter input')
-        .off('.DT')
-        .on('keyup.DT', function(e) {
-          if (e.keyCode == 13) {
-            api.search(this.value).draw();
-          }
-        });
-      },
-      oLanguage: {
-        sProcessing: "loading..."
-      },
-      processing: true,
-      serverSide: true,
-      ajax: {"url": "<?= base_url('admin/investor/json') ?>", "type": "POST"},
-      columns: [
-      {"data": "id", "orderable": false},
-      {"data": "name"},
-      {"data": "email"},
-      {"data": "address"},
-      {"data": "phone"},
-      {"data": "view","orderable": false}
-      ],
-      order: [[1, 'asc']],
-      columnDefs : [{ 
-        targets : [5]
-      }],
-      rowCallback: function(row, data, iDisplayIndex) {
-        var info = this.fnPagingInfo();
-        var page = info.iPage;
-        var length = info.iLength;
-        var index = page * length + (iDisplayIndex + 1);
-        $('td:eq(0)', row).html(index);
-      }
-    });
-  }
 
   loadtable($("#select-status").val());
 
@@ -149,14 +192,14 @@
     location.href = "<?= base_url('admin/investor/view/') ?>"+id;
   }       
 
-  function edit(id) {
-    location.href = "<?= base_url('admin/investor/edit/') ?>"+id;
-  }         
+  // function edit(id) {
+  //   location.href = "<?= base_url('admin/investor/edit/') ?>"+id;
+  // }         
 
-  function hapus(id) {
-    $("#modal-delete").modal('show');
-    $("#delete-input").val(id);
-  }
+  // function hapus(id) {
+  //   $("#modal-delete").modal('show');
+  //   $("#delete-input").val(id);
+  // }
 
   $("#upload-delete").submit(function(){
     event.preventDefault();
