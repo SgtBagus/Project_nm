@@ -23,6 +23,10 @@ class Dashboard extends MY_Controller {
 	public function account(){
 		$data['user'] = $this->mymodel->selectDataOne('tbl_investor',  array('id' => $this->session->userdata('id')));
 		$data['file'] = $this->mymodel->selectDataOne('file',  array('table_id' => $data['user']['id'], 'table' => 'tbl_investor'));
+
+		$data['ktp'] = $this->mymodel->selectDataOne('file',  array('table_id' => $data['user']['id'], 'table' => 'tbl_investor_ktp'));
+		$data['npwp'] = $this->mymodel->selectDataOne('file',  array('table_id' => $data['user']['id'], 'table' => 'tbl_investor_npwp'));
+
 		$data['title'] = "Akun Saya";
 		$data['content'] = "account";
 		$this->template->load('template/template','dashboard/index', $data);
@@ -37,33 +41,83 @@ class Dashboard extends MY_Controller {
 		$this->template->load('template/template','dashboard/index', $data);
 	}	
 
-
-	public function validate(){
+	public function vali_akun(){
 
 		$this->form_validation->set_error_delimiters('<li>', '</li>');
 		$this->form_validation->set_rules('dt[name]', '<strong>Nama Lengkap</strong> Tidak Boleh Kosong', 'required');
-		$this->form_validation->set_rules('dt[phone]', '<strong>Nomor Whatsapp</strong> Tidak Boleh Kosong', 'required');
-		$this->form_validation->set_rules('dt[email]', '<strong>Email</strong> Tidak Boleh Kosong', 'required');
-
-		$supported_file = array(
-			'jpg', 'jpeg', 'png'
-		);
-		
-		$src_file_name = $_FILES['file']['name'];
-
-		if($src_file_name){
-			$ext = strtolower(pathinfo($src_file_name, PATHINFO_EXTENSION)); 
-
-			if (!in_array($ext, $supported_file)) {
-				$this->form_validation->set_rules('dt[gambar]', '<strong>Gambar Profil</strong> Harus berformat PNG, JPG, JPEG', 'required');
-			} 	
-		}
-
+		$this->form_validation->set_rules('dt[jk]', '<strong>Jenis Kelamin</strong> Mohon Dipilih', 'required');
+		$this->form_validation->set_rules('dt[wrg_negara]', '<strong>Warga Negara</strong> Mohon Dipilih', 'required');
+		$this->form_validation->set_rules('dt[agama_id]', '<strong>Agama</strong> Mohon Dipilih', 'required');
+		$this->form_validation->set_rules('dt[tpt_lahir]', '<strong>Tempat Lahir</strong> Tidak Boleh Kosong', 'required');
+		$this->form_validation->set_rules('dt[tgl_lahir]', '<strong>Tempat Lahir</strong> Tidak Boleh Kosong', 'required');
 		$this->form_validation->set_message('required', '%s');
 	}
 
 	public function editaccount(){
-		$this->validate();
+		$this->vali_akun();
+		if ($this->form_validation->run() == FALSE){
+			$this->alert->alertdanger(validation_errors());     
+		}else{
+			$id = $this->session->userdata('id');
+			$dt = $_POST['dt'];
+			$dt['tgl_lahir'] = date("Y-m-d", strtotime($dt['tgl_lahir']));
+			$dt['updated_at'] = date("Y-m-d H:i:s");
+			$this->mymodel->updateData('tbl_investor', $dt , array('id'=>$id));
+
+			$this->alert->alertsuccess('Success Send Data');   
+		}
+	}
+
+	public function editphoto(){
+		$id = $this->session->userdata('id');
+		if (!empty($_FILES['file']['name'])){
+			$dir  = "webfile/investor/";
+			$config['upload_path']          = $dir;
+			$config['allowed_types']        = '*';
+			$config['file_name']           = md5('smartsoftstudio').rand(1000,100000);
+			$this->load->library('upload', $config);
+			if ( ! $this->upload->do_upload('file')){
+				$error = $this->upload->display_errors();
+				$this->alert->alertdanger($error);		
+			}else{
+				$file = $this->upload->data();
+
+				$data = array(
+					'name'=> $file['file_name'],
+					'mime'=> $file['file_type'],
+					'dir'=> $dir.$file['file_name'],
+					'table'=> 'tbl_investor',
+					'table_id'=> $id,
+					'updated_at'=>date('Y-m-d H:i:s')
+				);
+
+				$file_dir = $this->mymodel->selectDataone('file', array('table_id' => $id, 'table' => 'tbl_investor'));
+				if($file_dir['name'] == 'default.png'){
+					$this->mymodel->updateData('file', $data , array('table_id'=>$id, 'table' => 'tbl_investor'));	
+				}else{
+					@unlink($file_dir['dir']);
+					$this->mymodel->updateData('file', $data , array('table_id'=>$id, 'table' => 'tbl_investor'));	
+				}
+			}
+		}
+		$this->alert->alertsuccess('Success Send Data');   
+	}
+
+	public function vali_contact(){
+
+		$this->form_validation->set_error_delimiters('<li>', '</li>');
+		$this->form_validation->set_rules('dt[email]', '<strong>Email</strong> Tidak Boleh Kosong', 'required');
+		$this->form_validation->set_rules('dt[phone]', '<strong>Nomor Hp</strong> Tidak Boleh Kosong', 'required');
+		$this->form_validation->set_rules('dt[kelurahan]', '<strong>Kelurahan</strong> Tidak Boleh Kosong', 'required');
+		$this->form_validation->set_rules('dt[kecamatan]', '<strong>Kecamatan</strong> Tidak Boleh Kosong', 'required');
+		$this->form_validation->set_rules('dt[provinsi_id]', '<strong>Provinsi</strong> Mohon Dipilih', 'required');
+		$this->form_validation->set_rules('dt[kota_id]', '<strong>Kota</strong> Mohon Dipilih', 'required');
+		$this->form_validation->set_rules('dt[kode_pos]', '<strong>Kode Post</strong> Tidak Boleh Kosong', 'required');
+		$this->form_validation->set_message('required', '%s');
+	}
+
+	public function editcontact(){
+		$this->vali_contact();
 		if ($this->form_validation->run() == FALSE){
 			$this->alert->alertdanger(validation_errors());     
 		}else{
@@ -72,13 +126,118 @@ class Dashboard extends MY_Controller {
 			$dt['updated_at'] = date("Y-m-d H:i:s");
 			$this->mymodel->updateData('tbl_investor', $dt , array('id'=>$id));
 
-			if (!empty($_FILES['file']['name'])){
-				$dir  = "webfile/users/";
+			$this->alert->alertsuccess('Success Send Data');   
+		}
+	}
+
+
+	public function vali_dana(){
+
+		$this->form_validation->set_error_delimiters('<li>', '</li>');
+		$this->form_validation->set_rules('dt[sumberdana_id]', '<strong>Sumber Dana</strong> Mohon Dipilih', 'required');
+		$this->form_validation->set_rules('dt[pekerjaan_id]', '<strong>Pekerjaan</strong> Mohon Dipilih', 'required');
+		$this->form_validation->set_rules('dt[gaji_id]', '<strong>Penghasilan Bulanan</strong> Mohon Dipilih', 'required');
+		$this->form_validation->set_message('required', '%s');
+	}
+
+	public function editdana(){
+		$this->vali_dana();
+		if ($this->form_validation->run() == FALSE){
+			$this->alert->alertdanger(validation_errors());     
+		}else{
+			$id = $this->session->userdata('id');
+			$dt = $_POST['dt'];
+			$dt['updated_at'] = date("Y-m-d H:i:s");
+			$this->mymodel->updateData('tbl_investor', $dt , array('id'=>$id));
+
+			$this->alert->alertsuccess('Success Send Data');   
+		}
+	}
+
+	public function vali_rek(){
+		$this->form_validation->set_error_delimiters('<li>', '</li>');
+		$this->form_validation->set_rules('dt[bank_id]', '<strong>Bank</strong> Mohon Dipilih', 'required');
+		$this->form_validation->set_rules('dt[bank_cabang]', '<strong>Cabang Bank</strong> Tidak Boleh Kosong', 'required');
+		$this->form_validation->set_rules('dt[no_rek]', '<strong>No Rek</strong> Tidak Boleh Kosong', 'required');
+		$this->form_validation->set_rules('dt[atas_nama]', '<strong>Atas Nama</strong> Tidak Boleh Kosong', 'required');
+		$this->form_validation->set_message('required', '%s');
+	}
+
+	public function editrek(){
+		$this->vali_rek();
+		if ($this->form_validation->run() == FALSE){
+			$this->alert->alertdanger(validation_errors());     
+		}else{
+			$id = $this->session->userdata('id');
+			$dt = $_POST['dt'];
+			$dt['updated_at'] = date("Y-m-d H:i:s");
+			$this->mymodel->updateData('tbl_investor', $dt , array('id'=>$id));
+
+			$this->alert->alertsuccess('Success Send Data');   
+		}
+	}
+
+
+	public function vali_document(){
+		$this->form_validation->set_error_delimiters('<li>', '</li>');
+		$this->form_validation->set_rules('dt[no_ktp]', '<strong>No KTP</strong> Tidak Boleh Kosong', 'required');
+		$this->form_validation->set_rules('dt[no_npwp]', '<strong>No NPWP</strong> Tidak Boleh Kosong', 'required');
+		$this->form_validation->set_message('required', '%s');
+	}
+
+	public function editdocument(){
+		$this->vali_document();
+		if ($this->form_validation->run() == FALSE){
+			$this->alert->alertdanger(validation_errors());     
+		}else{
+			$id = $this->session->userdata('id');
+			$dt = $_POST['dt'];
+			$dt['updated_at'] = date("Y-m-d H:i:s");
+			$this->mymodel->updateData('tbl_investor', $dt , array('id'=>$id));
+
+			$id = $this->session->userdata('id');
+
+			if (!empty($_FILES['fileKTP']['name'])){
+				$dir  = "webfile/investor/doc/";
+				$config['upload_path']          = $dir;
+				$config['allowed_types']        = '*';
+				$config['file_name']           = md5('smartsoftstudio').rand(1000,100000);
+
+				$this->load->library('upload', $config);
+				if ( ! $this->upload->do_upload('fileKTP')){
+					$error = $this->upload->display_errors();
+					$this->alert->alertdanger($error);
+				}else{
+					$file = $this->upload->data();
+
+					$data = array(
+						'name'=> $file['file_name'],
+						'mime'=> $file['file_type'],
+						'dir'=> $dir.$file['file_name'],
+						'table'=> 'tbl_investor_ktp',
+						'table_id'=> $id,
+						'status' => 'ENABLE',
+						'created_at'=>date('Y-m-d H:i:s'),
+						'updated_at'=>date('Y-m-d H:i:s')
+					);
+
+					$file_dir = $this->mymodel->selectDataone('file', array('table_id' => $id, 'table' => 'tbl_investor_ktp'));
+					if($file_dir){
+						@unlink($file_dir['dir']);
+						$this->mymodel->updateData('file', $data , array('table_id'=>$id, 'table' => 'tbl_investor_ktp'));	
+					}else{
+						$this->db->insert('file', $data);
+					}
+				}
+			}
+			
+			if (!empty($_FILES['fileNPWP']['name'])){
+				$dir  = "webfile/investor/doc/";
 				$config['upload_path']          = $dir;
 				$config['allowed_types']        = '*';
 				$config['file_name']           = md5('smartsoftstudio').rand(1000,100000);
 				$this->load->library('upload', $config);
-				if ( ! $this->upload->do_upload('file')){
+				if ( ! $this->upload->do_upload('fileNPWP')){
 					$error = $this->upload->display_errors();
 					$this->alert->alertdanger($error);		
 				}else{
@@ -88,15 +247,20 @@ class Dashboard extends MY_Controller {
 						'name'=> $file['file_name'],
 						'mime'=> $file['file_type'],
 						'dir'=> $dir.$file['file_name'],
-						'table'=> 'tbl_investor',
+						'table'=> 'tbl_investor_npwp',
 						'table_id'=> $id,
+						'status' => 'ENABLE',
+						'created_at'=>date('Y-m-d H:i:s'),
 						'updated_at'=>date('Y-m-d H:i:s')
 					);
 
-					$file_dir = $this->mymodel->selectDataone('file', array('table_id' => $id, 'table' => 'tbl_investor'));
-					@unlink($file_dir['dir']);
-
-					$this->mymodel->updateData('file', $data , array('table_id'=>$id, 'table' => 'tbl_investor'));
+					$file_dir = $this->mymodel->selectDataone('file', array('table_id' => $id, 'table' => 'tbl_investor_npwp'));
+					if($file_dir){
+						@unlink($file_dir['dir']);
+						$this->mymodel->updateData('file', $data , array('table_id'=>$id, 'table' => 'tbl_investor_npwp'));	
+					}else{
+						$this->db->insert('file', $data);
+					}
 				}
 			}
 

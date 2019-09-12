@@ -14,9 +14,11 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="pull-right">
-                  <a href="<?= base_url('admin/project/create') ?>">
-                    <button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Project</button>
-                  </a>
+                  <?php if($this->session->userdata('role_id') == '17'){ ?>
+                    <a href="<?= base_url('admin/project/create') ?>">
+                      <button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Project</button>
+                    </a>
+                  <?php } ?>
                   <a href="<?= base_url('fitur/ekspor/tbl_project') ?>" target="_blank">
                     <button type="button" class="btn btn-sm btn-warning"><i class="fa fa-file-excel-o"></i> Ekspor Project</button>
                   </a>
@@ -117,9 +119,11 @@
                           <button type="button" class="btn btn-sm btn-primary" onclick="edit(<?=$row['id']?>)">
                             <i class="fa fa-edit"></i>
                           </button>
-                          <button type="button" onclick="hapus(<?=$row['id']?>)" class="btn btn-sm btn-danger">
-                            <i class="fa fa-trash-o"></i>
-                          </button>
+                          <?php if($this->session->userdata('role_id') == '17'){ ?>
+                            <button type="button" onclick="hapus(<?=$row['id']?>)" class="btn btn-sm btn-danger">
+                              <i class="fa fa-trash-o"></i>
+                            </button>
+                          <?php } ?>
                         </div>
                       </td>
                     </tr>

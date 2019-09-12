@@ -217,12 +217,7 @@ $this->session->set_userdata(array('url_session' => $actual_link));
     );
 
     $('#datepicker').datepicker({
-      dateFormat: "dd-mm-yy",
-      showOtherMonths: true,
-      selectOtherMonths: true,
-      autoclose: true,
-      changeMonth: true,
-      changeYear: true,
+      format: 'dd-mm-yyyy',
     });
 
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({

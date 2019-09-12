@@ -41,12 +41,11 @@ class User extends MY_Controller {
 
 				$file['name'] = 'default.png';
 				$file['mime'] = 'image/png';
-				$file['dir'] = 'webfile/users/default.png';
+				$file['dir'] = 'webfile/investor/default.png';
 				$file['table'] = 'tbl_investor';
 				$file['table_id'] = $this->db->insert_id();	    
 				$file['status'] = 'ENABLE';
 				$file['created_at'] = date('Y-m-d H:i:s');
-				$file['updated_at'] = date('Y-m-d H:i:s');
 				
 				$str = $this->db->insert('file', $file);
 

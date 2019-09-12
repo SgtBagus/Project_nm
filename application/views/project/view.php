@@ -72,7 +72,7 @@
               </div>
             </div>
           </div>
-          <button type="button" id="btn-invest" class="btn btn-block btn-primary btn-lg round" data-toggle="modal" data-target="#modal-invest" <?php if($tbl_project['status']=='DISABLE'){ echo "disabled"; }?> >
+          <button type="button" class="btn-invest btn btn-block btn-primary btn-lg round" data-toggle="modal" data-target="#modal-invest" <?php if($tbl_project['status']=='DISABLE'){ echo "disabled"; }?> >
             <i class="fa fa-credit-card"></i> Lakukan nvestasi
           </button>
           <br>
@@ -87,7 +87,7 @@
               <h2><b>Rp <?= number_format($tbl_project['harga'],0,',','.') ?>,- / Unit</b></h2>
             </div>
             <div class="box-body" align="center">
-              <button type="button" id="btn-invest" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-invest" <?php if($tbl_project['status']=='DISABLE'){ echo "disabled"; }?> >
+              <button type="button" class="btn-invest btn btn-primary btn-md" data-toggle="modal" data-target="#modal-invest" <?php if($tbl_project['status']=='DISABLE'){ echo "disabled"; }?> >
                 <i class="fa fa-credit-card"></i> Lakukan Investasi
               </button>
             </div>
@@ -115,15 +115,6 @@
                 <div class="col-md-8 col-xs-12 col-6 mb-md-0 mb-5">
                   <h3><?= $user['name'] ?> </h3>
                   <small>Mendaftar pada : <b><?= date("d-m-Y", strtotime($user['created_at']))  ?></b></small>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="box box-solid round">
-                <div class="box-body">
-                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63219.15520334034!2d112.59676353691754!3d-7.978558877729098!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd62822063dc2fb%3A0x78879446481a4da2!2sMalang%2C%20Malang%20City%2C%20East%20Java%2C%20Indonesia!5e0!3m2!1sen!2sus!4v1567484427303!5m2!1sen!2sus" width="100%" height="215" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
                 </div>
               </div>
             </div>
@@ -160,58 +151,44 @@
                                 <thead>
                                   <tr>
                                     <th>No</th>
-                                    <th>tahun Ke </th>
+                                    <th>Tahun Ke </th>
                                     <th>Bagi Hasil</th>
                                     <th>ROI</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <td colspan="4" align="center">
-                                      <img src='https://icon-library.net/images/no-data-icon/no-data-icon-20.jpg' width='100px' height='100px'>
-                                      <p>
-                                        <b>
-                                          Tidak Ada Data
-                                        </b>
-                                      </p>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>1</td>
-                                    <td>Rp 720.000</td>
-                                    <td>18%</td>
-                                  </tr>
-                                  <tr>
-                                    <td>2</td>
-                                    <td>2</td>
-                                    <td>Rp 720.000</td>
-                                    <td>18%</td>
-                                  </tr>
-                                  <tr>
-                                    <td>3</td>
-                                    <td>3</td>
-                                    <td>Rp 720.000</td>
-                                    <td>18%</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                            <br>
+                                  <?php $i = 1; foreach ($tbl_project_return_grafik as $grafik) { ?>
+                                    <tr>
+                                      <td><?=$i?></td>
+                                      <td>Tahun Ke - <?= $grafik['tahun']?></td>
+                                      <td><?php 
+                                      $total_harga = $tbl_project['total_harga']; 
+                                      $persentase = $grafik['return_tahun'];
+                                      $hasil = $total_harga*$persentase/100;
 
-                            <div class="box-group" id="accordion">
-                              <div class="panel box box-primary" align="center">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
-                                  <div class="box-header with-border">
-                                    <h4 class="box-title">
-                                      Buka Simulasi Grafik
-                                    </h4>
-                                  </div>
-                                </a>
-                                <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                  <div class="row" style="width: 100%; height: 300px;">
-                                    <canvas id="myChart" style="width: 512px; height: 256px" ></canvas>
-                                  </div>
+                                      echo "Rp ".number_format($hasil,0,',','.').",-"
+                                      ?>
+                                    </td>
+                                    <td><?= $grafik['return_tahun']?> % per Tahun</td>
+                                  </tr>
+                                <?php } ?>
+                              </tbody>
+                            </table>
+                          </div>
+                          <br>
+
+                          <div class="box-group" id="accordion">
+                            <div class="panel box box-primary" align="center">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
+                                <div class="box-header with-border">
+                                  <h4 class="box-title">
+                                    Buka Simulasi Grafik
+                                  </h4>
+                                </div>
+                              </a>
+                              <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                <div class="row" style="width: 100%; height: 300px;">
+                                  <canvas id="myChart" style="width: 512px; height: 256px" ></canvas>
                                 </div>
                               </div>
                             </div>
@@ -226,8 +203,9 @@
           </div>
         </div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
+</div>
 </div>
 
 <div class="modal modal-default fade" id="modal-invest" style="display: none;">
@@ -259,7 +237,7 @@
 
   <?php if($this->session->userdata('session_sop')) {
     if($this->session->userdata('role') != 'Investor'){ ?>
-      $('#btn-invest').remove();
+      $('.btn-invest').remove();
       $('#modal-invest').remove();
     <?php } 
   }
@@ -286,11 +264,21 @@
     var ctx = document.getElementById("myChart");
 
     var data = {
-      labels: ["Tahun 1", "Tahun 2", "Tahun 3", "Tahun4"],
+      labels: [
+      <?php foreach ($tbl_project_return_grafik as $grafik) { ?>
+        "Tahun <?= $grafik['tahun'] ?>",
+      <?php } ?>
+      ],
       datasets: [
       {
         label: "Profit ",
-        data: [0, 65000, 65000, 0],
+        data: [
+        <?php foreach ($tbl_project_return_grafik as $grafik) { 
+          $total_harga = $tbl_project['total_harga']; 
+          $persentase = $grafik['return_tahun'];
+          $hasil = $total_harga*$persentase/100;
+          echo $hasil.","; } ?>
+        ],
         backgroundColor: 'rgb(193, 193, 229)',
         borderColor: 'rgb(105, 105, 205)',
         borderWidth: 4,

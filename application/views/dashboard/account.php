@@ -19,8 +19,8 @@
                                     <div class="row">
                                         <div class="col-md-12"> 
                                             <div class="box-body">
-                                                <form action="<?= base_url('dashboard/editaccount') ?>" method="post" enctype="multipart/form-data" id="upload-create">
-                                                    <div class="show_error"></div>
+                                                <form action="<?= base_url('dashboard/editaccount') ?>" method="post" enctype="multipart/form-data" id="editaccount">
+                                                    <div class="show_error_account"></div>
                                                     <div class="row">
                                                         <div class="col-md-6"> 
                                                             <div class="form-group">
@@ -31,10 +31,10 @@
                                                         <div class="col-md-6"> 
                                                             <div class="form-group">
                                                                 <label>Jenis Kelamin</label>
-                                                                <select class="form-control select2" name="dt[jk]">
+                                                                <select class="form-control select2" name="dt[jk]" style="width: 100%">
                                                                     <option value="">--Pilih Jenis Kelamin--</option>
-                                                                    <option value="L">Laki Laki</option>
-                                                                    <option value="P">Perempuan</option>
+                                                                    <option value="L" <?php if($user['jk'] == 'L'){echo "selected";} ?>>Laki Laki</option>
+                                                                    <option value="P" <?php if($user['jk'] == 'P'){echo "selected";} ?>>Perempuan</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -43,21 +43,21 @@
                                                         <div class="col-md-6"> 
                                                             <div class="form-group">
                                                                 <label>Warga Negara</label>
-                                                                <select class="form-control select2" name="dt[jk]">
+                                                                <select class="form-control select2" name="dt[wrg_negara]" style="width: 100%">
                                                                     <option value="">--Pilih Warga Negara--</option>
-                                                                    <option value="WNI">WNI</option>
-                                                                    <option value="WNA">WNA</option>
+                                                                    <option value="WNI" <?php if($user['wrg_negara'] == 'WNI'){echo "selected";} ?>>WNI</option>
+                                                                    <option value="WNA" <?php if($user['wrg_negara'] == 'WNA'){echo "selected";} ?>>WNA</option>
                                                                 </select>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6"> 
                                                             <div class="form-group">
                                                                 <label>Agama</label>
-                                                                <select class="form-control select2" name="dt[provinsi_id]">
+                                                                <select class="form-control select2" name="dt[agama_id]"  style="width: 100%">
                                                                     <option value="">--Pilih Agama--</option>
                                                                     <?php $tbl_agama = $this->mymodel->selectData("tbl_agama");
                                                                     foreach ($tbl_agama as $key => $value) {?>
-                                                                        <option value="<?= $value['id'] ?>"><?= $value['value'] ?></option>
+                                                                        <option value="<?= $value['id'] ?>" <?php if($user['agama_id'] == $value['id']){echo "selected"; } ?>><?= $value['value'] ?></option>
                                                                     <?php } ?>
                                                                 </select>
                                                             </div>
@@ -73,8 +73,13 @@
                                                         <div class="col-md-6"> 
                                                             <div class="form-group">
                                                                 <label>Tanggal Lahir</label>
-                                                                <input type="text" name="dt[tgl_lahir]" class="form-control" id="datepicker" placeholder="Masukan Tanggal Lahir" value="<?= $user['tgl_lahir']?>">
+                                                                <input type="text" name="dt[tgl_lahir]" class="form-control" id="datepicker" placeholder="Masukan Tanggal Lahir" value="<?= date("d-m-Y", strtotime($user['tgl_lahir'])); ?>">
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" align="right">
+                                                        <div class="col-md-12"> 
+                                                            <button type="submit" class="btn-send btn btn-primary btn-send" ><i class="fa fa-edit"></i> Save</button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -83,36 +88,44 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="tab_image">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Foto Profil</label>
-                                        <div class="row">
-                                            <div class="col-md-5" align="center">
-                                                <img src="<?= base_url().$file['dir'] ?>"   class="img-circle" alt="User Image" width="250px" height="250px" id="preview_image">
+                                    <form action="<?= base_url('dashboard/editphoto') ?>" method="post" enctype="multipart/form-data" id="editphoto">
+                                        <div class="show_error_image"></div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Foto Profil</label>
+                                            <div class="row">
+                                                <div class="col-md-5" align="center">
+                                                    <img src="<?= base_url().$file['dir'] ?>"   class="img-circle" alt="User Image" width="250px" height="250px" id="preview_image">
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <button type="button" class="btn btn-sm btn-primary" id="btnFile"><i class="fa fa-file"></i> Browser File</button>
+                                                    <input type="file" class="file" id="imageFile" style="display: none;" name="file" accept="image/x-png,image/jpeg,image/jpg" />
+                                                    <p class="help-block">Foto yang diupload disarankan berukuran 70px x 70px dan memiliki format PNG, JPG, atau JPEG</p>
+                                                </div>
                                             </div>
-                                            <div class="col-md-7">
-                                                <button type="button" class="btn btn-sm btn-primary" id="btnFile"><i class="fa fa-file"></i> Browser File</button>
-                                                <input type="file" class="file" id="imageFile" style="display: none;" name="file"/>
-                                                <p class="help-block">Foto yang diupload disarankan berukuran 70px x 70px dan memiliki format PNG, JPG, atau JPEG</p>
+                                            <div class="row" align="right">
+                                                <div class="col-md-12"> 
+                                                    <button type="submit" class="btn-send btn btn-primary btn-send" ><i class="fa fa-edit"></i> Save</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                                 <div class="tab-pane" id="tab_contact">
                                     <div class="row">
                                         <div class="col-md-12"> 
                                             <div class="box-body">
-                                                <form action="<?= base_url('dashboard/editaccount') ?>" method="post" enctype="multipart/form-data" id="upload-create">
-                                                    <div class="show_error"></div>
+                                                <form action="<?= base_url('dashboard/editcontact') ?>" method="post" enctype="multipart/form-data" id="editcontact">
+                                                    <div class="show_error_contact"></div>
                                                     <div class="row">
                                                         <div class="col-md-6"> 
                                                             <div class="form-group">
                                                                 <label>Email</label>
-                                                                <input type="text" name="dt[email]" class="form-control" placeholder="Masukan Email" value="<?= $user['email']?>">
+                                                                <input type="text" name="dt[email]" class="form-control" placeholder="Masukan Email" value="<?= $user['email']?>" readonly>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6"> 
                                                             <div class="form-group">
-                                                                <label>Telephone</label>
+                                                                <label>No Hp</label>
                                                                 <input type="number" name="dt[phone]" class="form-control" placeholder="Masukan Telephone" value="<?= $user['phone']?>">
                                                             </div>
                                                         </div>
@@ -148,7 +161,7 @@
                                                                     <?php 
                                                                     $tbl_provinsi = $this->mymodel->selectData("tbl_provinsi"); foreach ($tbl_provinsi as $key => $value) 
                                                                     { ?>
-                                                                        <option value="<?= $value['id'] ?>"><?= $value['value'] ?></option>
+                                                                        <option value="<?= $value['id'] ?>" <?php if($user['provinsi_id'] == $value['id']){ echo "selected"; } ?>><?= $value['value'] ?></option>
                                                                     <?php } ?>
                                                                 </select>
                                                             </div>
@@ -156,12 +169,12 @@
                                                         <div class="col-md-6">  
                                                             <div class="form-group">
                                                                 <label>Kota</label>
-                                                                <select class="form-control select2" name="dt[kode_id]" style="width: 100%">
-                                                                    <option value="">--Pilih Provinsi--</option>
+                                                                <select class="form-control select2" name="dt[kota_id]" style="width: 100%">
+                                                                    <option value="">--Pilih Kota--</option>
                                                                     <?php 
                                                                     $tbl_kota = $this->mymodel->selectData("tbl_kota"); foreach ($tbl_kota as $key => $value) 
                                                                     { ?>
-                                                                        <option value="<?= $value['id'] ?>"><?= $value['value'] ?></option>
+                                                                        <option value="<?= $value['id'] ?>" <?php if($user['kota_id'] == $value['id']){ echo "selected"; } ?>><?= $value['value'] ?></option>
                                                                     <?php } ?>
                                                                 </select>
                                                             </div>
@@ -175,6 +188,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="row" align="right">
+                                                        <div class="col-md-12"> 
+                                                            <button type="submit" class="btn-send btn btn-primary btn-send" ><i class="fa fa-edit"></i> Save</button>
+                                                        </div>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
@@ -184,8 +202,8 @@
                                     <div class="row">
                                         <div class="col-md-12"> 
                                             <div class="box-body">
-                                                <form action="<?= base_url('dashboard/editaccount') ?>" method="post" enctype="multipart/form-data" id="upload-create">
-                                                    <div class="show_error"></div>
+                                                <form action="<?= base_url('dashboard/editdana') ?>" method="post" enctype="multipart/form-data" id="editdana">
+                                                    <div class="show_error_dana"></div>
                                                     <div class="row">
                                                         <div class="col-md-6"> 
                                                             <div class="form-group">
@@ -195,7 +213,7 @@
                                                                     <?php 
                                                                     $tbl_sumberdana = $this->mymodel->selectData("tbl_sumberdana"); foreach ($tbl_sumberdana as $key => $value) 
                                                                     { ?>
-                                                                        <option value="<?= $value['id'] ?>"><?= $value['value'] ?></option>
+                                                                        <option value="<?= $value['id'] ?>" <?php if($user['sumberdana_id'] == $value['id']){ echo "selected"; } ?> ><?= $value['value'] ?></option>
                                                                     <?php } ?>
                                                                 </select>
                                                             </div>
@@ -208,7 +226,7 @@
                                                                     <?php 
                                                                     $tbl_pekerjaan = $this->mymodel->selectData("tbl_pekerjaan"); foreach ($tbl_pekerjaan as $key => $value) 
                                                                     { ?>
-                                                                        <option value="<?= $value['id'] ?>"><?= $value['value'] ?></option>
+                                                                        <option value="<?= $value['id'] ?>" <?php if($user['pekerjaan_id'] == $value['id']){ echo "selected"; } ?> ><?= $value['value'] ?></option>
                                                                     <?php } ?>
                                                                 </select>
                                                             </div>
@@ -218,15 +236,20 @@
                                                         <div class="col-md-6"> 
                                                             <div class="form-group">
                                                                 <label>Penghasilan Bulanan</label>
-                                                                <select class="form-control select2" name="dt[sumberdana_id]" style="width: 100%">
+                                                                <select class="form-control select2" name="dt[gaji_id]" style="width: 100%">
                                                                     <option value="">--Pilih Penghasilan Bulanan--</option>
                                                                     <?php 
                                                                     $tbl_gaji = $this->mymodel->selectData("tbl_gaji"); foreach ($tbl_gaji as $key => $value) 
                                                                     { ?>
-                                                                        <option value="<?= $value['id'] ?>"><?= $value['value'] ?></option>
+                                                                        <option value="<?= $value['id'] ?>" <?php if($user['gaji_id'] == $value['id']){ echo "selected"; } ?> ><?= $value['value'] ?></option>
                                                                     <?php } ?>
                                                                 </select>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" align="right">
+                                                        <div class="col-md-12"> 
+                                                            <button type="submit" class="btn-send btn btn-primary btn-send" ><i class="fa fa-edit"></i> Save</button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -238,8 +261,8 @@
                                     <div class="row">
                                         <div class="col-md-12"> 
                                             <div class="box-body">
-                                                <form action="<?= base_url('dashboard/editaccount') ?>" method="post" enctype="multipart/form-data" id="upload-create">
-                                                    <div class="show_error"></div>
+                                                <form action="<?= base_url('dashboard/editrek') ?>" method="post" enctype="multipart/form-data" id="editrek">
+                                                    <div class="show_error_rek"></div>
                                                     <div class="row">
                                                         <div class="col-md-6"> 
                                                             <div class="form-group">
@@ -257,7 +280,7 @@
                                                         <div class="col-md-6">  
                                                             <div class="form-group">
                                                                 <label>Cabang</label>
-                                                                <input type="text" name="dt[cabang]" class="form-control" placeholder="Masukan Cabang Bank" value="<?= $user['bank_cabang']?>">
+                                                                <input type="text" name="dt[bank_cabang]" class="form-control" placeholder="Masukan Cabang Bank" value="<?= $user['bank_cabang']?>">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -275,6 +298,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="row" align="right">
+                                                        <div class="col-md-12"> 
+                                                            <button type="submit" class="btn-send btn btn-primary btn-send" ><i class="fa fa-edit"></i> Save</button>
+                                                        </div>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
@@ -284,8 +312,8 @@
                                     <div class="row">
                                         <div class="col-md-12"> 
                                             <div class="box-body">
-                                                <form action="<?= base_url('dashboard/editaccount') ?>" method="post" enctype="multipart/form-data" id="upload-create">
-                                                    <div class="show_error"></div>
+                                                <form action="<?= base_url('dashboard/editdocument') ?>" method="post" enctype="multipart/form-data" id="editdocument">
+                                                    <div class="show_error_document"></div>
                                                     <div class="row">
                                                         <div class="col-md-6">  
                                                             <div class="form-group">
@@ -305,10 +333,18 @@
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1">Foto KTP</label>
                                                                 <br>
-                                                                <img src="https://getuikit.com/v2/docs/images/placeholder_600x400.svg" width="250px" height="250px" id="preview_ktp">
-                                                                <br>
+                                                                <?php if($ktp) { ?>
+                                                                    <img src="<?= base_url().$ktp['dir']?>" width="250px" height="250px" id="preview_ktp">
+                                                                    <br><br>
+                                                                    <a href="<?= base_url('webfile/investor/doc/').$ktp['name']?>" target="_blank">
+                                                                        <button type="button" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Lihat Gambar</button>
+                                                                    </a>
+                                                                <?php } else {?>
+                                                                    <img src="https://getuikit.com/v2/docs/images/placeholder_600x400.svg" width="250px" height="250px" id="preview_ktp">
+                                                                <?php } ?>
+                                                                <hr>
                                                                 <button type="button" class="btn btn-sm btn-primary" id="btnFile-KTP"><i class="fa fa-file"></i> Browser File</button>
-                                                                <input type="file" class="file" id="imageKTP" style="display: none;" name="file"/>
+                                                                <input type="file" class="file" id="imageKTP" style="display: none;" name="fileKTP"/>
                                                                 <p class="help-block">Foto yang diupload disarankan berukuran 70px x 70px dan memiliki format PNG, JPG, atau JPEG</p>
                                                             </div>
                                                         </div>
@@ -316,16 +352,30 @@
                                                             <div class="form-group">
                                                                 <label for="exampleInputEmail1">Foto NPWP</label>
                                                                 <br>
-                                                                <img src="https://getuikit.com/v2/docs/images/placeholder_600x400.svg" width="250px" height="250px" id="preview_npwp">
-                                                                <br>
+
+                                                                <?php if($npwp) { ?>
+                                                                    <img src="<?= base_url().$npwp['dir']?>" width="250px" height="250px" id="preview_npwp">
+                                                                    <br><br>
+                                                                    <a href="<?= base_url('webfile/investor/doc/').$npwp['name']?>" target="_blank">
+                                                                        <button type="button" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Lihat Gambar</button>
+                                                                    </a>
+                                                                <?php } else {?>
+                                                                    <img src="https://getuikit.com/v2/docs/images/placeholder_600x400.svg" width="250px" height="250px" id="preview_npwp">
+                                                                <?php } ?>
+                                                                <hr>
                                                                 <button type="button" class="btn btn-sm btn-primary" id="btnFile-NPWP"><i class="fa fa-file"></i> Browser File</button>
-                                                                <input type="file" class="file" id="imageNPWP" style="display: none;" name="file"/>
+                                                                <input type="file" class="file" id="imageNPWP" style="display: none;" name="fileNPWP"/>
                                                                 <p class="help-block">Foto yang diupload disarankan berukuran 70px x 70px dan memiliki format PNG, JPG, atau JPEG</p>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </form>
+                                                    <div class="row" align="right">
+                                                        <div class="col-md-12"> 
+                                                            <button type="submit" class="btn-send btn btn-primary btn-send" ><i class="fa fa-edit"></i> Save</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -337,4 +387,237 @@
         </div>
     </div>
 </div>
-</div>
+<script type="text/javascript">
+
+    $("#editaccount").submit(function(){
+        var form = $(this);
+        var mydata = new FormData(this);
+        $.ajax({
+            type: "POST",
+            url: form.attr("action"),
+            data: mydata,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend : function(){
+                $(".btn-send").addClass("disabled").html("<i class='la la-spinner la-spin'></i>  Processing...").attr('disabled',true);
+                form.find(".show_error_account").slideUp().html("");
+            },
+
+            success: function(response, textStatus, xhr) {
+                var str = response;
+                if (str.indexOf("success") != -1){
+                  form.find(".show_error_account").hide().html(response).slideDown("fast");
+                  setTimeout(function(){
+                    window.location.href = "<?= base_url('dashboard/account') ?>";
+                }, 1000);
+
+                  $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              }else{
+                  form.find(".show_error_account").hide().html(response).slideDown("fast");
+                  $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              }
+          },
+          error: function(xhr, textStatus, errorThrown) {
+              console.log(xhr);
+              $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              form.find(".show_error_account").hide().html(xhr).slideDown("fast");
+          }
+      });
+        return false;
+    });
+
+
+    $("#editphoto").submit(function(){
+        var form = $(this);
+        var mydata = new FormData(this);
+        $.ajax({
+            type: "POST",
+            url: form.attr("action"),
+            data: mydata,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend : function(){
+                $(".btn-send").addClass("disabled").html("<i class='la la-spinner la-spin'></i>  Processing...").attr('disabled',true);
+                form.find(".show_error_image").slideUp().html("");
+            },
+
+            success: function(response, textStatus, xhr) {
+                var str = response;
+                if (str.indexOf("success") != -1){
+                  form.find(".show_error_image").hide().html(response).slideDown("fast");
+                  setTimeout(function(){
+                    window.location.href = "<?= base_url('dashboard/account') ?>";
+                }, 1000);
+
+                  $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              }else{
+                  form.find(".show_error_image").hide().html(response).slideDown("fast");
+                  $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              }
+          },
+          error: function(xhr, textStatus, errorThrown) {
+              console.log(xhr);
+              $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              form.find(".show_error_image").hide().html(xhr).slideDown("fast");
+          }
+      });
+        return false;
+    });
+
+    $("#editcontact").submit(function(){
+        var form = $(this);
+        var mydata = new FormData(this);
+        $.ajax({
+            type: "POST",
+            url: form.attr("action"),
+            data: mydata,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend : function(){
+                $(".btn-send").addClass("disabled").html("<i class='la la-spinner la-spin'></i>  Processing...").attr('disabled',true);
+                form.find(".show_error_contact").slideUp().html("");
+            },
+
+            success: function(response, textStatus, xhr) {
+                var str = response;
+                if (str.indexOf("success") != -1){
+                  form.find(".show_error_contact").hide().html(response).slideDown("fast");
+                  setTimeout(function(){
+                    window.location.href = "<?= base_url('dashboard/account') ?>";
+                }, 1000);
+
+                  $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              }else{
+                  form.find(".show_error_contact").hide().html(response).slideDown("fast");
+                  $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              }
+          },
+          error: function(xhr, textStatus, errorThrown) {
+              console.log(xhr);
+              $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              form.find(".show_error_contact").hide().html(xhr).slideDown("fast");
+          }
+      });
+        return false;
+    });
+
+
+    $("#editdana").submit(function(){
+        var form = $(this);
+        var mydata = new FormData(this);
+        $.ajax({
+            type: "POST",
+            url: form.attr("action"),
+            data: mydata,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend : function(){
+                $(".btn-send").addClass("disabled").html("<i class='la la-spinner la-spin'></i>  Processing...").attr('disabled',true);
+                form.find(".show_error_dana").slideUp().html("");
+            },
+
+            success: function(response, textStatus, xhr) {
+                var str = response;
+                if (str.indexOf("success") != -1){
+                  form.find(".show_error_dana").hide().html(response).slideDown("fast");
+                  setTimeout(function(){
+                    window.location.href = "<?= base_url('dashboard/account') ?>";
+                }, 1000);
+
+                  $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              }else{
+                  form.find(".show_error_dana").hide().html(response).slideDown("fast");
+                  $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              }
+          },
+          error: function(xhr, textStatus, errorThrown) {
+              console.log(xhr);
+              $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              form.find(".show_error_dana").hide().html(xhr).slideDown("fast");
+          }
+      });
+        return false;
+    });
+
+
+    $("#editrek").submit(function(){
+        var form = $(this);
+        var mydata = new FormData(this);
+        $.ajax({
+            type: "POST",
+            url: form.attr("action"),
+            data: mydata,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend : function(){
+                $(".btn-send").addClass("disabled").html("<i class='la la-spinner la-spin'></i>  Processing...").attr('disabled',true);
+                form.find(".show_error_rek").slideUp().html("");
+            },
+
+            success: function(response, textStatus, xhr) {
+                var str = response;
+                if (str.indexOf("success") != -1){
+                  form.find(".show_error_rek").hide().html(response).slideDown("fast");
+                  setTimeout(function(){
+                    window.location.href = "<?= base_url('dashboard/account') ?>";
+                }, 1000);
+
+                  $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              }else{
+                  form.find(".show_error_rek").hide().html(response).slideDown("fast");
+                  $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              }
+          },
+          error: function(xhr, textStatus, errorThrown) {
+              console.log(xhr);
+              $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              form.find(".show_error_rek").hide().html(xhr).slideDown("fast");
+          }
+      });
+        return false;
+    });
+
+    $("#editdocument").submit(function(){
+        var form = $(this);
+        var mydata = new FormData(this);
+        $.ajax({
+            type: "POST",
+            url: form.attr("action"),
+            data: mydata,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend : function(){
+                $(".btn-send").addClass("disabled").html("<i class='la la-spinner la-spin'></i>  Processing...").attr('disabled',true);
+                form.find(".show_error_document").slideUp().html("");
+            },
+
+            success: function(response, textStatus, xhr) {
+                var str = response;
+                if (str.indexOf("success") != -1){
+                  form.find(".show_error_document").hide().html(response).slideDown("fast");
+                  setTimeout(function(){
+                    window.location.href = "<?= base_url('dashboard/account') ?>";
+                }, 1000);
+
+                  $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              }else{
+                  form.find(".show_error_document").hide().html(response).slideDown("fast");
+                  $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              }
+          },
+          error: function(xhr, textStatus, errorThrown) {
+              console.log(xhr);
+              $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);
+              form.find(".show_error_document").hide().html(xhr).slideDown("fast");
+          }
+      });
+        return false;
+    });
+
+</script>

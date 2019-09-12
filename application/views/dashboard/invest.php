@@ -57,9 +57,9 @@
                                         <?php if ($row['status_pembayaran'] == 'WAITING') {
                                             echo '<small class="label bg-yellow"><i class="fa fa-warning"> </i> Menunggu Dikonfirmasi </small>';
                                         }else if ($row['status_pembayaran'] == 'APPROVE') {
-                                            echo '<small class="label bg-primary"><i class="fa fa-check"> </i> Di Terima </small>';
+                                            echo '<small class="label bg-green"><i class="fa fa-check"> </i> Di Terima </small>';
                                         }else{
-                                            echo '<small class="label bg-danger"><i class="fa fa-ban"> </i> Di Tolak </small>';
+                                            echo '<small class="label bg-red"><i class="fa fa-ban"> </i> Di Tolak </small>';
                                         }?>
                                     </td>
                                     <td>

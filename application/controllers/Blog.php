@@ -7,7 +7,7 @@ class Blog extends MY_Controller {
 	public function index(){
 		$data['tbl_blog'] = $this->mymodel->selectWhere('tbl_blog', array('public' => 'ENABLE'));
 		$data['page_name'] = "Blog";
-        $this->template->load('template/template','blog/index',$data); 
+		$this->template->load('template/template','blog/index',$data); 
 	}
 	
 	public function view($slug){
@@ -17,7 +17,9 @@ class Blog extends MY_Controller {
 		$data['user'] = $this->mymodel->selectDataone('user',array('id'=>$data['tbl_blog']['user_id']));
 		$data['user_image'] = $this->mymodel->selectDataone('file',array('table_id'=>$data['user']['id'],'table'=>'user'));
 		if($data['tbl_blog']){
-        	$this->template->load('template/template','blog/view',$data); 
+			$view['view'] = $data['tbl_blog']['view'] + 1;
+			$this->mymodel->updateData('tbl_blog', $view , array('slug'=>$slug));
+			$this->template->load('template/template','blog/view',$data); 
 		}else{
 			$this->load->view('errors/html/error_404');
 			return false;

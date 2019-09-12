@@ -13,6 +13,8 @@ class Project extends MY_Controller {
 	public function view($slug){
 		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('slug'=>$slug));
 		$data['tbl_project_return'] = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$data['tbl_project']['id'], 'public' => 'ENABLE'));
+		$data['tbl_project_return_grafik'] = $this->mymodel->selectWhere('tbl_project_return', array('project_id'=>$data['tbl_project']['id'], 'public' => 'ENABLE'));
+
 		$data['user'] = $this->mymodel->selectDataone('user',array('id'=>$data['tbl_project']['user_id']));
 		$data['user_image'] = $this->mymodel->selectDataone('file',array('table_id'=>$data['user']['id'],'table'=>'user'));
 		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$data['tbl_project']['id'],'table'=>'tbl_project'));
@@ -37,21 +39,38 @@ class Project extends MY_Controller {
 			$this->alert->alertdanger(validation_errors());
 		}else{
 			$dt = $_POST['dt'];
-			$dt['code'] = 'INV-'.$_POST['dt']['project_id'].'_'.date('Y').date('m').date('d').'_'.$this->session->userdata('id').'C';
 
+			$chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			$res = "";
+			for(;;){
+				for ($i = 0; $i < 10; $i++) {
+					$res .= $chars[mt_rand(0, strlen($chars)-1)];
+				}
+
+				$query = $this->db->query("SELECT * FROM tbl_project_invest WHERE code='$res'")->result();
+	// echo "SELECT * FROM donasi WHERE kodeDonasi='$res'";
+				if(count($query)==0){
+		// echo 'TIDAK ADA';
+					break;
+				}else{
+		// echo 'ADA';
+				}
+			}
+
+			$dt['code'] = 'AN-'.$res;
 			$dt['investor_id'] = $this->session->userdata('id');
 			$dt['total_harga'] = str_replace( ',', '', $dt['total_harga'] );
-			$dt['status_invest'] = 'WAITING';
-			$dt['status'] = 'ENABLE';
+			$dt['status_pembayaran'] = 'WAITING';
 			$dt['created_at'] = date('Y-m-d H:i:s');
 			$dt['tgl_kadarluasa'] = date('Y-m-d H:i:s', time() + 86400);
+			$dt['status'] = 'ENABLE';
 			$this->db->insert('tbl_project_invest', $dt);
 			
 			// $unit = $this->mymodel->selectDataOne('tbl_project', array('id' => $_POST['dt']['project_id']));
 			// $minUnit['unit'] = $unit['unit']-$_POST['dt']['unit'];
 			// $this->mymodel->updateData('tbl_project', $minUnit , array('id'=>$_POST['dt']['project_id']));
 
-			$this->alert->alertsuccess('Investasi Telah Dikirim dan menunggu untuk melakukan Pembayaran <br> Cek Proses Investasi di <a href="'.base_url('dashboard').'"> Dashboard</a>');
+			$this->alert->alertsuccess('Investasi Telah Dikirim dan menunggu untuk melakukan Pembayaran <br> Cek Proses Investasi di <a href="'.base_url('dashboard/invest').'"> Dashboard</a>');
 			echo '<script type="text/javascript" language="Javascript">window.open("'.base_url('invoice/payment/').$dt['code'].'");</script>';
 		}
 	}

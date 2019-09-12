@@ -1,4 +1,5 @@
 <?php
+
 $action = base_url('admin/project/store');
 
 if($data_edit){
@@ -37,7 +38,7 @@ if($data_edit){
             <?php } ?>
           </select>
         <?php } else { ?>
-            <input type="text" class="form-control" placeholder="Slug Proyek Diambil Sesuai Judul" name="dt[user_id]" value="<?= $this->session->userdata('name')?>" readonly>
+          <input type="text" class="form-control" placeholder="Slug Proyek Diambil Sesuai Judul" name="dt[user_id]" value="<?= $this->session->userdata('name')?>" readonly>
         <?php } ?>
       </div>
     </div>

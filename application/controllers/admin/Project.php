@@ -19,7 +19,12 @@ class Project extends MY_Controller {
 
 	public function create(){
 		$data['page_name'] = "Project";
-		$this->template->load('admin/template/template','admin/project/create', $data);
+
+		if($this->session->userdata('role_id') == '17'){
+			$this->template->load('admin/template/template','admin/project/create', $data);
+		}else{
+			$this->load->view('errors/html/error_404.php');
+		}
 	}
 
 	public function validate(){
@@ -228,21 +233,41 @@ class Project extends MY_Controller {
 		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_project'));
 		$data['file_detail'] = $this->mymodel->selectWhere('file',array('table_id'=>$id,'table'=>'tbl_project_gambar'));
 		$data['page_name'] = "Project";
-		$this->template->load('admin/template/template','admin/project/view',$data);
+		if($data['tbl_project']){
+			$this->template->load('admin/template/template','admin/project/view',$data);
+		}else{
+			$this->load->view('errors/html/error_404');
+			return false;
+		}
 	}
 
 	public function viewReturn($id){
 		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('id'=>$id));
 		$data['tbl_project_return'] = $this->mymodel->selectWhere('tbl_project_return',array('project_id'=>$id));
 		$data['page_name'] = "Project";
-		$this->template->load('admin/template/template','admin/project/viewReturn',$data);
+
+
+		if($data['tbl_project']){
+			$this->template->load('admin/template/template','admin/project/viewReturn',$data);
+		}else{
+			$this->load->view('errors/html/error_404');
+			return false;
+		}
+
 	}
 
 	public function viewReturnEdit($id){
 		$data['tbl_project_return'] = $this->mymodel->selectDataone('tbl_project_return', array('id'=>$id));
 		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project', array('id'=>$data['tbl_project_return']['project_id']));
 		$data['page_name'] = "Project";
-		$this->template->load('admin/template/template','admin/project/viewReturnEdit',$data);
+
+		if($data['tbl_project_return']){
+			$this->template->load('admin/template/template','admin/project/viewReturnEdit',$data);
+		}else{
+			$this->load->view('errors/html/error_404');
+			return false;
+		}
+		
 	}
 
 	public function edit($id){
@@ -250,21 +275,41 @@ class Project extends MY_Controller {
 		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_project'));
 		$data['file_detail'] = $this->mymodel->selectWhere('file',array('table_id'=>$id,'table'=>'tbl_project_gambar'));
 		$data['page_name'] = "Project";
-		$this->template->load('admin/template/template','admin/project/edit',$data);
+
+		if($data['tbl_project']){
+			$this->template->load('admin/template/template','admin/project/edit',$data);
+		}else{
+			$this->load->view('errors/html/error_404');
+			return false;
+		}
+
 	}
 
 	public function editImage($id){
 		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('id'=>$id));
 		$data['file_detail'] = $this->mymodel->selectWhere('file',array('table_id'=>$id,'table'=>'tbl_project_gambar'));
 		$data['page_name'] = "Project";
-		$this->template->load('admin/template/template','admin/project/editImage',$data);
+
+		if($data['tbl_project']){
+			$this->template->load('admin/template/template','admin/project/editImage',$data);
+		}else{
+			$this->load->view('errors/html/error_404');
+			return false;
+		}
+
 	}
 
 	public function editOneImage($id){
 		$data['file_detail'] = $this->mymodel->selectDataone('file',array('id'=>$id,'table'=>'tbl_project_gambar'));
 		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project', array('id'=>$data['file_detail']['table_id']));
 		$data['page_name'] = "Project";
-		$this->template->load('admin/template/template','admin/project/editOneImage',$data);
+
+		if($data['file_detail']){
+			$this->template->load('admin/template/template','admin/project/editOneImage',$data);
+		}else{
+			$this->load->view('errors/html/error_404');
+			return false;
+		}
 	}
 
 	public function update(){
