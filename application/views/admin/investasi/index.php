@@ -44,7 +44,11 @@
                           <?= $project['title'] ?>
                         </a>
                       </td>
-                      <td><?= $investor['name'] ?></td>
+                      <td>
+                        <a href="<?= base_url('admin/investor/view/').$investor['id'] ?>">
+                          <?= $investor['name'] ?>
+                        </a>
+                      </td>
                       <td><?= $row_invest['unit'] ?></td>
                       <td><b>Rp <?= number_format($project['harga'],0,',','.') ?></b></td>
                       <td><b>Rp <?= number_format($row_invest['total_harga'],0,',','.') ?>,-</b></td>

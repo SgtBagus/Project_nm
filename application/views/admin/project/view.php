@@ -34,7 +34,7 @@
                         <th>Total Harga</th>
                         <th>Tgl Mengajukan</th>
                         <th>Tgl Kadarluasa</th>
-                        <th>Tgl Pembayaran</th>
+                        <th>Tgl Pembayaran</th> 
                         <th>Metode</th>
                         <th>Status Pembarayan</th>
                         <th>Tgl Konfirmasi</th>
@@ -255,57 +255,43 @@
                                     <thead>
                                       <tr>
                                         <th>No</th>
-                                        <th>tahun Ke </th>
+                                        <th>Tahun Ke </th>
                                         <th>Bagi Hasil</th>
                                         <th>ROI</th>
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <tr>
-                                        <td colspan="4" align="center">
-                                          <img src='https://icon-library.net/images/no-data-icon/no-data-icon-20.jpg' width='100px' height='100px'>
-                                          <p>
-                                            <b>
-                                              Tidak Ada Data
-                                            </b>
-                                          </p>
+                                      <?php $i = 1; foreach ($tbl_project_return_grafik as $grafik) { ?>
+                                        <tr>
+                                          <td><?=$i?></td>
+                                          <td>Tahun Ke - <?= $grafik['tahun']?></td>
+                                          <td><?php 
+                                          $total_harga = $tbl_project['total_harga']; 
+                                          $persentase = $grafik['return_tahun'];
+                                          $hasil = $total_harga*$persentase/100;
+
+                                          echo "Rp ".number_format($hasil,0,',','.').",-"
+                                          ?>
                                         </td>
+                                        <td><?= $grafik['return_tahun']?> % per Tahun</td>
                                       </tr>
-                                      <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>Rp 720.000</td>
-                                        <td>18%</td>
-                                      </tr>
-                                      <tr>
-                                        <td>2</td>
-                                        <td>2</td>
-                                        <td>Rp 720.000</td>
-                                        <td>18%</td>
-                                      </tr>
-                                      <tr>
-                                        <td>3</td>
-                                        <td>3</td>
-                                        <td>Rp 720.000</td>
-                                        <td>18%</td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>
-                                <br>
-                                <div class="box-group" id="accordion">
-                                  <div class="panel box box-primary" align="center">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
-                                      <div class="box-header with-border">
-                                        <h4 class="box-title">
-                                          Buka Simulasi Grafik
-                                        </h4>
-                                      </div>
-                                    </a>
-                                    <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                      <div class="row" style="width: 100%; height: 300px;">
-                                        <canvas id="myChart" style="width: 512px; height: 256px" ></canvas>
-                                      </div>
+                                    <?php } ?>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <br>
+                              <div class="box-group" id="accordion">
+                                <div class="panel box box-primary" align="center">
+                                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
+                                    <div class="box-header with-border">
+                                      <h4 class="box-title">
+                                        Buka Simulasi Grafik
+                                      </h4>
+                                    </div>
+                                  </a>
+                                  <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                    <div class="row" style="width: 100%; height: 300px;">
+                                      <canvas id="myChart" style="width: 512px; height: 256px" ></canvas>
                                     </div>
                                   </div>
                                 </div>
@@ -320,191 +306,202 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6" align="center">
-              <a href="<?= base_url('admin/project') ?>"> <button type="button" class="btn btn-block btn-md btn-sm btn-info"><i class="fa fa-archive"></i> Data Proyek</button></a>
-            </div>
-            <div class="col-md-6" align="center">
-              <a href="<?= base_url('admin/project/edit/').$tbl_project['id'] ?>"> <button type="button" class="btn btn-block btn-md btn-sm btn-primary"><i class="fa fa-edit"></i> Ubah Proyek</button></a>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6" align="center">
+            <a href="<?= base_url('admin/project') ?>"> <button type="button" class="btn btn-block btn-md btn-sm btn-info"><i class="fa fa-archive"></i> Data Proyek</button></a>
+          </div>
+          <div class="col-md-6" align="center">
+            <a href="<?= base_url('admin/project/edit/').$tbl_project['id'] ?>"> <button type="button" class="btn btn-block btn-md btn-sm btn-primary"><i class="fa fa-edit"></i> Ubah Proyek</button></a>
           </div>
         </div>
       </div>
-    </section>
-  </div>
-  <script type="text/javascript">
+    </div>
+  </section>
+</div>
+<script type="text/javascript">
 
-    <?php
-    if($file_detail){
-      $i = 1;
-      foreach($file_detail as $img){
-        ?>
-        $('#detail_image-<?=$i?>').click(function() {
-          var main_src = $('#main_image').attr('src');
-          var detail_src = $('#detail_image-<?=$i?>').attr('src');
+  <?php
+  if($file_detail){
+    $i = 1;
+    foreach($file_detail as $img){
+      ?>
+      $('#detail_image-<?=$i?>').click(function() {
+        var main_src = $('#main_image').attr('src');
+        var detail_src = $('#detail_image-<?=$i?>').attr('src');
 
-          $('#detail_image-<?=$i?>').attr('src',main_src);
-          $('#main_image').attr('src',detail_src);
-        });
+        $('#detail_image-<?=$i?>').attr('src',main_src);
+        $('#main_image').attr('src',detail_src);
+      });
 
-        <?php
-        $i++;
-      }
+      <?php
+      $i++;
     }
-    ?>
+  }
+  ?>
 
-    $(function () {
-      var ctx = document.getElementById("myChart");
+  $(function () {
+    var ctx = document.getElementById("myChart");
 
-      var data = {
-        labels: ["Tahun 1", "Tahun 2", "Tahun 3", "Tahun4"],
-        datasets: [
-        {
-          label: "Profit ",
-          data: [0, 65000, 65000, 0],
-          backgroundColor: 'rgb(193, 193, 229)',
-          borderColor: 'rgb(105, 105, 205)',
-          borderWidth: 4,
-          pointBorderWidth: 6
-        }
-        ]
-      };
+    var data = {
+      labels: [
+      <?php foreach ($tbl_project_return_grafik as $grafik) { ?>
+        "Tahun <?= $grafik['tahun'] ?>",
+      <?php } ?>
+      ],
+      datasets: [
+      {
+        label: "Profit ",
+        data: [
+        <?php foreach ($tbl_project_return_grafik as $grafik) { 
+          $total_harga = $tbl_project['total_harga']; 
+          $persentase = $grafik['return_tahun'];
+          $hasil = $total_harga*$persentase/100;
+          echo $hasil.","; } ?>
+        ],
+        backgroundColor: 'rgb(193, 193, 229)',
+        borderColor: 'rgb(105, 105, 205)',
+        borderWidth: 4,
+        pointBorderWidth: 6
+      }
+      ]
+    };
 
-      var options = {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          position: 'top',
-        },
-        hover: {
-          mode: 'label'
-        },
-        scales: {
-          xAxes: [{
+    var options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      legend: {
+        position: 'top',
+      },
+      hover: {
+        mode: 'label'
+      },
+      scales: {
+        xAxes: [{
+          display: true,
+          scaleLabel: {
             display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Tahun ke',
-              ticks: {
-                userCallback: function(value, index, values) {
-                  return value.replace("Tahun ","");
-                }
-              }
-            }
-          }],
-          yAxes: [{
-            display: true,
-            scaleLabel: {
-              display: true,
-              labelString: 'Profit'
-            },
-            gridLines: {
-              display: false
-            },
+            labelString: 'Tahun ke',
             ticks: {
-              callback: function(value, index, values) {
-                return 'Rp ' + formatNumber(value) + ',-';
+              userCallback: function(value, index, values) {
+                return value.replace("Tahun ","");
               }
             }
-          }]
-        },
-        tooltips: {
-          callbacks: {
-            label: function(t, d) {
-              var xLabel = d.datasets[t.datasetIndex].label;
-              var yLabel = "Rp "+ formatNumber(t.yLabel) + ',-';
-              return xLabel + ': ' + yLabel;
+          }
+        }],
+        yAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Profit'
+          },
+          gridLines: {
+            display: false
+          },
+          ticks: {
+            callback: function(value, index, values) {
+              return 'Rp ' + formatNumber(value) + ',-';
             }
           }
-        },
-      }
+        }]
+      },
+      tooltips: {
+        callbacks: {
+          label: function(t, d) {
+            var xLabel = d.datasets[t.datasetIndex].label;
+            var yLabel = "Rp "+ formatNumber(t.yLabel) + ',-';
+            return xLabel + ': ' + yLabel;
+          }
+        }
+      },
+    }
 
-      var myLineChart = new Chart(ctx, {
-        type: 'line',
-        data: data,
-        options: options
-      });
+    var myLineChart = new Chart(ctx, {
+      type: 'line',
+      data: data,
+      options: options
     });
+  });
 
 
-    function statusDisable(id) {
-      location.href = "<?= base_url('admin/project/statusView_disable/') ?>"+id;
-    }
+  function statusDisable(id) {
+    location.href = "<?= base_url('admin/project/statusView_disable/') ?>"+id;
+  }
 
-    function statusEnable(id) {
-      location.href = "<?= base_url('admin/project/statusView_enable/') ?>"+id;
-    }
+  function statusEnable(id) {
+    location.href = "<?= base_url('admin/project/statusView_enable/') ?>"+id;
+  }
 
-    function publicDisable(id) {
-      location.href = "<?= base_url('admin/project/statusPublic_disable/') ?>"+id;
-    }
+  function publicDisable(id) {
+    location.href = "<?= base_url('admin/project/statusPublic_disable/') ?>"+id;
+  }
 
-    function publicEnable(id) {
-      location.href = "<?= base_url('admin/project/statusPublic_enable/') ?>"+id;
-    }
+  function publicEnable(id) {
+    location.href = "<?= base_url('admin/project/statusPublic_enable/') ?>"+id;
+  }
 
 
-    function approve(id) {
-      $.ajax({
-        type: "POST",
-        url: "<?= base_url('admin/investasi/approve/') ?>"+id,
-        cache: false,
-        contentType: false,
-        processData: false,
-        beforeSend : function(){
-          $(".btn-send").addClass("disabled").html("<i class='fa fa-spinner'></i>").attr('disabled',true);
-          $(".show_error").slideUp().html("");
-        },
-        success: function(response, textStatus, xhr) {
-          var str = response;
-          if (str.indexOf("success") != -1){
-            $(".show_error").hide().html(response).slideDown("fast");
-            $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
-            $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
-            location.reload();
-          }else{
-            setTimeout(function(){
-              $("#modal-delete").modal('hide');
-            }, 1000);
-            $(".show_error").hide().html(response).slideDown("fast");
-            $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
-            $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
-          }
-        },
-        error: function(xhr, textStatus, errorThrown) {
+  function approve(id) {
+    $.ajax({
+      type: "POST",
+      url: "<?= base_url('admin/investasi/approve/') ?>"+id,
+      cache: false,
+      contentType: false,
+      processData: false,
+      beforeSend : function(){
+        $(".btn-send").addClass("disabled").html("<i class='fa fa-spinner'></i>").attr('disabled',true);
+        $(".show_error").slideUp().html("");
+      },
+      success: function(response, textStatus, xhr) {
+        var str = response;
+        if (str.indexOf("success") != -1){
+          $(".show_error").hide().html(response).slideDown("fast");
+          $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
+          $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
+          location.reload();
+        }else{
+          setTimeout(function(){
+            $("#modal-delete").modal('hide');
+          }, 1000);
+          $(".show_error").hide().html(response).slideDown("fast");
+          $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
+          $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
         }
-      });
-    }
+      },
+      error: function(xhr, textStatus, errorThrown) {
+      }
+    });
+  }
 
-    function reject(id) {
-      $.ajax({
-        type: "POST",
-        url: "<?= base_url('admin/investasi/reject/') ?>"+id,
-        cache: false,
-        contentType: false,
-        processData: false,
-        beforeSend : function(){
-          $(".btn-send").addClass("disabled").html("<i class='fa fa-spinner'></i>").attr('disabled',true);
-          $(".show_error").slideUp().html("");
-        },
-        success: function(response, textStatus, xhr) {
-          var str = response;
-          if (str.indexOf("success") != -1){
-            $(".show_error").hide().html(response).slideDown("fast");
-            $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
-            $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
-            location.reload();
-          }else{
-            setTimeout(function(){
-              $("#modal-delete").modal('hide');
-            }, 1000);
-            $(".show_error").hide().html(response).slideDown("fast");
-            $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
-            $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
-          }
-        },
-        error: function(xhr, textStatus, errorThrown) {
+  function reject(id) {
+    $.ajax({
+      type: "POST",
+      url: "<?= base_url('admin/investasi/reject/') ?>"+id,
+      cache: false,
+      contentType: false,
+      processData: false,
+      beforeSend : function(){
+        $(".btn-send").addClass("disabled").html("<i class='fa fa-spinner'></i>").attr('disabled',true);
+        $(".show_error").slideUp().html("");
+      },
+      success: function(response, textStatus, xhr) {
+        var str = response;
+        if (str.indexOf("success") != -1){
+          $(".show_error").hide().html(response).slideDown("fast");
+          $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
+          $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
+          location.reload();
+        }else{
+          setTimeout(function(){
+            $("#modal-delete").modal('hide');
+          }, 1000);
+          $(".show_error").hide().html(response).slideDown("fast");
+          $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
+          $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
         }
-      });
-    }
-  </script>
+      },
+      error: function(xhr, textStatus, errorThrown) {
+      }
+    });
+  }
+</script>

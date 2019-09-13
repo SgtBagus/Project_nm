@@ -103,6 +103,8 @@ class Project extends MY_Controller {
 
 			$prj['periode'] = $periode+1;
 			$prj['bagi_hasil'] = '1';
+			$prj['public'] = "ENABLE";
+			$prj['status'] = "ENABLE";
 			$this->mymodel->updateData('tbl_project', $prj , array('id'=>$id));
 			$this->alert->alertsuccess('Success Send Data');
 		}
@@ -228,6 +230,7 @@ class Project extends MY_Controller {
 	public function view($id){
 		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('id'=>$id));
 		$data['tbl_project_invest'] = $this->mymodel->selectWhere('tbl_project_invest',array('project_id'=>$id));
+		$data['tbl_project_return_grafik'] = $this->mymodel->selectWhere('tbl_project_return', array('project_id'=>$data['tbl_project']['id']));
 		$data['user'] = $this->mymodel->selectDataone('user',array('id'=>$data['tbl_project']['user_id']));
 		$data['user_image'] = $this->mymodel->selectDataone('file',array('table_id'=>$data['user']['id'],'table'=>'user'));
 		$data['file'] = $this->mymodel->selectDataone('file',array('table_id'=>$id,'table'=>'tbl_project'));

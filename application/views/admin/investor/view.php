@@ -1,6 +1,6 @@
 <div class="content-wrapper">
 	<section class="content-header">
-		<h1> Investor </h1>
+		<h1> Investor <small><?= $user['name']?></small> </h1>
 		<ol class="breadcrumb">
 			<li><a href="<?= base_url('admin') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li class="active">Investor</li>
@@ -8,74 +8,530 @@
 	</section>
 	<section class="content">
 		<div class="row">
-			<div class="col-md-6 col-sm-6 col-xm-12">
-				<div class="panel">
-					<div class="panel-heading">
-						<h3 class="panel-title">
-						</h3>
-						<div class="pull-right">
-						</div>
-					</div>
-					<div class="panel-body">
-						<form action="#" enctype="multipart/form-data" method="POST" id="upload">
-							<div class="show_error"></div>
-							<input type="hidden" name="ids" value="<?= $tbl_investor['id'] ?>">
-							<div class="form-group">
-								<center>
-									<?php
-									if($file['dir']!=""){
-										$types = explode("/", $file['mime']);
-										if($types[0]=="image"){
-											?>
-											<img src="<?= base_url($file['dir']) ?>" style="width: 250px; height: 250px; border-radius: 50%" class="img img-thumbnail">
-											<br>
-										<?php }else{ ?>
+			<div class="col-md-12 col-sm-12 col-xm-12">
+				<div class="show_error"></div>
+				<input type="hidden" name="ids" value="<?= $tbl_investor['id'] ?>">
+				<div class="col-md-6">  
+					<div class="form-group">
+						<center>
+							<?php
+							if($file['dir']!=""){
+								$types = explode("/", $file['mime']);
+								if($types[0]=="image"){
+									?>
+									<img src="<?= base_url($file['dir']) ?>" style="width: 250px; height: 250px; border-radius: 50%" class="img img-thumbnail">
+									<br> 
+								<?php }else{ ?>
 
-											<i class="fa fa-file fa-5x text-danger"></i>
-											<br>
-											<a href="<?= base_url($file['dir']) ?>" target="_blank"><i class="fa fa-download"></i> <?= $file['name'] ?></a>
-											<br>
-											<br>
-										<?php } ?>
-									<?php } ?>
-								</center>       
-							</div>   
-							<div class="form-group">
-								<label>Nama</label>
-								<input type="text" name="name" class="form-control" value="<?= $tbl_investor['name'] ?>" readonly>
+									<i class="fa fa-file fa-5x text-danger"></i>
+									<br>
+									<a href="<?= base_url($file['dir']) ?>" target="_blank"><i class="fa fa-download"></i> <?= $file['name'] ?></a>
+									<br>
+									<br>
+								<?php } ?>
+							<?php } ?>
+						</center>       
+					</div>    
+				</div>  
+				<div class="col-md-6">        
+					<div class="box box-solid round" >
+						<div class="box-body">
+							<div class="nav-tabs-custom">
+								<ul class="nav nav-tabs">
+									<li class="active"><a href="#tab_info" data-toggle="tab" aria-expanded="false">Info</a></li>
+									<li class=""><a href="#tab_contact" data-toggle="tab" aria-expanded="false">Kontak</a></li>
+									<li class=""><a href="#tab_dana" data-toggle="tab" aria-expanded="false">Sumber Dana</a></li>
+									<li class=""><a href="#tab_rek" data-toggle="tab" aria-expanded="false">Rekerning</a></li>
+									<li class=""><a href="#tab_doc" data-toggle="tab" aria-expanded="false">Dokumen</a></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane active" id="tab_info">
+										<div class="row">
+											<div class="col-md-12"> 
+												<div class="box-body">
+													<div class="row">
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label>Nama Lengkap</label>
+																<input type="text" name="dt[name]" class="form-control" placeholder="Masukan Nama Lengkap" value="<?= $user['name']?>" readonly>
+															</div>
+														</div>
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label>Jenis Kelamin</label>
+																<?php if($user['jk']) {?>
+																	<select class="form-control select2" name="dt[jk]" style="width: 100%" disabled>
+																		<option value="">--Pilih Jenis Kelamin--</option>
+																		<option value="L" <?php if($user['jk'] == 'L'){echo "selected";} ?>>Laki Laki</option>
+																		<option value="P" <?php if($user['jk'] == 'P'){echo "selected";} ?>>Perempuan</option>
+																	</select>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label>Warga Negara</label>
+																<?php if($user['wrg_negara']) {?>
+																	<select class="form-control select2" name="dt[wrg_negara]" style="width: 100%" disabled>
+																		<option value="">--Pilih Warga Negara--</option>
+																		<option value="WNI" <?php if($user['wrg_negara'] == 'WNI'){echo "selected";} ?>>WNI</option>
+																		<option value="WNA" <?php if($user['wrg_negara'] == 'WNA'){echo "selected";} ?>>WNA</option>
+																	</select>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label>Agama</label>
+																<?php if($user['agama_id']) {?>
+																	<select class="form-control select2" name="dt[agama_id]"  style="width: 100%" disabled>
+																		<option value="">--Pilih Agama--</option>
+																		<?php $tbl_agama = $this->mymodel->selectData("tbl_agama");
+																		foreach ($tbl_agama as $key => $value) {?>
+																			<option value="<?= $value['id'] ?>" <?php if($user['agama_id'] == $value['id']){echo "selected"; } ?>><?= $value['value'] ?></option>
+																		<?php } ?>
+																	</select>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label>Tempat Lahir</label>
+																<?php if($user['tpt_lahir']) {?>
+																	<input type="text" name="dt[tpt_lahir]" class="form-control" placeholder="Masukan Tempat Lahir" value="<?= $user['tpt_lahir']?>" readonly>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label>Tanggal Lahir</label>
+																<?php if($user['tgl_lahir']) {?>
+																	<input type="text" name="dt[tgl_lahir]" class="form-control" id="datepicker" placeholder="Masukan Tanggal Lahir" value="<?= date("d-m-Y", strtotime($user['tgl_lahir'])); ?>" readonly>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab_contact">
+										<div class="row">
+											<div class="col-md-12"> 
+												<div class="box-body">
+													<div class="row">
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label>Email</label>
+																<input type="text" name="dt[email]" class="form-control" placeholder="Masukan Email" value="<?= $user['email']?>" readonly>
+															</div>
+														</div>
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label>No Hp</label>
+																<?php if($user['phone']) {?>
+																	<input type="number" name="dt[phone]" class="form-control" placeholder="Masukan Telephone" value="<?= $user['phone']?>" readonly>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12"> 
+															<div class="form-group">
+																<label>Alamat</label>
+																<?php if($user['alamat']) {?>
+																	<textarea name="dt[alamat]" class="form-control" placeholder="Masukan Alamat" readonly><?= $user['alamat'] ?></textarea>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label>Kelurahan</label>
+																<?php if($user['kelurahan']) {?>
+																	<input type="text" name="dt[kelurahan]" class="form-control" placeholder="Masukan Kelurahan" value="<?= $user['kelurahan']?>" readonly>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+														<div class="col-md-6">  
+															<div class="form-group">
+																<label>Kecamatan</label>
+																<?php if($user['kecamatan']) {?>
+																	<input type="text" name="dt[kecamatan]" class="form-control" placeholder="Masukan Kecamatan" value="<?= $user['kecamatan']?>" readonly>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label>Provinsi</label>
+																<?php if($user['provinsi_id']) {?>
+																	<select class="form-control select2" name="dt[provinsi_id]" style="width: 100%" disabled>
+																		<option value="">--Pilih Provinsi--</option>
+																		<?php 
+																		$tbl_provinsi = $this->mymodel->selectData("tbl_provinsi"); foreach ($tbl_provinsi as $key => $value) 
+																		{ ?>
+																			<option value="<?= $value['id'] ?>" <?php if($user['provinsi_id'] == $value['id']){ echo "selected"; } ?>><?= $value['value'] ?></option>
+																		<?php } ?>
+																	</select>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+														<div class="col-md-6">  
+															<div class="form-group">
+																<label>Kota</label>
+																<?php if($user['kota_id']) {?>
+																	<select class="form-control select2" name="dt[kota_id]" style="width: 100%" disabled>
+																		<option value="">--Pilih Kota--</option>
+																		<?php 
+																		$tbl_kota = $this->mymodel->selectData("tbl_kota"); foreach ($tbl_kota as $key => $value) 
+																		{ ?>
+																			<option value="<?= $value['id'] ?>" <?php if($user['kota_id'] == $value['id']){ echo "selected"; } ?>><?= $value['value'] ?></option>
+																		<?php } ?>
+																	</select>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label>Kode Pos</label>
+																<?php if($user['kode_pos']) {?>
+																	<input type="text" name="dt[kode_pos]" class="form-control" placeholder="Masukan Kode Pos" value="<?= $user['kode_pos']?>" readonly>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab_dana">
+										<div class="row">
+											<div class="col-md-12"> 
+												<div class="box-body">
+													<div class="row">
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label>Sumber Dana</label>
+																<?php if($user['tbl_sumberdana']) {?>
+																	<select class="form-control select2" name="dt[sumberdana_id]" style="width: 100%" disabled>
+																		<option value="">--Pilih Sumber Dana--</option>
+																		<?php 
+																		$tbl_sumberdana = $this->mymodel->selectData("tbl_sumberdana"); foreach ($tbl_sumberdana as $key => $value) 
+																		{ ?>
+																			<option value="<?= $value['id'] ?>" <?php if($user['sumberdana_id'] == $value['id']){ echo "selected"; } ?> ><?= $value['value'] ?></option>
+																		<?php } ?>
+																	</select>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+														<div class="col-md-6">  
+															<div class="form-group">
+																<label>Pekerjaan</label>
+																<?php if($user['pekerjaan_id']) {?>
+																	<select class="form-control select2" name="dt[pekerjaan_id]" style="width: 100%" disabled>
+																		<option value="">--Pilih Pekerjaan --</option>
+																		<?php 
+																		$tbl_pekerjaan = $this->mymodel->selectData("tbl_pekerjaan"); foreach ($tbl_pekerjaan as $key => $value) 
+																		{ ?>
+																			<option value="<?= $value['id'] ?>" <?php if($user['pekerjaan_id'] == $value['id']){ echo "selected"; } ?> ><?= $value['value'] ?></option>
+																		<?php } ?>
+																	</select>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label>Penghasilan Bulanan</label>
+																<?php if($user['gaji_id']) {?>
+																	<select class="form-control select2" name="dt[gaji_id]" style="width: 100%" disabled>
+																		<option value="">--Pilih Penghasilan Bulanan--</option>
+																		<?php 
+																		$tbl_gaji = $this->mymodel->selectData("tbl_gaji"); foreach ($tbl_gaji as $key => $value) 
+																		{ ?>
+																			<option value="<?= $value['id'] ?>" <?php if($user['gaji_id'] == $value['id']){ echo "selected"; } ?> ><?= $value['value'] ?></option>
+																		<?php } ?>
+																	</select>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab_rek">
+										<div class="row">
+											<div class="col-md-12"> 
+												<div class="box-body">
+													<div class="row">
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label>Bank</label>
+																<?php if($user['bank_id']) {?>
+																	<select class="form-control select2" name="dt[bank_id]" style="width: 100%" disabled>
+																		<option value="">--Pilih Bank--</option>
+																		<?php 
+																		$tbl_bank = $this->mymodel->selectData("tbl_bank"); foreach ($tbl_bank as $key => $value) 
+																		{ ?>
+																			<option value="<?= $value['id'] ?>"><?= $value['value'] ?></option>
+																		<?php } ?>
+																	</select>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+														<div class="col-md-6">  
+															<div class="form-group">
+																<label>Cabang</label>
+																<?php if($user['bank_cabang']) {?>
+																	<input type="text" name="dt[bank_cabang]" class="form-control" placeholder="Masukan Cabang Bank" value="<?= $user['bank_cabang']?>" readonly>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div> 
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">  
+															<div class="form-group">
+																<label>No Rekening</label>
+																<?php if($user['no_rek']) {?>
+																	<input type="text" name="dt[no_rek]" class="form-control" placeholder="Masukan No Rekening" value="<?= $user['no_rek']?>" readonly>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+														<div class="col-md-6">  
+															<div class="form-group">
+																<label>Atas Nama</label>
+																<?php if($user['atas_nama']) {?>
+																	<input type="text" name="dt[atas_nama]" class="form-control" placeholder="Masukan Atas Nama" value="<?= $user['atas_nama']?>" readonly>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane" id="tab_doc">
+										<div class="row">
+											<div class="col-md-12"> 
+												<div class="box-body">
+													<div class="row">
+														<div class="col-md-6">  
+															<div class="form-group">
+																<label>No KTP</label>
+																<?php if($user['no_ktp']) {?>
+																	<input type="text" name="dt[no_ktp]" class="form-control" placeholder="Masukan No KTP" value="<?= $user['no_ktp']?>" readonly>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+														<div class="col-md-6">  
+															<div class="form-group">
+																<label>No NPWP</label>
+																<?php if($user['no_npwp']) {?>
+																	<input type="text" name="dt[no_npwp]" class="form-control" placeholder="Masukan No NPWP" value="<?= $user['no_npwp']?>" readonly>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+													</div>
+													<div class="row"  align="center">
+														<div class="col-md-6"> 
+															<div class="form-group">
+																<label for="exampleInputEmail1">Foto KTP</label>
+																<br>
+																<?php if($ktp) { ?>
+																	<img src="<?= base_url().$ktp['dir']?>" width="250px" height="250px" id="preview_ktp">
+																	<br><br>
+																	<a href="<?= base_url('webfile/investor/doc/').$ktp['name']?>" target="_blank">
+																		<button type="button" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Lihat Gambar</button>
+																	</a>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+														<div class="col-md-6">  
+															<div class="form-group">
+																<label for="exampleInputEmail1">Foto NPWP</label>
+																<br>
+																<?php if($npwp) { ?>
+																	<img src="<?= base_url().$npwp['dir']?>" width="250px" height="250px" id="preview_npwp">
+																	<br><br>
+																	<a href="<?= base_url('webfile/investor/doc/').$npwp['name']?>" target="_blank">
+																		<button type="button" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Lihat Gambar</button>
+																	</a>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
-							<div class="form-group">
-								<label>Email</label>
-								<input type="text" name="email" class="form-control" value="<?= $tbl_investor['email'] ?>" readonly>
-							</div>
-							<div class="form-group">
-								<label>Alamat</label>
-								<textarea class="form-control" name="desc" readonly><?= $tbl_investor['address'] ?></textarea>
-							</div>
-							<div class="form-group">
-								<label>Nomer HP</label>
-								<input type="text" name="email" class="form-control" value="<?= $tbl_investor['phone'] ?>" readonly>
-							</div>
-							<div style="float: right;">
-								<a href="<?= base_url('admin/investor') ?>">
-									<button class="btn btn-info btn-flat" type="button"><i class="fa fa-arrow-left"></i> Kembali</button>
-								</a>
-							</div>
-						</form>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-6 col-sm-6 col-xm-12">
-				<div class="panel panel-info">
-					<div class="panel-heading">
-						<h3 class="panel-title">Data Investor</h3>
-					</div>
-					<div class="panel-body">
-						<div id="mydiv" class="table-responsive">
-							
+		</div>
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xm-12">
+				<div class="col-md-12">   
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h3 class="panel-title">Data Investor</h3>
+						</div>
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table id="datatable" class="table table-bordered table-striped" >
+									<thead>
+										<tr class="bg-success">
+											<th>No</th>
+											<th>Code</th>
+											<th>Project</th>
+											<th>Banyak Unit</th>
+											<th>Harga per Unit</th>
+											<th>Total Harga</th>
+											<th>Tgl Mengajukan</th>
+											<th>Tgl Kadarluasa</th>
+											<th>Tgl Pembayaran</th>
+											<th>Metode</th>
+											<th>Status Pembarayan</th>
+											<th>Tgl Konfirmasi</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php $i = 1; foreach ($tbl_project_invest as $row_invest) { 
+											$project =  $this->mymodel->selectDataOne('tbl_project', array('id' => $row_invest['project_id'] ));
+											$investor =  $this->mymodel->selectDataOne('tbl_investor', array('id' => $row_invest['investor_id'] ));?>
+											<tr>
+												<td><?= $i ?></td>
+												<td><b><?= $row_invest['code'] ?></b></td>
+												<td>
+													<a href="<?= base_url('admin/project/view/').$project['id'] ?>">
+														<?= $project['title'] ?>
+													</a>
+												</td>
+												<td><?= $row_invest['unit'] ?></td>
+												<td><b>Rp <?= number_format($project['harga'],0,',','.') ?></b></td>
+												<td><b>Rp <?= number_format($row_invest['total_harga'],0,',','.') ?>,-</b></td>
+												<td><?= date("d-m-Y H:i:s", strtotime($row_invest['created_at']))  ?></td>
+												<td><?= date("d-m-Y H:i:s", strtotime($row_invest['tgl_kadarluasa'])) ?></td>
+												<td>
+													<?php if (!$row_invest['tgl_pembayaran']) {
+														echo "<p class='help-block'><i>Belum Tersedia</i></p>";
+													}else {
+														echo date("d-m-Y H:i:s", strtotime($row_invest['tgl_pembayaran']));
+													}?>
+												</td>
+												<td>
+													<?php if (!$row_invest['metode_pembayaran']) {
+														echo "<p class='help-block'><i>Belum Tersedia</i></p>";
+													}else {
+														echo $row_invest['metode_pembayaran'];
+													}?>
+												</td>
+												<td>
+													<?php if (!$row_invest['tgl_pembayaran']) { ?>
+														<p class='help-block'><i>Invoice Ini Belum Terbayar</i></p>
+													<?php  }else { 
+														if ($row_invest['status_pembayaran'] == 'WAITING') {
+															echo '<small class="label bg-yellow"><i class="fa fa-warning"> </i> Menunggu Dikonfirmasi </small>';
+															if($this->session->userdata('role_id') == '17'){
+																echo '<hr>
+																<div class="row" align="center">
+																<button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-primary" onclick="approve('.$row_invest['id'].')"><i class="fa fa-check-circle"></i></button>
+																<button type="button" class="btn btn-send btn-reject btn-sm btn-sm btn-danger" onclick="reject('.$row_invest['id'].')"><i class="fa fa-ban"></i></button>
+																</div>';
+															}
+														}else if ($row_invest['status_pembayaran'] == 'APPROVE') {
+															echo '<small class="label bg-green"><i class="fa fa-check"> </i> Di Terima </small>';
+														}else{
+															echo '<small class="label bg-red"><i class="fa fa-ban"> </i> Di Tolak </small>';
+														}?>
+													<?php } ?>
+												</td>
+												<td>
+													<?php if (!$row_invest['tgl_konfirmasi']) {
+														echo "<p class='help-block'><i>Belum Tersedia</i></p>";
+													}else {
+														echo date("d-m-Y", strtotime($row_invest['tgl_konfirmasi']));
+													}?>
+												</td>
+												<td>
+													<a href="<?= base_url('invoice/payment/').$row_invest['code']?>" target="_blank">
+														<button type="button" class="btn btn-sm btn-sm btn-info"><i class="fa fa-print"></i> Invoice</button>
+													</a>
+												</td>
+											</tr>
+											<?php $i++; }  ?>
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="row" align="center">
+				<a href="<?= base_url('admin/investor')?>">
+					<button type="button" class="btn btn-sm btn-sm btn-info"><i class="fa fa-arrow-left"></i> Kembali</button>
+				</a>
 			</div>
 		</div>
 	</section>
