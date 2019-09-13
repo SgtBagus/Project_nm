@@ -59,14 +59,14 @@
                       <td><?= $row['name'] ?></td>
                       <td>
                         <?php if (!$row['tgl_lahir']) {
-                          echo "<p class='help-block'><i>Kosong</i></p>";
+                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
                         }else {
                           echo date("d-m-Y", strtotime($row['tgl_lahir']));
                         }?>
                       </td>
                       <td>
                         <?php if (!$row['jk']) {
-                          echo "<p class='help-block'><i>Kosong</i></p>";
+                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
                         }else {
                           if($row['jk'] == 'L'){
                             echo "Laki Laki";
@@ -77,7 +77,7 @@
                       </td>
                       <td>
                         <?php if (!$row['wrg_negara']) {
-                          echo "<p class='help-block'><i>Kosong</i></p>";
+                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
                         }else {
                           echo $row['wrg_negara'];
                         }?>
@@ -85,35 +85,35 @@
                       <td><?= $row['email'] ?></td>
                       <td>
                         <?php if (!$row['phone']) {
-                          echo "<p class='help-block'><i>Kosong</i></p>";
+                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
                         }else {
                           echo $row['phone'];
                         }?>
                       </td>
                       <td>
                         <?php if (!$row['alamat']) {
-                          echo "<p class='help-block'><i>Kosong</i></p>";
+                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
                         }else {
                           echo $row['alamat'];
                         }?>
                       </td>
                       <td>
                         <?php if (!$row['kode_pos']) {
-                          echo "<p class='help-block'><i>Kosong</i></p>";
+                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
                         }else {
                           echo $row['kode_pos'];
                         }?>
                       </td>
                       <td>
                         <?php if (!$row['no_rek']) {
-                          echo "<p class='help-block'><i>Kosong</i></p>";
+                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
                         }else {
                           echo $row['no_rek'];
                         }?>
                       </td>
                       <td>
                         <?php if (!$row['atas_nama']) {
-                          echo "<p class='help-block'><i>Kosong</i></p>";
+                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
                         }else {
                           echo $row['atas_nama'];
                         }?>

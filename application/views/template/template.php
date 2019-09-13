@@ -22,6 +22,8 @@
   <script src="<?= base_url('assets/') ?>/jquery/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
   
+  <script type="text/javascript" src='https://maps.google.com/maps/api/js?libraries=places&key=AIzaSyASx6JCkfcpuUIDho2q_G_ayRSsq4BpV2Q'></script>
+  <script src="<?= base_url('assets/') ?>maps/locationpicker.jquery.min.js"></script>
   <link rel="stylesheet" href="<?= base_url('assets/') ?>custom/css_custom.css">
   <style>
     #myList li{ display:none;

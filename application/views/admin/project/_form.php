@@ -152,18 +152,31 @@ if($data_edit){
       <?php } ?>
     </div>
     <div class="form-group">
-      <label for="inputEmail3" class="col-sm-2 control-label">Deskripsi </label>
-      <div class="col-sm-10">
+      <label for="inputEmail3" class="col-sm-3 control-label">Deskripsi </label>
+      <div class="col-sm-9">
         <textarea class="textarea form-control" name="dt[deskripsi]"><?php if($data_edit){echo $data_edit['deskripsi']; }  ?></textarea>
       </div>
     </div>
-    <!-- <div class="form-group">
-      <label for="inputEmail3" class="col-sm-2 control-label">Url Google Maps </label>
-      <div class="col-sm-10">
-        <input type="text" class="form-control" name="dt[url_map]" <?php if($data_edit){echo $data_edit['url_map']; } ?>>
-        <p class="help-block">Salin Url Lokasi anda melalui Google Maps untuk menampilkan peta Lokasi</p>
+    <div class="form-group">
+      <label for="inputEmail3" class="col-sm-3 control-label">Lokasi (Maps) </label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="us3-address" autocomplete="off">
+        <div id="us3" style="margin-top:10px; width: 100%; height: 350px; border: 3px solid #CED4DC; border-radius: .25rem;"></div>
+        <input type="hidden" name="dt[latitude]" <?php if($data_edit){echo "value='".$data_edit['latitude']."'"; }  ?> id="us3-lat">
+        <input type="hidden" name="dt[longitude]" <?php if($data_edit){echo "value='".$data_edit['longitude']."'"; }  ?> id="us3-lon">
       </div>
-    </div> -->
+      <?php 
+      if(empty($row['latitude']) || empty($row['longitude'])){
+        if($data_edit){
+          $row['latitude'] = $data_edit['latitude'];
+          $row['longitude'] =  $data_edit['longitude'];
+        }else{
+          $row['latitude'] = '0';
+          $row['longitude'] =  '0';
+        }
+      }
+      ?>
+    </div>
   </div>
   <div class="box-footer" align="right">
     <a href="<?= base_url('admin/project') ?> ">
@@ -176,7 +189,6 @@ if($data_edit){
     <?php } ?>
   </div>
 </form>
-
 <script type="text/javascript">
   $(function () {
 
@@ -216,6 +228,22 @@ if($data_edit){
     })
   });
 
+
+  $('#us3').locationpicker({
+    location: {
+      latitude: <?= $row['latitude'] ?>,
+      longitude: <?= $row['longitude'] ?>
+    },
+    radius: 0,
+    inputBinding: {
+      latitudeInput: $('#us3-lat'),
+      longitudeInput: $('#us3-lon'),
+      locationNameInput: $('#us3-address')
+    },
+    enableAutocomplete: true,
+    onchanged: function (currentLocation, radius, isMarkerDropped) {
+    }
+  });
 
   $("#upload-create").submit(function(){
     var form = $(this);

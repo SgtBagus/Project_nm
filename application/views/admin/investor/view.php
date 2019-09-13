@@ -245,7 +245,7 @@
 														<div class="col-md-6"> 
 															<div class="form-group">
 																<label>Sumber Dana</label>
-																<?php if($user['tbl_sumberdana']) {?>
+																<?php if($user['sumberdana_id']) {?>
 																	<select class="form-control select2" name="dt[sumberdana_id]" style="width: 100%" disabled>
 																		<option value="">--Pilih Sumber Dana--</option>
 																		<?php 
@@ -314,7 +314,7 @@
 																		<?php 
 																		$tbl_bank = $this->mymodel->selectData("tbl_bank"); foreach ($tbl_bank as $key => $value) 
 																		{ ?>
-																			<option value="<?= $value['id'] ?>"><?= $value['value'] ?></option>
+																			<option value="<?= $value['id'] ?>"<?php if($user['bank_id'] == $value['id']){ echo "selected"; } ?> ><?= $value['value'] ?></option>
 																		<?php } ?>
 																	</select>
 																<?php } else { ?>
