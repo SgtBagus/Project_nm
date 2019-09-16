@@ -42,6 +42,7 @@ if($this->session->userdata('session_sop')=="") {
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
   <script type="text/javascript" src='https://maps.google.com/maps/api/js?libraries=places&key=AIzaSyASx6JCkfcpuUIDho2q_G_ayRSsq4BpV2Q'></script>
   <script src="<?=base_url()?>assets/maps/locationpicker.jquery.min.js"></script>
+  <script src="<?= base_url('assets/') ?>bower_components/chart.js/Chart.js"></script>
 
   <script type="text/javascript">
 
@@ -219,7 +220,6 @@ if($this->session->userdata('session_sop')=="") {
   <script>
     $.widget.bridge('uibutton', $.ui.button);
   </script>
-  <script src="<?= base_url('assets/') ?>bower_components/chart.js/Chart.js"></script>
   <script src="<?= base_url('assets/') ?>bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="<?= base_url('assets/') ?>bower_components/select2/dist/js/select2.full.min.js"></script>
   <script src="<?= base_url('assets/') ?>bower_components/raphael/raphael.min.js"></script>

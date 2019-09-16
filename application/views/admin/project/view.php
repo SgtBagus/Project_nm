@@ -130,7 +130,7 @@
                   $i = 1;
                   foreach($file_detail as $img){
                     ?>
-                    <div class="col-md-2">
+                    <div class="col-md-2 col-sm-3 col-xs-4">
                       <img src="<?= base_url().$img['dir']?>" id="detail_image-<?=$i?>" alt="User Image" width="100%" height="85px" style="border-radius: 15px">
                     </div>
                     <?php
@@ -337,58 +337,22 @@
   </div>
   <script type="text/javascript">
 
-    $('#us3').locationpicker({
-      location: {
-        latitude: <?= $tbl_project['latitude'] ?>,
-        longitude: <?= $tbl_project['longitude'] ?>},
-        radius: 0,
-        inputBinding: {
-          latitudeInput: $('#us3-lat'),
-          longitudeInput: $('#us3-lon'),
-          locationNameInput: $('#us3-address')
-        },
-        enableAutocomplete: true,
-        onchanged: function (currentLocation, radius, isMarkerDropped) {
-        }
-      });
-    
-    <?php
-    if($file_detail){
-      $i = 1;
-      foreach($file_detail as $img){
-        ?>
-        $('#detail_image-<?=$i?>').click(function() {
-          var main_src = $('#main_image').attr('src');
-          var detail_src = $('#detail_image-<?=$i?>').attr('src');
-
-          $('#detail_image-<?=$i?>').attr('src',main_src);
-          $('#main_image').attr('src',detail_src);
-        });
-
-        <?php
-        $i++;
-      }
-    }
-    ?>
-
     $(function () {
       var ctx = document.getElementById("myChart");
 
       var data = {
         labels: [
         <?php foreach ($tbl_project_return_grafik as $grafik) { ?>
-          "Tahun <?= $grafik['tahun'] ?>",
+          "Tahun <?= $grafik['tahun'] ?>", 
         <?php } ?>
         ],
-        datasets: [
-        {
+        datasets: [{
           label: "Profit ",
-          data: [
-          <?php foreach ($tbl_project_return_grafik as $grafik) { 
+          data: [ <?php foreach ($tbl_project_return_grafik as $grafik) { 
             $total_harga = $tbl_project['total_harga']; 
             $persentase = $grafik['return_tahun'];
             $hasil = $total_harga*$persentase/100;
-            echo $hasil.","; } ?>
+            echo $hasil.","; } ?> 
             ],
             backgroundColor: 'rgb(193, 193, 229)',
             borderColor: 'rgb(105, 105, 205)',
@@ -454,6 +418,40 @@
         });
       });
 
+
+    $('#us3').locationpicker({
+      location: {
+        latitude: <?= $tbl_project['latitude'] ?>,
+        longitude: <?= $tbl_project['longitude'] ?>},
+        radius: 0,
+        inputBinding: {
+          latitudeInput: $('#us3-lat'),
+          longitudeInput: $('#us3-lon'),
+          locationNameInput: $('#us3-address')
+        },
+        enableAutocomplete: true,
+        onchanged: function (currentLocation, radius, isMarkerDropped) {
+        }
+      });
+    
+    <?php
+    if($file_detail){
+      $i = 1;
+      foreach($file_detail as $img){
+        ?>
+        $('#detail_image-<?=$i?>').click(function() {
+          var main_src = $('#main_image').attr('src');
+          var detail_src = $('#detail_image-<?=$i?>').attr('src');
+
+          $('#detail_image-<?=$i?>').attr('src',main_src);
+          $('#main_image').attr('src',detail_src);
+        });
+
+        <?php
+        $i++;
+      }
+    }
+    ?>
 
     function statusDisable(id) {
       location.href = "<?= base_url('admin/project/statusView_disable/') ?>"+id;

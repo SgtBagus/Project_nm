@@ -22,7 +22,7 @@
               $i = 1;
               foreach($file_detail as $img){
                 ?>
-                <div class="col-md-2">
+                <div class="col-md-2 col-sm-3 col-xs-4">
                   <img src="<?= base_url().$img['dir']?>" class="round" id="detail_image-<?=$i?>" alt="User Image" width="100%" height="85px" style="border-radius: 15px">
                 </div>
                 <?php

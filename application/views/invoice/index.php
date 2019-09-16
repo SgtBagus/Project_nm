@@ -23,16 +23,26 @@ data-client-key="SB-Mid-client-BwKVZAEn_uaPXdIe"></script>
                 <div class="box-header with-border">
                   <h3 class="box-title pull-left">Sisa Waktu</h3>
                   <h3 class="box-title pull-right">
-                    <span type="button" class="btn-success btn-sm round">
-                      <i class="fa fa-check"></i> Masih Ada
-                    </span>
+                    <?php if($invoice['status_pembayaran'] == "APPROVE") { ?>
+                      <span type="button" class="btn-primary btn-sm round">
+                        <i class="fa fa-check"></i> Di Terima
+                      </span>
+                    <?php }else if($invoice['status_pembayaran'] == "REJECT") { ?>
+                      <span type="button" class="btn-danger btn-sm round">
+                        <i class="fa fa-check"></i> Sudah Tidak ada
+                      </span>
+                    <?php }else { ?>
+                      <span type="button" class="btn-success btn-sm round">
+                        <i class="fa fa-check"></i> Masih Ada
+                      </span>
+                    <?php } ?>
                   </h3>
                 </div>
                 <div class="box-body" align="center">
                   <?php if($invoice['status_pembayaran'] == "APPROVE") { ?>
-                    <h1><b>00 : 00 : 00</b></h1>
+                    <h1><b>DITERIMA</b></h1>
                   <?php }else if($invoice['status_pembayaran'] == "REJECT") { ?>
-                    <h1><b>00 : 00 : 00</b></h1>
+                    <h1><b>DITOLAK</b></h1>
                   <?php }else { ?>
                     <h1><b id="countDownKadarluasa">00 : 00 : 00</b></h1>
                   <?php } ?>
