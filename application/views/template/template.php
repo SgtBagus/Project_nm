@@ -342,7 +342,7 @@ $this->session->set_userdata(array('url_session' => $actual_link));
             $("#kota").append('<option value="">Data Tidak Ada</option>');
           }else{
             $.each(data, function (key, value) {
-              $("#kota").append('<option value="' +
+              $("#kota").append('<option id="kota-'+value.id+'" value="' +
                 value.id + '">' + value.value +
                 '</option>');
             });
@@ -351,7 +351,7 @@ $this->session->set_userdata(array('url_session' => $actual_link));
       });
     } else {
       $("#kota").empty();
-      $("#kota").append('<option value="">Pilih Kota</option>');
+      $("#kota").append('<option value="">Pilih Provinsi Terlebih Dahulu</option>');
     }
   }
 
@@ -359,6 +359,7 @@ $this->session->set_userdata(array('url_session' => $actual_link));
     get_kota();
   });
 
-  get_kota();
+  // get_kota();
+  
 </script>
 </html>

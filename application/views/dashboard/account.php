@@ -170,11 +170,14 @@
                                                             <div class="form-group">
                                                                 <label>Kota</label>
                                                                 <select class="form-control select2" name="dt[kota_id]" id="kota" style="width: 100%">
-                                                                    <option value="">--Pilih Kota--</option>
                                                                     <?php 
-                                                                    $tbl_kota = $this->mymodel->selectData("tbl_kota"); foreach ($tbl_kota as $key => $value) 
+                                                                    $tbl_kota = $this->mymodel->selectWhere("tbl_kota", array('provinsi_id' => $user['provinsi_id']));  
+                                                                    if(!$tbl_kota){ ?>
+                                                                    <option value="">Pilih Provinsi Terlebih Dahulu</option>
+                                                                    <?php } ?>
+                                                                    <?php foreach ($tbl_kota as $key => $value) 
                                                                     { ?>
-                                                                        <option value="<?= $value['id'] ?>" <?php if($user['kota_id'] == $value['id']){ echo "selected"; } ?>><?= $value['value'] ?></option>
+                                                                        <option id="kota-<?=$value['id']?>" value="<?= $value['id'] ?>" <?php if($user['kota_id'] == $value['id']){ echo "selected"; } ?>><?= $value['value'] ?></option>
                                                                     <?php } ?>
                                                                 </select>
                                                             </div>
