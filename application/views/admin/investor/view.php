@@ -125,6 +125,22 @@
 															</div>
 														</div>
 													</div>
+													<div class="row">
+														<div class="col-md-12"> 
+															<div class="form-group">
+																<label>Status Perkawinan</label>
+																<?php if($user['status_kawin']) {?>
+																	<select class="form-control select2" name="dt[status_kawin]" style="width: 100%">
+																		<option value="">--Pilih Status Perkawinan--</option>
+																		<option value="0" <?php if($user['status_kawin'] == '0'){echo "selected";} ?>>Belum Menikah</option>
+																		<option value="1" <?php if($user['status_kawin'] == '1'){echo "selected";} ?>>Sudah Menikah</option>
+																	</select>
+																<?php } else { ?>
+																	<p class='help-block'><i>Belum Tersedia</i></p>
+																<?php } ?>
+															</div>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>

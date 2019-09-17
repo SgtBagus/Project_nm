@@ -13,7 +13,7 @@ if($this->session->userdata('session_sop')=="") {
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-xs-12">
                     <h1><?= $title ?> </h1>
-                    <div class="box box-solid round avatar">
+                    <div class="box box-solid round">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-12" align="center">

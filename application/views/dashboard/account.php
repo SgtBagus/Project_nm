@@ -77,6 +77,18 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12"> 
+                                                            <div class="form-group">
+                                                                <label>Status Perkawinan</label>
+                                                                <select class="form-control select2" name="dt[status_kawin]" style="width: 100%">
+                                                                    <option value="">--Pilih Status Perkawinan--</option>
+                                                                    <option value="0" <?php if($user['status_kawin'] == '0'){echo "selected";} ?>>Belum Menikah</option>
+                                                                    <option value="1" <?php if($user['status_kawin'] == '1'){echo "selected";} ?>>Sudah Menikah</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="row" align="right">
                                                         <div class="col-md-12"> 
                                                             <button type="submit" class="btn-send btn btn-primary btn-send" ><i class="fa fa-edit"></i> Save</button>

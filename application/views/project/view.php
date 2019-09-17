@@ -224,7 +224,7 @@
                                 </a>
                                 <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                                   <div class="row" style="width: 100%; height: 300px;">
-                                    <canvas id="myChart" style="width: 512px; height: 256px" ></canvas>
+                                    <canvas id="myChart" style="width: 512px; height: 600px" ></canvas>
                                   </div>
                                 </div>
                               </div>

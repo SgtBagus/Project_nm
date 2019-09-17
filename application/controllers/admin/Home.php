@@ -11,7 +11,7 @@ class Home extends MY_Controller {
 			$data['Totalproyek'] = $this->mymodel->selectWithQuery("SELECT COUNT(id) as total FROM tbl_project");
 			$data['AVGpersent'] = $this->mymodel->selectWithQuery("SELECT AVG(return_tahun) as persent FROM tbl_project_return");
 			$data['SUMReturn'] = $this->mymodel->selectWithQuery("SELECT SUM(total_harga) as SUM FROM tbl_project");
-			$data['AVGReturn'] = $this->mymodel->selectWithQuery("SELECT AVG(total_harga) as AVG FROM tbl_project");
+			$data['AVGReturn'] = $this->mymodel->selectWithQuery("SELECT AVG(harga) as AVG FROM tbl_project");
 
 			$data['AVGpersentyear1'] = $this->mymodel->selectWithQuery("SELECT AVG(return_tahun) as year1 FROM tbl_project_return WHERE Tahun = '1'");
 			$data['AVGpersentyear2'] = $this->mymodel->selectWithQuery("SELECT AVG(return_tahun) as year2 FROM tbl_project_return WHERE Tahun = '2'");
@@ -28,7 +28,7 @@ class Home extends MY_Controller {
 
 			$data['SUMReturn'] = $this->mymodel->selectWithQuery("SELECT SUM(total_harga) as SUM FROM tbl_project WHERE user_id = '".$this->session->userdata('id')."'");
 
-			$data['AVGReturn'] = $this->mymodel->selectWithQuery("SELECT AVG(total_harga) as AVG FROM tbl_project WHERE user_id = '".$this->session->userdata('id')."'");
+			$data['AVGReturn'] = $this->mymodel->selectWithQuery("SELECT AVG(harga) as AVG FROM tbl_project WHERE user_id = '".$this->session->userdata('id')."'");
 			$data['tbl_project'] = $this->db->limit(5)->get_where('tbl_project', array('public' => 'ENABLE'))->result_array();
 			$data['tbl_project_all'] = $this->mymodel->selectData("tbl_project");
 		}

@@ -253,11 +253,11 @@
       datasets: [{
         label: "Profit ",
         data: [
-        <?= ($AVGReturn[0]['AVG']*$AVGpersentyear1[0]['year1']/100)/1000000 ?>, 
-        <?= ($AVGReturn[0]['AVG']*$AVGpersentyear2[0]['year2']/100)/1000000 ?>, 
-        <?= ($AVGReturn[0]['AVG']*$AVGpersentyear3[0]['year3']/100)/1000000 ?>, 
-        <?= ($AVGReturn[0]['AVG']*$AVGpersentyear4[0]['year4']/100)/1000000 ?>, 
-        <?= ($AVGReturn[0]['AVG']*$AVGpersentyear5[0]['year5']/100)/1000000 ?>, 
+        <?= ($AVGReturn[0]['AVG']*$AVGpersentyear1[0]['year1']/100) ?>, 
+        <?= ($AVGReturn[0]['AVG']*$AVGpersentyear2[0]['year2']/100) ?>, 
+        <?= ($AVGReturn[0]['AVG']*$AVGpersentyear3[0]['year3']/100) ?>, 
+        <?= ($AVGReturn[0]['AVG']*$AVGpersentyear4[0]['year4']/100) ?>, 
+        <?= ($AVGReturn[0]['AVG']*$AVGpersentyear5[0]['year5']/100) ?>, 
         ], 
         backgroundColor: 'rgb(193, 193, 229)',
         borderColor: 'rgb(105, 105, 205)',
@@ -298,7 +298,7 @@
           },
           ticks: {
             callback: function(value, index, values) {
-              return 'Rp ' + formatNumber(value) + ' Jt ,-';
+              return 'Rp ' + formatNumber(value) + ',-';
             }
           }
         }]
@@ -307,7 +307,7 @@
         callbacks: {
           label: function(t, d) {
             var xLabel = d.datasets[t.datasetIndex].label;
-            var yLabel = "Rp "+ formatNumber(t.yLabel) + ' Jt ,-';
+            var yLabel = "Rp "+ formatNumber(t.yLabel) + ',-';
             return xLabel + ': ' + yLabel;
           }
         }

@@ -31,7 +31,7 @@
           <div class="small-box bg-green round">
             <div class="inner">
               <h4>Investor Terdaftar</h4>
-              <h2><b><?= $users[0]['users'] ?></b></h2>
+              <h2><b><?= $users[0]['users'] ?></b></h2> 
             </div>
             <div class="icon">
               <i class="fa fa-users"></i>
@@ -119,18 +119,46 @@
                     <?= strlen($row["title"]) > 15 ? substr($row["title"],0,15)."..." : $row["title"] ?>
                   </h2>
                   <h5 align="center">
-                    <?php $user = $this->mymodel->selectDataone('user', array('id'=>$row['user_id'])); ?>
-                    <?php $return = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$row['id'], 'public' => 'ENABLE')); ?>
+                    <?php 
+                    $user = $this->mymodel->selectDataone('user', array('id'=>$row['user_id']));
+                    $return = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$row['id'], 'public' => 'ENABLE')); 
+
+                    $avgReturn = $this->mymodel->selectWithQuery('SELECT AVG(return_tahun) as AVG from tbl_project_return WHERE project_id = "'.$row[id].'"');
+
+                    $countInvestor = $this->mymodel->selectWithQuery('SELECT COUNT(id) as COUNT from tbl_project_invest WHERE project_id = "'.$row[id].'" AND status_pembayaran = "APPROVE" ');
+                    ?>
                     Oleh : <b><?= $user['name'] ?></b>
+                    <p class='help-block'><b>Dibuat pada : </b><?= date("d-m-Y", strtotime($row['created_at']))  ?></p>
+                    <hr>
+                    <?php
+                    if($row['status']=='ENABLE'){
+                      echo '<div class="alert alert-success alert-dismissible round status-alert" align="center">
+                      <i class="fa fa-check-circle"></i> <b>Masih Dibuka</b>
+                      </div>';
+                    }else{
+                      echo '<div class="alert alert-danger alert-dismissible round status-alert" align="center">
+                      <i class="fa fa-ban"></i> <b>Sudah Ditutup</b>
+                      </div>';
+                    }
+                    ?>
                     <hr>
                     Periode Kontrak : <b><?= $row['periode'] ?> Tahun</b>
                     <hr>
                     Return Tahun ke <b><?=$return['tahun']?></b> : <b><?= $return['return_tahun'] ?></b>  % per Tahun
                     <hr>
-                    Slot Unit Tersisa : <b><?= $row['unit'] ?></b>
-                    <?php if ($row['unit'] == 0){
-                      echo '<p class="help-block"> Slot Telah Habis</p>';
-                    } ?>
+                    Rata Rata Return Kembali : <br>
+                      <?php 
+                      $harga = $row['harga'];
+                      $rata2return = $avgReturn[0]['AVG'];
+                      $hasilrata2 = $harga*$rata2return/100;
+                      echo "Rp. <b>".number_format($hasilrata2,0,',','.')."</b>,- s/d Rp. <b>".number_format($hasilrata2+100000,0,',','.')."</b>,-"; ?></b>  
+                      <hr>
+                      Slot Unit Tersisa : <b><?php if ($row['unit'] == 0){
+                        echo 'Slot Telah Habis';
+                      } else { 
+                        echo $row['unit'];
+                      }
+                      ?></b>
                     <hr>
                     Periode Bagi Hasil : <b><?= $row['bagi_hasil'] ?> Tahun</b>
                   </h5>
@@ -138,6 +166,7 @@
                   <h4 align="center">
                     Harga : <b>Rp <?= number_format($row['harga'],0,',','.') ?>,- / Unit</b>
                   </h4>
+                  <p class='help-block' align="center">Sebanyak <b> <?= $countInvestor[0]['COUNT'] ?></b> Telah Bergabung</p>
                   <div class="row" align="center">
                     <div class="col-md-12" align="center">
                       <a href="<?= base_url('project/view/').$row['slug'] ?>">
