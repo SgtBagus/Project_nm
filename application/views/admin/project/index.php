@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-xs-12">
         <div class="box">
-          <div class="box-header">
+          <div class="box-header"> 
             <div class="row">
               <div class="col-md-12">
                 <div class="pull-right">
@@ -71,7 +71,7 @@
                       </td>
                       <td>
                         <a href="<?= base_url('admin/project/viewReturn/').$row['id'] ?>">
-                          <button type="button" class="btn btn-sm btn-sm btn-info"><i class="fa fa-eye"></i> Lihat Detail Return</button>
+                          <button type="button" class="btn btn-sm btn-sm btn-primary"><i class="fa fa-eye"></i> Detail Return</button>
                         </a>
                       </td>
                       <td>

@@ -31,6 +31,7 @@ class Project extends MY_Controller {
 
 		$this->form_validation->set_error_delimiters('<li>', '</li>');
 		$this->form_validation->set_rules('dt[title]', '<strong>Judul Proyek</strong> Tidak Boleh Kosong', 'required');
+		$this->form_validation->set_rules('dt[user_id]', '<strong>Hak Milik Proyek</strong> Harus Di Pilih', 'required');
 		$this->form_validation->set_rules('dt[slug]', '<strong>Slug Proyek</strong> Tidak Boleh Kosong', 'required');
 
 		$supported_file = array(
@@ -65,6 +66,7 @@ class Project extends MY_Controller {
 		}
 
 		$this->form_validation->set_rules('dt[harga]', '<strong>Harga Proyek</strong> Tidak Boleh Kosong', 'required');
+		$this->form_validation->set_rules('dt[modal_back]', '<strong>Pengembalian Modal</strong> Tidak Boleh Kosong', 'required');
 		$this->form_validation->set_rules('dt[unit]', '<strong>Unit</strong> Tidak Boleh Kosong', 'required');
 		$this->form_validation->set_rules('dt[total_harga]', '<strong>Total Harga</strong> Tidak Boleh Kosong', 'required');
 		$this->form_validation->set_message('required', '%s');
@@ -148,6 +150,7 @@ class Project extends MY_Controller {
 			$dt['harga'] = str_replace( ',', '', $dt['harga'] );
 			$dt['unit'] = str_replace( ',', '', $dt['unit'] );
 			$dt['total_harga'] = str_replace( ',', '', $dt['total_harga'] );
+			$dt['modal_back'] = str_replace( ',', '', $dt['modal_back'] );
 			$dt['created_at'] = date('Y-m-d H:i:s');
 			$dt['public'] = "DISABLE";
 			$dt['status'] = "DISABLE";
@@ -388,6 +391,7 @@ class Project extends MY_Controller {
 			$dt['harga'] = str_replace( ',', '', $dt['harga'] );
 			$dt['unit'] = str_replace( ',', '', $dt['unit'] );
 			$dt['total_harga'] = str_replace( ',', '', $dt['total_harga'] );
+			$dt['modal_back'] = str_replace( ',', '', $dt['modal_back'] );
 			$dt['updated_at'] = date("Y-m-d H:i:s");
 			$this->mymodel->updateData('tbl_project', $dt , array('id'=>$_POST['dt']['id']));
 			$this->alert->alertsuccess('Success Update Data');

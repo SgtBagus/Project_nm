@@ -116,7 +116,7 @@ if($data_edit){
           <div class="input-group-addon">
             <i class="fa fa-money"></i> Rp.
           </div>
-          <input type="text" name="dt[harga]" id="harga_proyek" class="number-separator form-control" placeholder="Masukan Nominal uang.." <?php if($data_edit){echo "value='".number_format($data_edit['harga'],0,',',',')."'"; }  ?>>
+          <input type="text" name="dt[harga]" id="harga_proyek" class="number-separator form-control" placeholder="Masukan Hara Proyek.." <?php if($data_edit){echo "value='".number_format($data_edit['harga'],0,',',',')."'"; }  ?>>
         </div>
       </div>
       <div class="col-sm-4">
@@ -134,6 +134,17 @@ if($data_edit){
             <i class="fa fa-money"></i> Rp.
           </div>
           <input type="text" name="dt[total_harga]" id="total_proyek" class="number-separator form-control" readonly="true">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputEmail3" class="col-sm-3 control-label">Pengembalian Modal*</label>
+      <div class="col-sm-9">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-money"></i> Rp.
+          </div>
+          <input type="text" name="dt[modal_back]" class="number-separator form-control" placeholder="Masukan Pengembalian Modal.." <?php if($data_edit){echo "value='".number_format($data_edit['modal_back'],0,',',',')."'"; } ?>>
         </div>
       </div>
     </div>

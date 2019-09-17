@@ -156,7 +156,7 @@
                                                         <div class="col-md-6"> 
                                                             <div class="form-group">
                                                                 <label>Provinsi</label>
-                                                                <select class="form-control select2" name="dt[provinsi_id]" style="width: 100%">
+                                                                <select class="form-control select2" name="dt[provinsi_id]" id="provinsi" style="width: 100%">
                                                                     <option value="">--Pilih Provinsi--</option>
                                                                     <?php 
                                                                     $tbl_provinsi = $this->mymodel->selectData("tbl_provinsi"); foreach ($tbl_provinsi as $key => $value) 
@@ -169,7 +169,7 @@
                                                         <div class="col-md-6">  
                                                             <div class="form-group">
                                                                 <label>Kota</label>
-                                                                <select class="form-control select2" name="dt[kota_id]" style="width: 100%">
+                                                                <select class="form-control select2" name="dt[kota_id]" id="kota" style="width: 100%">
                                                                     <option value="">--Pilih Kota--</option>
                                                                     <?php 
                                                                     $tbl_kota = $this->mymodel->selectData("tbl_kota"); foreach ($tbl_kota as $key => $value) 
@@ -272,7 +272,7 @@
                                                                     <?php 
                                                                     $tbl_bank = $this->mymodel->selectData("tbl_bank"); foreach ($tbl_bank as $key => $value) 
                                                                     { ?>
-                                                                        <option value="<?= $value['id'] ?>"><?= $value['value'] ?></option>
+                                                                        <option value="<?= $value['id'] ?>" <?php if($user['bank_id'] == $value['id']){ echo "selected"; } ?> ><?= $value['value'] ?></option>
                                                                     <?php } ?>
                                                                 </select>
                                                             </div>
@@ -288,7 +288,7 @@
                                                         <div class="col-md-6">  
                                                             <div class="form-group">
                                                                 <label>No Rekening</label>
-                                                                <input type="text" name="dt[no_rek]" class="form-control" placeholder="Masukan No Rekening" value="<?= $user['no_rek']?>">
+                                                                <input type="number" name="dt[no_rek]" class="form-control" placeholder="Masukan No Rekening" value="<?= $user['no_rek']?>">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">  

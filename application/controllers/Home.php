@@ -5,6 +5,10 @@ class Home extends MY_Controller {
 	}
 
 	public function index(){
+		$data['avg'] = $this->mymodel->selectWithQuery('SELECT AVG(return_tahun) as AVG from tbl_project_return');
+		$data['project'] = $this->mymodel->selectWithQuery('SELECT count(id) as project from tbl_project WHERE status = "ENABLE" ');
+		$data['harga'] = $this->mymodel->selectWithQuery('SELECT AVG(harga) as harga from tbl_project WHERE status = "ENABLE"');
+		$data['users'] = $this->mymodel->selectWithQuery('SELECT count(id) as users from tbl_investor');
 		$data['cara_pertama'] = $this->mymodel->selectDataOne('tbl_hows_work', array('id'=>1));
 		$data['cara_kedua'] = $this->mymodel->selectDataOne('tbl_hows_work', array('id'=>2));
 		$data['cara_ketiga'] = $this->mymodel->selectDataOne('tbl_hows_work', array('id'=>3));

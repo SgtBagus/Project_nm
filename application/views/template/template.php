@@ -328,5 +328,37 @@ $this->session->set_userdata(array('url_session' => $actual_link));
   $('#refresh').click(function() {
     location.reload();
   });
+
+  function get_kota(){
+    var idProvinsi = $("#provinsi").val();
+    if (idProvinsi) {
+      $.ajax({
+        url: "<?=base_url()?>ajaxurl/get_kota/" + idProvinsi,
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+          $("#kota").empty();
+          if(!$.trim(data)){
+            $("#kota").append('<option value="">Data Tidak Ada</option>');
+          }else{
+            $.each(data, function (key, value) {
+              $("#kota").append('<option value="' +
+                value.id + '">' + value.value +
+                '</option>');
+            });
+          }
+        }
+      });
+    } else {
+      $("#kota").empty();
+      $("#kota").append('<option value="">Pilih Kota</option>');
+    }
+  }
+
+  $("#provinsi").change(function() {
+    get_kota();
+  });
+
+  get_kota();
 </script>
 </html>

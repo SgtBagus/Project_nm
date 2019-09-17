@@ -15,28 +15,24 @@
               <div class="col-sm-9">
                 <div class="radio">
                   <label style="margin-right: 5px">
-                    <input type="radio" name="filter" id="optionsRadios1" value="filter 1" checked="true">
+                    <input type="radio" name="filter" onclick="filterall()" id="optionsRadios1" value="filter 1" <?php if(!$_GET['search']) { echo "checked"; }?>>
                     Semua Proyek
                   </label>
-
                   <label style="margin-right: 5px">
-                    <input type="radio" name="filter" id="optionsRadios1" value="filter 1">
-                    Baru Berjalan
+                    <input type="radio" name="filter" onclick="filternew()" id="optionsRadios1" value="filter 1" <?php if($_GET['search'] == 'new') { echo "checked"; }?>>
+                    Baru Berjalan 
                   </label>
-
                   <label style="margin-right: 5px">
-                    <input type="radio" name="filter" id="optionsRadios1" value="filter 1">
+                    <input type="radio" name="filter" onclick="filterlast()" id="optionsRadios1" value="filter 1" <?php if($_GET['search'] == 'last') { echo "checked"; }?>>
                     Lama Berjalan
                   </label>
-
                   <label style="margin-right: 5px">
-                    <input type="radio" name="filter" id="optionsRadios1" value="filter 1">
-                    Return Terbesar
+                    <input type="radio" name="filter" onclick="filterreturn()" id="optionsRadios1" value="filter 1" <?php if($_GET['search'] == 'return') { echo "checked"; }?>>
+                    Rata Rata Return Terbesar
                   </label>
-
                   <label style="margin-right: 5px">
-                    <input type="radio" name="filter" id="optionsRadios1" value="filter 1">
-                    Proyek Terbaik
+                    <input type="radio" name="filter" onclick="filterinvest()" id="optionsRadios1" value="filter 1" <?php if($_GET['search'] == 'invest') { echo "checked"; }?>>
+                    Proyek Dengan Investor Terbanyak
                   </label>
                 </div>
               </div>
@@ -56,9 +52,16 @@
                     <?= strlen($row["title"]) > 15 ? substr($row["title"],0,15)."..." : $row["title"] ?>
                   </h2>
                   <h5 align="center">
-                    <?php $user = $this->mymodel->selectDataone('user', array('id'=>$row['user_id'])); ?>
-                    <?php $return = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$row['id'], 'public' => 'ENABLE')); ?>
+                    <?php 
+                    $user = $this->mymodel->selectDataone('user', array('id'=>$row['user_id']));
+                    $return = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$row['id'], 'public' => 'ENABLE')); 
+
+                    $avgReturn = $this->mymodel->selectWithQuery('SELECT AVG(return_tahun) as AVG from tbl_project_return WHERE project_id = "'.$row[id].'"');
+
+                    $countInvestor = $this->mymodel->selectWithQuery('SELECT COUNT(id) as COUNT from tbl_project_invest WHERE project_id = "'.$row[id].'" AND status_pembayaran = "APPROVE" ');
+                    ?>
                     Oleh : <b><?= $user['name'] ?></b>
+                    <p class='help-block'><b>Dibuat pada : </b><?= date("d-m-Y", strtotime($row['created_at']))  ?></p>
                     <hr>
                     <?php
                     if($row['status']=='ENABLE'){
@@ -76,7 +79,19 @@
                     <hr>
                     Return Tahun ke <b><?=$return['tahun']?></b> : <b><?= $return['return_tahun'] ?></b>  % per Tahun
                     <hr>
-                    Stok : <b><?= $row['unit'] ?></b>
+                    Rata Rata Return Kembali : <br>
+                      <?php 
+                      $harga = $row['harga'];
+                      $rata2return = $avgReturn[0]['AVG'];
+                      $hasilrata2 = $harga*$rata2return/100;
+                      echo "Rp. <b>".number_format($hasilrata2,0,',','.')."</b>,- s/d Rp. <b>".number_format($hasilrata2+100000,0,',','.')."</b>,-"; ?></b>  
+                      <hr>
+                      Slot Unit Tersisa : <b><?php if ($row['unit'] == 0){
+                        echo 'Slot Telah Habis';
+                      } else { 
+                        echo $row['unit'];
+                      }
+                      ?></b>
                     <hr>
                     Periode Bagi Hasil : <b><?= $row['bagi_hasil'] ?> Tahun</b>
                   </h5>
@@ -84,6 +99,7 @@
                   <h4 align="center">
                     Harga : <b>Rp <?= number_format($row['harga'],0,',','.') ?>,- / Unit</b>
                   </h4>
+                  <p class='help-block' align="center">Sebanyak <b> <?= $countInvestor[0]['COUNT'] ?></b> Telah Bergabung</p>
                   <div class="row" align="center">
                     <div class="col-md-12" align="center">
                       <a href="<?= base_url('project/view/').$row['slug'] ?>">
@@ -110,3 +126,25 @@
     </section>
   </div>
 </div>
+<script type="text/javascript">
+
+  function filterall(id) {
+    window.location.href = "<?= base_url('project') ?>";
+  }
+
+  function filternew(id) {
+    window.location.href = "<?= base_url('project?search=new') ?>";
+  }
+
+  function filterlast(id) {
+    window.location.href = "<?= base_url('project?search=last') ?>";
+  }
+
+  function filterreturn(id) {
+    window.location.href = "<?= base_url('project?search=return') ?>";
+  }
+
+  function filterinvest(id) {
+    window.location.href = "<?= base_url('project?search=invest') ?>";
+  }
+</script>

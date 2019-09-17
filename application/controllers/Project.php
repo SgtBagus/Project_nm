@@ -5,7 +5,26 @@ class Project extends MY_Controller {
 	}
 
 	public function index(){
-		$data['tbl_project'] = $this->mymodel->selectWhere('tbl_project', array('public' => 'ENABLE'));
+
+		if($_GET['search']){
+			if($_GET['search'] == 'new'){
+				$data['tbl_project'] = $this->mymodel->selectWithQuery("SELECT * FROM tbl_project WHERE public = 'ENABLE' ORDER BY created_at DESC ");
+			} else if ($_GET['search'] == 'last'){
+				$data['tbl_project'] = $this->mymodel->selectWithQuery("SELECT * FROM tbl_project WHERE public = 'ENABLE' ORDER BY created_at ASC ");
+			} else if ($_GET['search'] == 'return'){
+				$data['tbl_project'] = $this->mymodel->selectWithQuery("SELECT (a.harga*AVG(b.return_tahun)/100) as return_besar, a.* from tbl_project a LEFT JOIN tbl_project_return b on a.id = b.project_id WHERE a.public = 'ENABLE' GROUP BY a.id ORDER BY `return_besar` DESC");
+			} else if ($_GET['search'] == 'invest'){
+				$data['tbl_project'] = $this->mymodel->selectWithQuery("SELECT *
+					FROM (SELECT * FROM tbl_project a) x
+					LEFT OUTER JOIN
+					(SELECT a.project_id, COUNT(a.investor_id) as count_invest
+					from  tbl_project_invest a 
+					WHERE a.status_pembayaran = 'APPROVE' GROUP BY a.project_id) y
+					ON x.id = y.project_id ORDER BY count_invest DESC");
+			}
+		}else{
+			$data['tbl_project'] = $this->mymodel->selectWhere('tbl_project', array('public' => 'ENABLE'));
+		}
 		$data['file'] = $this->mymodel->selectWhere('file',array('table'=>'tbl_project'));
 		$this->template->load('template/template','project/index',$data);
 	}

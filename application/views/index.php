@@ -16,66 +16,44 @@
   <div class="container">
     <section class="content">
       <div class="row">
-        <div class="col-md-4 col-6 mb-md-0 mb-5">
-          <div class="small-box bg-purple round">
-            <div class="inner">
-              <h4>Rata Rata Bagi Hasil</h4>
-              <h2><b>12 - 18%</b></h2>
-            </div>
-            <div class="icon">
-              <i class="fa fa-inbox"></i>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-6 mb-md-0 mb-5">
+        <div class="col-md-6 col-6 mb-md-0 mb-5">
           <div class="small-box bg-orange round">
             <div class="inner">
-              <h4>Total Outstanding Pinjaman</h4>
-              <h2><b>Rp. 95.4 M</b></h2>
+              <h4>Total Proyek</h4>
+              <h2><b><?= $project[0]['project'] ?></b></h2>
             </div>
             <div class="icon">
-              <i class="fa fa-money"></i>
+              <i class="fa fa-archive"></i>
             </div>
           </div>
         </div>
-        <div class="col-md-4 col-6 mb-md-0 mb-5">
+        <div class="col-md-6 col-6 mb-md-0 mb-5">
           <div class="small-box bg-green round">
             <div class="inner">
-              <h4>Total Outstanding Pinjaman</h4>
-              <h2><b>Rp. 95.4 M</b></h2>
+              <h4>Investor Terdaftar</h4>
+              <h2><b><?= $users[0]['users'] ?></b></h2>
             </div>
             <div class="icon">
-              <i class="fa fa-check"></i>
+              <i class="fa fa-users"></i>
             </div>
           </div>
         </div>
-        <div class="col-md-4 col-6 mb-md-0 mb-5">
+        <div class="col-md-6 col-6 mb-md-0 mb-5">
           <div class="small-box bg-yellow round">
             <div class="inner">
-              <h4>Akumulasi Pinjaman Tersalurkan</h4>
-              <h2><b>Rp 136.5 M</b></h2>
+              <h4>Rata Rata Bagi Hasil</h4>
+              <h2><b><?= ceil($avg[0]['AVG']) ?> % - <?= ceil($avg[0]['AVG'])+2 ?> % </b></h2>
             </div>
             <div class="icon">
               <i class="fa fa-bar-chart"></i>
             </div>
           </div>
         </div>
-        <div class="col-md-4 col-6 mb-md-0 mb-5">
-          <div class="small-box bg-red round">
-            <div class="inner">
-              <h4>Akumulasi Pinjaman 2019</h4>
-              <h2><b>Rp 40.5 M</b></h2>
-            </div>
-            <div class="icon">
-              <i class="fa fa-check-circle"></i>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-6 mb-md-0 mb-5">
+        <div class="col-md-6 col-6 mb-md-0 mb-5">
           <div class="small-box bg-blue round">
             <div class="inner">
-              <h4>Total Biaya</h4>
-              <h2><b>0.06%</b></h2>
+              <h4>Rata Rata Harga Per Unit</h4>
+              <h2><b>Rp <?= number_format($harga[0]['harga']/1000000,0,',','.') ?> Jt ,- / Unit</b></h2>
             </div>
             <div class="icon">
               <i class="fa fa-handshake-o"></i>
@@ -149,7 +127,10 @@
                     <hr>
                     Return Tahun ke <b><?=$return['tahun']?></b> : <b><?= $return['return_tahun'] ?></b>  % per Tahun
                     <hr>
-                    Stok : <b><?= $row['unit'] ?></b>
+                    Slot Unit Tersisa : <b><?= $row['unit'] ?></b>
+                    <?php if ($row['unit'] == 0){
+                      echo '<p class="help-block"> Slot Telah Habis</p>';
+                    } ?>
                     <hr>
                     Periode Bagi Hasil : <b><?= $row['bagi_hasil'] ?> Tahun</b>
                   </h5>

@@ -119,9 +119,9 @@
           <div class="row">
             <div class="col-md-8">
               <?php if($file['dir']){ ?>
-                <img src="<?= base_url().$file['dir'] ?>" class="round" id="main_image" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%">
+                <img src="<?= base_url().$file['dir'] ?>" class="round" id="main_image" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%; border-radius: 15px">
               <?php } else { ?>
-                <img src="<?= base_url('webfile/project/default.jpg')?>" class="round" id="main_image" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%">
+                <img src="<?= base_url('webfile/project/default.jpg')?>" class="round" id="main_image" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%; border-radius: 15px">
               <?php } ?>
               <br><br>
               <div class="row">
@@ -131,7 +131,7 @@
                   foreach($file_detail as $img){
                     ?>
                     <div class="col-md-2 col-sm-3 col-xs-4">
-                      <img src="<?= base_url().$img['dir']?>" id="detail_image-<?=$i?>" alt="User Image" width="100%" height="85px" style="border-radius: 15px">
+                      <img src="<?= base_url().$img['dir']?>" id="detail_image-<?=$i?>" alt="User Image" width="100%" height="85px" style="border-radius: 15px; margin-bottom: 20px">
                     </div>
                     <?php
                     $i++;
@@ -185,28 +185,42 @@
                 </div>
               </div>
               <h5 align="center"><b>Ubah Status</b></h5>
+              <?php $return = $this->mymodel->selectWithQuery("SELECT count(id) as return_row FROM tbl_project_return WHERE project_id = $tbl_project[id] "); ?>
               <div class="row">
                 <div class="col-md-6" align="center">
                   Public <br>
-                  <?php
-                  if($tbl_project['public']=='ENABLE'){
-                    echo '<button type="button" class="btn btn-block btn-sm btn-sm btn-danger" onclick="publicDisable('.$tbl_project['id'].')"><i class="fa fa-ban"></i> DISABLE</button>';
-                  }else{
-                    echo '<button type="button" class="btn btn-block btn-sm btn-sm btn-success" onclick="publicEnable('.$tbl_project['id'].')"><i class="fa fa-check-circle"></i> ENABLE</button>';
-                  }
-                  ?>
+                  <?php if($tbl_project['public']=='ENABLE'){?>
+                    <button type="button" class="btn btn-block btn-sm btn-sm btn-danger" onclick="publicDisable('<?=$tbl_project['id']?>')" <?php if(!$return[0]['return_row']) { echo "disabled"; }?>>
+                      <i class="fa fa fa-ban"></i> DISABLE
+                    </button>
+                  <?php }else { ?>
+                    <button type="button" class="btn btn-block btn-sm btn-sm btn-success" onclick="publicEnable('<?=$tbl_project['id']?>')" <?php if(!$return[0]['return_row']) { echo "disabled"; }?>>
+                      <i class="fa fa fa-ban"></i> ENABLE
+                    </button>
+                  <?php } if(!$return[0]['return_row']) { echo "<p class='help-block'><i>Mohon Untuk Melakukan Set pada Return per Tahun Terlebih Dahulu</i></p>"; } ?>
                 </div>
                 <div class="col-md-6" align="center">
                   Proyek <br>
-                  <?php
-                  if($tbl_project['status']=='ENABLE'){
-                    echo '<button type="button" class="btn btn-block btn-sm btn-sm btn-danger" onclick="statusDisable('.$tbl_project['id'].')"><i class="fa fa-ban"></i> DISABLE</button>';
-                  }else{
-                    echo '<button type="button" class="btn btn-block btn-sm btn-sm btn-success" onclick="statusEnable('.$tbl_project['id'].')"><i class="fa fa-check-circle"></i> ENABLE</button>';
-                  }
-                  ?>
+                  <?php if($tbl_project['status']=='ENABLE'){?>
+                    <button type="button" class="btn btn-block btn-sm btn-sm btn-danger" onclick="publicDisable('<?=$tbl_project['id']?>')" <?php if(!$return[0]['return_row']) { echo "disabled"; }?>>
+                      <i class="fa fa fa-ban"></i> DISABLE
+                    </button>
+                  <?php }else { ?>
+                    <button type="button" class="btn btn-block btn-sm btn-sm btn-success" onclick="publicEnable('<?=$tbl_project['id']?>')" <?php if(!$return[0]['return_row']) { echo "disabled"; }?>>
+                      <i class="fa fa fa-ban"></i> ENABLE
+                    </button>
+                  <?php } if(!$return[0]['return_row']) { echo "<p class='help-block'><i>Mohon Untuk Melakukan Set pada Return per Tahun Terlebih Dahulu</i></p>"; } ?>
                 </div>
               </div>
+              <?php if(!$return[0]['return_row']) { ?>
+                <div class="row">
+                  <div class="col-md-12" align="center">
+                    <a href="<?= base_url('admin/project/viewReturn/').$tbl_project['id'] ?>">
+                      <button type="button" class="btn btn-sm btn-block btn-primary"><i class="fa fa-edit"></i> Ubah Detail Return Proyek</button>
+                    </a>
+                  </div>
+                </div>
+              <?php }?>
               <div style="margin: 5px">
                 Proyek dimulai <b><?= date("d-m-Y", strtotime($tbl_project['created_at']))  ?></b> oleh:
               </div>
@@ -282,32 +296,42 @@
                                             <td><?=$i?></td>
                                             <td>Tahun Ke - <?= $grafik['tahun']?></td>
                                             <td><?php 
-                                            $total_harga = $tbl_project['total_harga']; 
+                                            $total_harga = $tbl_project['harga']; 
                                             $persentase = $grafik['return_tahun'];
                                             $hasil = $total_harga*$persentase/100;
 
-                                            echo "Rp ".number_format($hasil,0,',','.').",-"
-                                            ?>
+                                            $total_hasil += $hasil;
+
+                                            echo "Rp ".number_format($hasil,0,',','.').",-"; ?>
                                           </td>
                                           <td><?= $grafik['return_tahun']?> % per Tahun</td>
                                         </tr>
-                                      <?php } ?>
-                                    </tbody>
-                                  </table>
-                                </div>
-                                <br>
-                                <div class="box-group" id="accordion">
-                                  <div class="panel box box-primary" align="center">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
-                                      <div class="box-header with-border">
-                                        <h4 class="box-title">
-                                          Buka Simulasi Grafik
-                                        </h4>
-                                      </div>
-                                    </a>
-                                    <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                      <div class="row" style="width: 100%; height: 300px;">
-                                        <canvas id="myChart" style="width: 512px; height: 256px" ></canvas>
+                                        <?php $i++; } ?>
+                                        <tr>
+                                          <td colspan="2" align="right"><b>Pengembalian Modal : </b></td>
+                                          <td colspan="2" align="left"><b>Rp <?= number_format($tbl_project['modal_back'],0,',','.')?> ,-</b></td>
+                                        </tr>
+                                        <tr>
+                                          <td colspan="2" align="right"><b>Total : </b></td>
+                                          <td colspan="2" align="left"><b>Rp <?= number_format($total_hasil+$tbl_project['modal_back'],0,',','.')?> ,-</b></td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                  <br>
+                                  <div class="box-group" id="accordion">
+                                    <div class="panel box box-primary" align="center">
+                                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
+                                        <div class="box-header with-border">
+                                          <h4 class="box-title">
+                                            Buka Simulasi Grafik
+                                          </h4>
+                                        </div>
+                                      </a>
+                                      <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                        <div class="row" style="width: 100%; height: 300px;">
+                                          <canvas id="myChart" style="width: 512px; height: 256px" ></canvas>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
@@ -322,215 +346,214 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6" align="center">
-              <a href="<?= base_url('admin/project') ?>"> <button type="button" class="btn btn-block btn-md btn-sm btn-info"><i class="fa fa-archive"></i> Data Proyek</button></a>
-            </div>
-            <div class="col-md-6" align="center">
-              <a href="<?= base_url('admin/project/edit/').$tbl_project['id'] ?>"> <button type="button" class="btn btn-block btn-md btn-sm btn-primary"><i class="fa fa-edit"></i> Ubah Proyek</button></a>
+            <div class="row">
+              <div class="col-md-6" align="center">
+                <a href="<?= base_url('admin/project') ?>"> <button type="button" class="btn btn-block btn-md btn-sm btn-info"><i class="fa fa-archive"></i> Data Proyek</button></a>
+              </div>
+              <div class="col-md-6" align="center">
+                <a href="<?= base_url('admin/project/edit/').$tbl_project['id'] ?>"> <button type="button" class="btn btn-block btn-md btn-sm btn-primary"><i class="fa fa-edit"></i> Ubah Proyek</button></a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  </div>
-  <script type="text/javascript">
+      </section>
+    </div>
+    <script type="text/javascript">
 
-    $(function () {
-      var ctx = document.getElementById("myChart");
+      $(function () {
+        var ctx = document.getElementById("myChart");
 
-      var data = {
-        labels: [
-        <?php foreach ($tbl_project_return_grafik as $grafik) { ?>
-          "Tahun <?= $grafik['tahun'] ?>", 
-        <?php } ?>
-        ],
-        datasets: [{
-          label: "Profit ",
-          data: [ <?php foreach ($tbl_project_return_grafik as $grafik) { 
-            $total_harga = $tbl_project['total_harga']; 
-            $persentase = $grafik['return_tahun'];
-            $hasil = $total_harga*$persentase/100;
-            echo $hasil.","; } ?> 
-            ],
-            backgroundColor: 'rgb(193, 193, 229)',
-            borderColor: 'rgb(105, 105, 205)',
-            borderWidth: 4,
-            pointBorderWidth: 6
-          }
-          ]
-        };
+        var data = {
+          labels: [
+          <?php foreach ($tbl_project_return_grafik as $grafik) { ?>
+            "Tahun <?= $grafik['tahun'] ?>", 
+          <?php } ?>
+          ],
+          datasets: [{
+            label: "Profit ",
+            data: [ <?php foreach ($tbl_project_return_grafik as $grafik) { 
+              $harga = $tbl_project['harga']; 
+              $persentase = $grafik['return_tahun'];
+              $hasil = $harga*$persentase/100;
+              echo $hasil.","; } ?> 
+              ],
+              backgroundColor: 'rgb(193, 193, 229)',
+              borderColor: 'rgb(105, 105, 205)',
+              borderWidth: 4,
+              pointBorderWidth: 6
+            }
+            ]
+          };
 
-        var options = {
-          responsive: true,
-          maintainAspectRatio: false,
-          legend: {
-            position: 'top',
-          },
-          hover: {
-            mode: 'label'
-          },
-          scales: {
-            xAxes: [{
-              display: true,
-              scaleLabel: {
+          var options = {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+              position: 'top',
+            },
+            hover: {
+              mode: 'label'
+            },
+            scales: {
+              xAxes: [{
                 display: true,
-                labelString: 'Tahun ke',
-                ticks: {
-                  userCallback: function(value, index, values) {
-                    return value.replace("Tahun ","");
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Tahun ke',
+                  ticks: {
+                    userCallback: function(value, index, values) {
+                      return value.replace("Tahun ","");
+                    }
                   }
                 }
-              }
-            }],
-            yAxes: [{
-              display: true,
-              scaleLabel: {
+              }],
+              yAxes: [{
                 display: true,
-                labelString: 'Profit'
-              },
-              gridLines: {
-                display: false
-              },
-              ticks: {
-                callback: function(value, index, values) {
-                  return 'Rp ' + formatNumber(value) + ',-';
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Profit'
+                },
+                gridLines: {
+                  display: false
+                },
+                ticks: {
+                  callback: function(value, index, values) {
+                    return 'Rp ' + formatNumber(value) + ',-';
+                  }
+                }
+              }]
+            },
+            tooltips: {
+              callbacks: {
+                label: function(t, d) {
+                  var xLabel = d.datasets[t.datasetIndex].label;
+                  var yLabel = "Rp "+ formatNumber(t.yLabel) + ',-';
+                  return xLabel + ': ' + yLabel;
                 }
               }
-            }]
+            },
+          }
+
+          var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: options
+          });
+        });
+
+
+      $('#us3').locationpicker({
+        location: {
+          latitude: <?= $tbl_project['latitude'] ?>,
+          longitude: <?= $tbl_project['longitude'] ?>},
+          radius: 0,
+          inputBinding: {
+            latitudeInput: $('#us3-lat'),
+            longitudeInput: $('#us3-lon'),
+            locationNameInput: $('#us3-address')
           },
-          tooltips: {
-            callbacks: {
-              label: function(t, d) {
-                var xLabel = d.datasets[t.datasetIndex].label;
-                var yLabel = "Rp "+ formatNumber(t.yLabel) + ',-';
-                return xLabel + ': ' + yLabel;
-              }
+          enableAutocomplete: true,
+          onchanged: function (currentLocation, radius, isMarkerDropped) {
+          }
+        });
+
+      <?php
+      if($file_detail){
+        $i = 1;
+        foreach($file_detail as $img){
+          ?>
+          $('#detail_image-<?=$i?>').click(function() {
+            var main_src = $('#main_image').attr('src');
+            var detail_src = $('#detail_image-<?=$i?>').attr('src');
+
+            $('#detail_image-<?=$i?>').attr('src',main_src);
+            $('#main_image').attr('src',detail_src);
+          });
+
+          <?php
+          $i++;
+        }
+      }
+      ?>
+
+      function statusDisable(id) {
+        location.href = "<?= base_url('admin/project/statusView_disable/') ?>"+id;
+      }
+
+      function statusEnable(id) {
+        location.href = "<?= base_url('admin/project/statusView_enable/') ?>"+id;
+      }
+
+      function publicDisable(id) {
+        location.href = "<?= base_url('admin/project/statusPublic_disable/') ?>"+id;
+      }
+
+      function publicEnable(id) {
+        location.href = "<?= base_url('admin/project/statusPublic_enable/') ?>"+id;
+      }
+
+
+      function approve(id) {
+        $.ajax({
+          type: "POST",
+          url: "<?= base_url('admin/investasi/approve/') ?>"+id,
+          cache: false,
+          contentType: false,
+          processData: false,
+          beforeSend : function(){
+            $(".btn-send").addClass("disabled").html("<i class='fa fa-spinner'></i>").attr('disabled',true);
+            $(".show_error").slideUp().html("");
+          },
+          success: function(response, textStatus, xhr) {
+            var str = response;
+            if (str.indexOf("success") != -1){
+              $(".show_error").hide().html(response).slideDown("fast");
+              $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
+              $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
+              location.reload();
+            }else{
+              setTimeout(function(){
+                $("#modal-delete").modal('hide');
+              }, 1000);
+              $(".show_error").hide().html(response).slideDown("fast");
+              $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
+              $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
             }
           },
-        }
-
-        var myLineChart = new Chart(ctx, {
-          type: 'line',
-          data: data,
-          options: options
+          error: function(xhr, textStatus, errorThrown) {
+          }
         });
-      });
-
-
-    $('#us3').locationpicker({
-      location: {
-        latitude: <?= $tbl_project['latitude'] ?>,
-        longitude: <?= $tbl_project['longitude'] ?>},
-        radius: 0,
-        inputBinding: {
-          latitudeInput: $('#us3-lat'),
-          longitudeInput: $('#us3-lon'),
-          locationNameInput: $('#us3-address')
-        },
-        enableAutocomplete: true,
-        onchanged: function (currentLocation, radius, isMarkerDropped) {
-        }
-      });
-    
-    <?php
-    if($file_detail){
-      $i = 1;
-      foreach($file_detail as $img){
-        ?>
-        $('#detail_image-<?=$i?>').click(function() {
-          var main_src = $('#main_image').attr('src');
-          var detail_src = $('#detail_image-<?=$i?>').attr('src');
-
-          $('#detail_image-<?=$i?>').attr('src',main_src);
-          $('#main_image').attr('src',detail_src);
-        });
-
-        <?php
-        $i++;
       }
-    }
-    ?>
 
-    function statusDisable(id) {
-      location.href = "<?= base_url('admin/project/statusView_disable/') ?>"+id;
-    }
-
-    function statusEnable(id) {
-      location.href = "<?= base_url('admin/project/statusView_enable/') ?>"+id;
-    }
-
-    function publicDisable(id) {
-      location.href = "<?= base_url('admin/project/statusPublic_disable/') ?>"+id;
-    }
-
-    function publicEnable(id) {
-      location.href = "<?= base_url('admin/project/statusPublic_enable/') ?>"+id;
-    }
-
-
-    function approve(id) {
-      $.ajax({
-        type: "POST",
-        url: "<?= base_url('admin/investasi/approve/') ?>"+id,
-        cache: false,
-        contentType: false,
-        processData: false,
-        beforeSend : function(){
-          $(".btn-send").addClass("disabled").html("<i class='fa fa-spinner'></i>").attr('disabled',true);
-          $(".show_error").slideUp().html("");
-        },
-        success: function(response, textStatus, xhr) {
-          var str = response;
-          if (str.indexOf("success") != -1){
-            $(".show_error").hide().html(response).slideDown("fast");
-            $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
-            $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
-            location.reload();
-          }else{
-            setTimeout(function(){
-              $("#modal-delete").modal('hide');
-            }, 1000);
-            $(".show_error").hide().html(response).slideDown("fast");
-            $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
-            $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
+      function reject(id) {
+        $.ajax({
+          type: "POST",
+          url: "<?= base_url('admin/investasi/reject/') ?>"+id,
+          cache: false,
+          contentType: false,
+          processData: false,
+          beforeSend : function(){
+            $(".btn-send").addClass("disabled").html("<i class='fa fa-spinner'></i>").attr('disabled',true);
+            $(".show_error").slideUp().html("");
+          },
+          success: function(response, textStatus, xhr) {
+            var str = response;
+            if (str.indexOf("success") != -1){
+              $(".show_error").hide().html(response).slideDown("fast");
+              $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
+              $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
+              location.reload();
+            }else{
+              setTimeout(function(){
+                $("#modal-delete").modal('hide');
+              }, 1000);
+              $(".show_error").hide().html(response).slideDown("fast");
+              $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
+              $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
+            }
+          },
+          error: function(xhr, textStatus, errorThrown) {
           }
-        },
-        error: function(xhr, textStatus, errorThrown) {
-        }
-      });
-    }
-
-    function reject(id) {
-      $.ajax({
-        type: "POST",
-        url: "<?= base_url('admin/investasi/reject/') ?>"+id,
-        cache: false,
-        contentType: false,
-        processData: false,
-        beforeSend : function(){
-          $(".btn-send").addClass("disabled").html("<i class='fa fa-spinner'></i>").attr('disabled',true);
-          $(".show_error").slideUp().html("");
-        },
-        success: function(response, textStatus, xhr) {
-          var str = response;
-          if (str.indexOf("success") != -1){
-            $(".show_error").hide().html(response).slideDown("fast");
-            $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
-            $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
-            location.reload();
-          }else{
-            setTimeout(function(){
-              $("#modal-delete").modal('hide');
-            }, 1000);
-            $(".show_error").hide().html(response).slideDown("fast");
-            $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
-            $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
-          }
-        },
-        error: function(xhr, textStatus, errorThrown) {
-        }
-      });
-    }
-  </script>
+        });
+      }
+    </script>

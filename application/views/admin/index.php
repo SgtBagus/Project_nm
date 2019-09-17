@@ -33,8 +33,8 @@
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
             <div class="info-box-content">
-              <span class="info-box-text">Rata Rata Total Harga Semua Proyek</span>
-              <span class="info-box-number"> Rp <?= number_format($AVGReturn[0]['AVG'],0,',','.')  ?> ,- </span>
+              <span class="info-box-text">Total Harga Semua Proyek</span>
+              <span class="info-box-number"> Rp <?= number_format($SUMReturn[0]['SUM']/1000000,0,',','.')  ?> Jt ,- </span>
             </div>
           </div>
         </div>
@@ -106,8 +106,12 @@
                     <strong>Unit 5 Proyek Terbaru dan Terjual</strong>
                   </p>
                   <?php foreach ($tbl_project as $row) { 
-                    $unit = $this->mymodel->selectWithQuery("SELECT COUNT(id) as unit FROM tbl_project_invest WHERE project_id = '".$row['id']."' AND status_pembayaran = 'APPROVE'");
-                    $unit_terjual = $unit[0]['unit'];
+                    $unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$row['id']."' AND status_pembayaran = 'APPROVE'");
+
+                    $unit_terjual = 0;
+                    if($unit[0]['unit']){
+                      $unit_terjual = $unit[0]['unit'];
+                    }
                     $totalunit = $row['unit'] + $unit[0]['unit'];
 
                     $persent = $unit_terjual/$totalunit*100;
@@ -126,8 +130,12 @@
               <?php } else { ?>
                 <div class="col-md-12 col-xs-12">
                   <?php foreach ($tbl_project as $row) { 
-                    $unit = $this->mymodel->selectWithQuery("SELECT COUNT(id) as unit FROM tbl_project_invest WHERE project_id = '".$row['id']."' AND status_pembayaran = 'APPROVE'");
-                    $unit_terjual = $unit[0]['unit'];
+                    $unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$row['id']."' AND status_pembayaran = 'APPROVE'");
+
+                    $unit_terjual = 0;
+                    if($unit[0]['unit']){
+                      $unit_terjual = $unit[0]['unit'];
+                    }
                     $totalunit = $row['unit'] + $unit[0]['unit'];
 
                     $persent = $unit_terjual/$totalunit*100;
