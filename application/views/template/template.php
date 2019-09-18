@@ -35,7 +35,7 @@
   </style>
 </head>
 <?php 
-$actual_link = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+$actual_link = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $this->session->set_userdata(array('url_session' => $actual_link));
 ?>
 <body class="hold-transition skin-green layout-top-nav">

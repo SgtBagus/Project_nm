@@ -62,9 +62,15 @@ data-client-key="SB-Mid-client-BwKVZAEn_uaPXdIe"></script>
               </div>
             </div>
           </div>
-          <span type="button" class="btn-block btn-primary btn-lg round" align="center">
+          <button type="button" class="btn btn-block btn-primary btn-lg round" align="center">
             <i class="fa fa-credit-card"></i> Bayar Sekarang
-          </span>
+          </button>
+          <br>
+          <a  href="https://api.whatsapp.com/send?phone=6281995020895?>&text=Halo Admin AGNOV. Perkenalkan Saya <?=$investor['name']?>. Saya ingin melakukan konfirmasi pembayaran donasi dengan link <?=base_url()?>invoice/payment/<?=$invoice['code']?>. Berikut saya sertakan bukti pembayarannya. Terimakasih..." target="_blank"> 
+            <button  type="button" class="btn btn-success btn-block btn-lg round">
+              <i class="fa fa-whatsapp"></i> Konfirmasi Lewat WA
+            </button>
+          </a>
         </div>
         <div class="col-md-7 col-sm-7 col-xs-12">
           <div class="row">
