@@ -6,7 +6,7 @@
                 <div class="box box-solid round" >
                     <div class="box-body">
                         <div class="row" align="center">
-                            <h3><b>Investasi Di Terima</b></h3>
+                            <h3><b>Data Investasi Saya</b></h3>
                         </div>
                         <table id="datatable" class="table table-bordered table-striped" >
                             <thead>
@@ -54,19 +54,19 @@
                                         }?>
                                     </td>
                                     <td>
+                                        <?php if (!$row['tgl_konfirmasi']) {
+                                            echo "<p class='help-block'><i>Belum Tersedia</i></p>";
+                                        }else {
+                                            echo date("d-m-Y H:i:s", strtotime($row['tgl_konfirmasi']));
+                                        }?>
+                                    </td>
+                                    <td>
                                         <?php if ($row['status_pembayaran'] == 'WAITING') {
                                             echo '<small class="label bg-yellow"><i class="fa fa-warning"> </i> Menunggu Dikonfirmasi </small>';
                                         }else if ($row['status_pembayaran'] == 'APPROVE') {
                                             echo '<small class="label bg-green"><i class="fa fa-check"> </i> Di Terima </small>';
                                         }else{
                                             echo '<small class="label bg-red"><i class="fa fa-ban"> </i> Di Tolak </small>';
-                                        }?>
-                                    </td>
-                                    <td>
-                                        <?php if (!$row['tgl_konfirmasi']) {
-                                            echo "<p class='help-block'><i>Belum Tersedia</i></p>";
-                                        }else {
-                                            echo date("d-m-Y", strtotime($row['tgl_konfirmasi']));
                                         }?>
                                     </td>
                                     <td>

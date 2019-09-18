@@ -32,7 +32,7 @@
                   </label>
                   <label style="margin-right: 5px">
                     <input type="radio" name="filter" onclick="filterinvest()" id="optionsRadios1" value="filter 1" <?php if($_GET['search'] == 'invest') { echo "checked"; }?>>
-                    Proyek Dengan Investor Terbanyak
+                    Proyek Dengan Banyak Invest Berhasil Terdaftar
                   </label>
                 </div>
               </div>
@@ -58,7 +58,7 @@
 
                     $avgReturn = $this->mymodel->selectWithQuery('SELECT AVG(return_tahun) as AVG from tbl_project_return WHERE project_id = "'.$row[id].'"');
 
-                    $countInvestor = $this->mymodel->selectWithQuery('SELECT COUNT(id) as COUNT from tbl_project_invest WHERE project_id = "'.$row[id].'" AND status_pembayaran = "APPROVE" ');
+                    $countInvestor = $this->mymodel->selectWithQuery('SELECT COUNT(id) as COUNT from tbl_project_invest WHERE project_id = "'.$row[id].'" AND status_pembayaran = "APPROVE" GROUP BY investor_id');
                     ?>
                     Oleh : <b><?= $user['name'] ?></b>
                     <p class='help-block'><b>Dibuat pada : </b><?= date("d-m-Y", strtotime($row['created_at']))  ?></p>
@@ -99,7 +99,7 @@
                   <h4 align="center">
                     Harga : <b>Rp <?= number_format($row['harga'],0,',','.') ?>,- / Unit</b>
                   </h4>
-                  <p class='help-block' align="center">Sebanyak <b> <?= $countInvestor[0]['COUNT'] ?></b> Telah Bergabung</p>
+                  <p class='help-block' align="center">Sebanyak <b> <?php if ($countInvestor[0]['COUNT']){echo $countInvestor[0]['COUNT']; } else { echo "0"; } ?></b> Invest Telah Berhasil Terdaftar</p>
                   <div class="row" align="center">
                     <div class="col-md-12" align="center">
                       <a href="<?= base_url('project/view/').$row['slug'] ?>">

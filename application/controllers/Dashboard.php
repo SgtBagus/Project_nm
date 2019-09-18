@@ -11,7 +11,7 @@ class Dashboard extends MY_Controller {
 
 		$data['invest_approve'] = $this->mymodel->selectWhere('tbl_project_invest', array('investor_id' => $this->session->userdata('id'), 'status_pembayaran' => 'APPROVE'));
 		$sum_harga = $this->mymodel->selectWithQuery("SELECT SUM(total_harga) as total_harga FROM tbl_project_invest WHERE investor_id = ".$this->session->userdata('id')." AND status_pembayaran = 'APPROVE'");
-		$count_project = $this->mymodel->selectWithQuery("SELECT count(id) as total_prj FROM tbl_project_invest WHERE investor_id = ".$this->session->userdata('id')." AND status_pembayaran = 'APPROVE'");
+		$count_project = $this->mymodel->selectWithQuery("SELECT count(id) as total_prj FROM tbl_project_invest WHERE investor_id = ".$this->session->userdata('id')." AND status_pembayaran = 'APPROVE' GROUP BY project_id ");
 
 		$data['total_harga'] = $sum_harga[0]['total_harga'];
 		$data['total_project'] = $count_project[0]['total_prj'];

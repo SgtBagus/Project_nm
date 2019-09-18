@@ -233,6 +233,7 @@ class Project extends MY_Controller {
 	public function view($id){
 		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('id'=>$id));
 		$data['tbl_project_invest'] = $this->mymodel->selectWhere('tbl_project_invest',array('project_id'=>$id));
+		$data['tbl_project_return'] = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$data['tbl_project']['id'], 'public' => 'ENABLE'));
 		$data['tbl_project_return_grafik'] = $this->mymodel->selectWhere('tbl_project_return', array('project_id'=>$data['tbl_project']['id']));
 		$data['user'] = $this->mymodel->selectDataone('user',array('id'=>$data['tbl_project']['user_id']));
 		$data['user_image'] = $this->mymodel->selectDataone('file',array('table_id'=>$data['user']['id'],'table'=>'user'));

@@ -89,7 +89,7 @@
                                         <?php if (!$row['tgl_konfirmasi']) {
                                             echo "<p class='help-block'><i>Belum Tersedia</i></p>";
                                         }else {
-                                            echo date("d-m-Y", strtotime($row['tgl_konfirmasi']));
+                                            echo date("d-m-Y H:i:s", strtotime($row['tgl_konfirmasi']));
                                         }?>
                                     </td>
                                     <td>

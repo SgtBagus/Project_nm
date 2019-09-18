@@ -138,16 +138,6 @@
                   }
                 }?>
               </div>
-              <br>
-              <div class="box box-solid">
-                <div class="box-body" align="center">
-                  <div class="row">
-                    <div class="col-md-12" align="center">
-                      Telah dibesarkan <b>493</b> Unit disponsori <b>212</b> orang
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div class="box box-solid">
                 <div class="box-header with-border" align="center">
                   <i class="fa fa-info"></i>
@@ -160,6 +150,14 @@
                     </div>
                     <div class="col-md-6" align="left">
                       <b><?= $tbl_project['periode'] ?> tahun</b>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6" align="right">
+                      Return Tahun ke <b><?=$tbl_project_return['tahun']?></b> :
+                    </div>
+                    <div class="col-md-6" align="left">
+                      <b><?= $tbl_project_return['return_tahun'] ?></b>  % per Tahun
                     </div>
                   </div>
                   <div class="row">

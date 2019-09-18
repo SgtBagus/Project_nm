@@ -64,6 +64,20 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
+                                                        <div class="col-md-12"> 
+                                                            <div class="form-group">
+                                                                <label>Pendidikan</label>
+                                                                <select class="form-control select2" name="dt[pendidikan_id]"  style="width: 100%">
+                                                                    <option value="">--Pilih Pendidikan--</option>
+                                                                    <?php $tbl_pendidikan = $this->mymodel->selectData("tbl_pendidikan");
+                                                                    foreach ($tbl_pendidikan as $key => $value) {?>
+                                                                        <option value="<?= $value['id'] ?>" <?php if($user['pendidikan_id'] == $value['id']){echo "selected"; } ?>><?= $value['value'] ?></option>
+                                                                    <?php } ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
                                                         <div class="col-md-6"> 
                                                             <div class="form-group">
                                                                 <label>Tempat Lahir</label>
@@ -73,7 +87,7 @@
                                                         <div class="col-md-6"> 
                                                             <div class="form-group">
                                                                 <label>Tanggal Lahir</label>
-                                                                <input type="text" name="dt[tgl_lahir]" class="form-control" id="datepicker" placeholder="Masukan Tanggal Lahir" value="<?= date("d-m-Y", strtotime($user['tgl_lahir'])); ?>">
+                                                                <input type="text" name="dt[tgl_lahir]" class="form-control" id="datepicker" placeholder="Masukan Tanggal Lahir" <?php if ($user['tgl_lahir']){ ?>value="<?= date("d-m-Y", strtotime($user['tgl_lahir'])); ?>" <?php } ?> >
                                                             </div>
                                                         </div>
                                                     </div>
@@ -83,8 +97,8 @@
                                                                 <label>Status Perkawinan</label>
                                                                 <select class="form-control select2" name="dt[status_kawin]" style="width: 100%">
                                                                     <option value="">--Pilih Status Perkawinan--</option>
-                                                                    <option value="0" <?php if($user['status_kawin'] == '0'){echo "selected";} ?>>Belum Menikah</option>
-                                                                    <option value="1" <?php if($user['status_kawin'] == '1'){echo "selected";} ?>>Sudah Menikah</option>
+                                                                    <option value="NO" <?php if($user['status_kawin'] == 'NO'){echo "selected";} ?>>Belum Menikah</option>
+                                                                    <option value="YES" <?php if($user['status_kawin'] == 'YES'){echo "selected";} ?>>Sudah Menikah</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -185,7 +199,7 @@
                                                                     <?php 
                                                                     $tbl_kota = $this->mymodel->selectWhere("tbl_kota", array('provinsi_id' => $user['provinsi_id']));  
                                                                     if(!$tbl_kota){ ?>
-                                                                    <option value="">Pilih Provinsi Terlebih Dahulu</option>
+                                                                        <option value="">Pilih Provinsi Terlebih Dahulu</option>
                                                                     <?php } ?>
                                                                     <?php foreach ($tbl_kota as $key => $value) 
                                                                     { ?>

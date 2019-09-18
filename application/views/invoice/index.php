@@ -10,7 +10,7 @@ data-client-key="SB-Mid-client-BwKVZAEn_uaPXdIe"></script>
   <div class="container">
     <section class="content">
       <div class="row" align="center"> 
-        <a class="btn btn-info round" href="javascript:close();">Tutup Invoice</a>
+        <a class="btn btn-info round" href="<?= base_url('dashboard/invest') ?>"><i class="fa fa-bar-chart"></i> Data Investasi</a>
         <h1><i class="fa fa-credit-card"></i> Invoice </h1>
         <small>Selesaikan Pembayaran Anda ! </small>
       </div>
@@ -21,7 +21,7 @@ data-client-key="SB-Mid-client-BwKVZAEn_uaPXdIe"></script>
             <div class="col-md-12">
               <div class="box box-solid round">
                 <div class="box-header with-border">
-                  <h3 class="box-title pull-left">Sisa Waktu</h3>
+                  <h3 class="box-title pull-left">Sisa Waktu</h3> 
                   <h3 class="box-title pull-right">
                     <?php if($invoice['status_pembayaran'] == "APPROVE") { ?>
                       <span type="button" class="btn-primary btn-sm round">
