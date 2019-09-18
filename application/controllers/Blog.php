@@ -5,7 +5,11 @@ class Blog extends MY_Controller {
 	}
 
 	public function index(){
-		$data['tbl_blog'] = $this->mymodel->selectWhere('tbl_blog', array('public' => 'ENABLE'));
+		if($_GET['title']){
+			$data['tbl_blog'] = $this->mymodel->selectWithQuery('SELECT *, LOWER(title) FROM tbl_blog WHERE LOWER(title) LIKE LOWER("%'.$_GET['title'].'%")');	
+		}else{
+			$data['tbl_blog'] = $this->mymodel->selectWhere('tbl_blog', array('public' => 'ENABLE'));	
+		}
 		$data['page_name'] = "Blog";
 		$this->template->load('template/template','blog/index',$data); 
 	}
