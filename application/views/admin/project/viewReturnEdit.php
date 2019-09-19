@@ -20,7 +20,7 @@
                       <input type="text" class="form-control" readonly value="Tahun ke <?= $tbl_project_return['tahun']; ?>">
                     </div>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group"> 
                     <label for="inputEmail3" class="col-sm-4 control-label">Return Didapat*</label>
                     <div class="col-sm-8">
                       <div class="input-group">
