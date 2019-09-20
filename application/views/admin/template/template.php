@@ -212,10 +212,9 @@ if($this->session->userdata('session_sop')=="") {
     <?=$contents?>
 
     <footer class="main-footer">
-      <div class="pull-right hidden-xs">
-        <b>Version</b> <?= VERSION ?>
+      <div class="container" align="center">
+        <strong>Copyright © 2019  by <a href="https://www.agnov.id/">Agnov..</a> All Right Reserved</strong>
       </div>
-      <strong>Copyright © 2019  by <a href="https://www.agnov.id/">Agnov</a></strong>
     </footer>
     <div class="control-sidebar-bg"></div>
   </div>
