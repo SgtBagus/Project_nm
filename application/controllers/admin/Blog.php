@@ -146,7 +146,7 @@
 							'name'=> $file['file_name'],
 							'mime'=> $file['file_type'],
 							'dir'=> $dir.$file['file_name'],
-							'table'=> 'user',
+							'table'=> 'tbl_blog',
 							'table_id'=> $id,
 							'updated_at'=>date('Y-m-d H:i:s')
 						);

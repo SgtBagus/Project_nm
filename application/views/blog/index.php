@@ -1,6 +1,12 @@
 <div class="content-wrapper">
   <div class="container">
     <section class="content">
+      <section class="content-header">
+        <ol class="breadcrumb" style="background: #f3f3f3;">
+          <li><a href="<?= base_url() ?>"><b>AGNOV</b></a></li>
+          <li class="active"><i class="fa fa-newspaper-o"></i> Blog</li>
+        </ol>
+      </section>
       <div class="row" align="center"> 
         <h1><i class="fa fa-newspaper-o"></i> Blog </h1>
       </div>
@@ -43,10 +49,10 @@
                     $user = $this->mymodel->selectDataone('user', array('id'=> $row['user_id'])); 
                     ?>
                     <img style="height: 200px; width: 100%; object-fit: cover; display: inline;" src="<?= base_url().$image_src['dir']?>">
-                    <h2 align="center">
-                      <?= strlen($row["title"]) > 25 ? substr($row["title"],0,25)."..." : $row["title"] ?>
-                    </h2>
-                    <?= strlen($row["deskripsi"]) > 150 ? substr($row["deskripsi"],0,150)."..." : $row["deskripsi"] ?>
+                    <h3 align="center">
+                      <?= strlen($row["title"]) > 15 ? substr($row["title"],0,15)."..." : $row["title"] ?>
+                    </h3>
+                    <!-- <?= strlen($row["deskripsi"]) > 150 ? substr($row["deskripsi"],0,150)."..." : $row["deskripsi"] ?> -->
                     <div class="row">
                       <div class="col-md-6 col-sm-6 col-xs-6" align="left">
                         <small class="label bg-primary btn-md round"> 

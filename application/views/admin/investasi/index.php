@@ -30,6 +30,7 @@
                     <th>Status Pembarayan</th>
                     <th>Tgl Konfirmasi</th>
                     <th></th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -96,8 +97,31 @@
                         }?>
                       </td>
                       <td>
+                        <?php if (!$row_invest['tgl_pembayaran']) {
+                          echo '<button type="button" class="btn btn-sm btn-sm btn-success"><i class="fa fa-credit-card"></i> Pembayaran Manual</button>';
+                        }else {
+                          ?>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-block btn-info">
+                              <i class="fa fa-eye"></i> Lihat Bukti pembayaran
+                            </button>
+                          </div>
+                          <hr>
+                          <div class="col-md-6">
+                            <button type="button" class="btn btn-block btn-sm btn-primary">
+                              <i class="fa fa-edit"></i>
+                            </button>
+                          </div>
+                          <div class="col-md-6">
+                            <button type="button"class="btn btn-block btn-sm btn-danger">
+                              <i class="fa fa-trash-o"></i>
+                            </button>
+                          </div>
+                        <?php } ?>
+                      </td>
+                      <td>
                         <a href="<?= base_url('invoice/payment/').$row_invest['code']?>" target="_blank">
-                          <button type="button" class="btn btn-sm btn-sm btn-info"><i class="fa fa-print"></i> Invoice</button>
+                          <button type="button" class="btn btn-sm btn-sm btn-info"><i class="fa fa-print"></i></button>
                         </a>
                       </td>
                     </tr>

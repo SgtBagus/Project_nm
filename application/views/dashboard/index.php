@@ -13,6 +13,10 @@ if($this->session->userdata('session_sop')=="") {
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-xs-12">
                     <h1><?= $title ?> </h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="box box-solid round">
                         <div class="box-body">
                             <div class="row">
@@ -42,7 +46,12 @@ if($this->session->userdata('session_sop')=="") {
                                         </a>
                                         <a href="<?= base_url('dashboard/invest') ?>">
                                             <li class="list-group-item a_black" style="margin-bottom: 5px;" id="invest">
-                                                <i class="fa fa-bar-chart"></i> Investasi
+                                                <i class="fa fa-archive"></i> Investasi
+                                            </li>
+                                        </a>
+                                        <a href="<?= base_url('dashboard/grafik') ?>">
+                                            <li class="list-group-item a_black" style="margin-bottom: 5px;" id="grafik">
+                                                <i class="fa fa-bar-chart"></i> Struktur Grafik
                                             </li>
                                         </a>
                                         <a href="<?= base_url('dashboard/account') ?>">
@@ -59,9 +68,9 @@ if($this->session->userdata('session_sop')=="") {
                 </div>
                 <div class="col-md-9 col-sm-6 col-xs-12">
                     <?php 
-                        $data['user'] = $user;
-                        $data['file'] = $file;
-                        
+                    $data['user'] = $user;
+                    $data['file'] = $file;
+                    
                     if($content == 'dashboard'){
                         $dashboard['invest_approve'] = $invest_approve;
                         $dashboard['total_harga'] = $total_harga;
@@ -70,6 +79,9 @@ if($this->session->userdata('session_sop')=="") {
                     }else if($content == 'invest'){
                         $invest['invest'] = $invest;
                         $this->load->view('dashboard/invest', $invest);
+                    }else if($content == 'grafik'){
+                        $grafik['grafik'] = $grafik;
+                        $this->load->view('dashboard/grafik', $grafik);
                     }else if($content == 'account'){
                         $this->load->view('dashboard/account');
                     }else{
@@ -87,6 +99,8 @@ if($this->session->userdata('session_sop')=="") {
             $("#dashboard").addClass("active");
         }else if('<?= $content ?>' == 'invest'){
             $("#invest").addClass("active");
+        }else if('<?= $content ?>' == 'grafik'){
+            $("#grafik").addClass("active");
         }else if('<?= $content ?>' == 'account'){
             $("#account").addClass("active");
         }

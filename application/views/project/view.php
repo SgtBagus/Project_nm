@@ -1,6 +1,13 @@
 <div class="content-wrapper">
   <div class="container">
     <section class="content">
+      <section class="content-header">
+        <ol class="breadcrumb" style="background: #f3f3f3;">
+          <li><a href="<?= base_url() ?>"><b>AGNOV</b></a></li>
+          <li><a href="<?= base_url('project') ?>"><i class="fa fa-archive"></i> Proyek</a></li>
+          <li class="active"><?= $tbl_project['title']?> </li>
+        </ol>
+      </section>
       <div class="row">
         <div class="col-md-8">
           <h1>
@@ -9,11 +16,11 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8"> 
           <?php if($file['dir']){ ?>
-            <img src="<?= base_url().$file['dir'] ?>" class="round" id="main_image" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%">
+            <img src="<?= base_url().$file['dir'] ?>" class="round" id="main_image" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%; object-fit: cover; display: inline;">
           <?php } else { ?>
-            <img src="<?= base_url('webfile/project/default.jpg')?>" class="round" id="main_image" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%">
+            <img src="<?= base_url('webfile/project/default.jpg')?>" class="round" id="main_image" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%; object-fit: cover; display: inline;">
           <?php } ?>
           <br><br>
           <div class="row">
@@ -23,7 +30,7 @@
               foreach($file_detail as $img){
                 ?>
                 <div class="col-md-2 col-sm-3 col-xs-4">
-                  <img src="<?= base_url().$img['dir']?>" class="round" id="detail_image-<?=$i?>" alt="User Image" width="100%" height="85px" style="border-radius: 15px; margin-bottom: 20px">
+                  <img src="<?= base_url().$img['dir']?>" class="round" id="detail_image-<?=$i?>" alt="User Image" width="100%" height="85px" style="border-radius: 15px; margin-bottom: 20px; object-fit: cover; display: inline;">
                 </div>
                 <?php
                 $i++;
@@ -87,7 +94,15 @@
         </div>
         <div class="col-md-4">
           <div class="row" align="center" style="margin-top: -20px">
-            <h2>Slot Unit : <b><?= $tbl_project['unit'] ?></b></h2>
+            <?php 
+              $unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$tbl_project['id']."' AND status_pembayaran = 'APPROVE'");
+
+              $totalunit = $tbl_project['unit'] + $unit[0]['unit'];
+
+            ?>
+
+            <h2>Slot Unit : <b><?= $tbl_project['unit'] ?></b> / <?= $totalunit ?></h2>
+
             <?php
             if($tbl_project['status']=='ENABLE'){
               echo '<h4><small class="label bg-green btn-md round"> 

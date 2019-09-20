@@ -41,6 +41,15 @@ class Dashboard extends MY_Controller {
 		$this->template->load('template/template','dashboard/index', $data);
 	}	
 
+	public function grafik(){
+		$data['grafik'] = $this->mymodel->selectWhere('tbl_project_invest', array('investor_id' => $this->session->userdata('id'),'status_pembayaran' => 'APPROVE'));
+		$data['user'] = $this->mymodel->selectDataOne('tbl_investor',  array('id' => $this->session->userdata('id')));
+		$data['file'] = $this->mymodel->selectDataOne('file',  array('table_id' => $data['user']['id'], 'table' => 'tbl_investor'));
+		$data['title'] = "Grafik";
+		$data['content'] = "grafik";
+		$this->template->load('template/template','dashboard/index', $data);
+	}	
+
 	public function vali_akun(){
 
 		$this->form_validation->set_error_delimiters('<li>', '</li>');

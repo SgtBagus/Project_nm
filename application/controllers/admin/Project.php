@@ -19,7 +19,7 @@ class Project extends MY_Controller {
 
 	public function create(){
 		$data['page_name'] = "Project";
- 
+
 		if($this->session->userdata('role_id') == '17'){
 			$this->template->load('admin/template/template','admin/project/create', $data);
 		}else{
@@ -134,6 +134,14 @@ class Project extends MY_Controller {
 
 		$this->mymodel->deleteData('tbl_project_return',  array('id'=>$_POST['id']));
 		$this->mymodel->updateData('tbl_project', $prj , array('id'=>$project['id']));
+
+		$return = $this->mymodel->selectWithQuery("SELECT count(id) as return_row FROM tbl_project_return WHERE project_id = ".$_POST['id']);
+
+		if($return[0][return_row] == '0'){
+			$prj['public'] = "DISABLE";
+			$prj['status'] = "DISABLE";
+			$this->mymodel->updateData('tbl_project', $prj , array('id'=>$id));
+		}
 
 		$this->alert->alertsuccess('Berhasil Hapus Data');
 	}
