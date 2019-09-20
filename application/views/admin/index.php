@@ -112,7 +112,8 @@
                     if($unit[0]['unit']){
                       $unit_terjual = $unit[0]['unit'];
                     }
-                    $totalunit = $row['unit'] + $unit[0]['unit'];
+                    
+                    $totalunit = $row['unit'];
 
                     $persent = $unit_terjual/$totalunit*100;
 

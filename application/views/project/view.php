@@ -97,11 +97,11 @@
             <?php 
               $unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$tbl_project['id']."' AND status_pembayaran = 'APPROVE'");
 
-              $totalunit = $tbl_project['unit'] + $unit[0]['unit'];
+              $mintunit = $tbl_project['unit'] - $unit[0]['unit'];
 
             ?>
 
-            <h2>Slot Unit : <b><?= $tbl_project['unit'] ?></b> / <?= $totalunit ?></h2>
+            <h2>Slot Unit : <b><?= $mintunit ?></b> / <?= $tbl_project['unit'] ?></h2>
 
             <?php
             if($tbl_project['status']=='ENABLE'){

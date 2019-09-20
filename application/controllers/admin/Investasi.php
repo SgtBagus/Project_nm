@@ -24,11 +24,11 @@ class Investasi extends MY_Controller {
 			'updated_at' => date('Y-m-d H:i:s')
 		);
 
-		$investUnit = $this->mymodel->selectDataOne('tbl_project_invest', array('id' => $id));
-		$projectUnit = $this->mymodel->selectDataOne('tbl_project', array('id' => $investUnit['project_id']));
+		// $investUnit = $this->mymodel->selectDataOne('tbl_project_invest', array('id' => $id));
+		// $projectUnit = $this->mymodel->selectDataOne('tbl_project', array('id' => $investUnit['project_id']));
 
-		$minUnit['unit'] = $projectUnit['unit']-$investUnit['unit'];
-		$this->mymodel->updateData('tbl_project', $minUnit , array('id'=>$investUnit['project_id']));
+		// $minUnit['unit'] = $projectUnit['unit']-$investUnit['unit'];
+		// $this->mymodel->updateData('tbl_project', $minUnit , array('id'=>$investUnit['project_id']));
 
 		$this->mymodel->updateData('tbl_project_invest', $data , array('id'=>$id));
 		$this->alert->alertsuccess('Success Update Data');  

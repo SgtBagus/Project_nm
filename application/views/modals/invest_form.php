@@ -1,9 +1,21 @@
+<?php 
+$unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$tbl_project['id']."' AND status_pembayaran = 'APPROVE'");
+
+$unit_terjual = 0;
+if($unit[0]['unit']){
+  $unit_terjual = $unit[0]['unit'];
+}
+
+$sisa_unit = $tbl_project['unit'] - $unit_terjual;
+
+?>
+
 <h3 align="center"> Ingin Menginvestasi Berapa Unit ?</h3>
 <form class="form-horizontal" action="<?= base_url('project/invest') ?>" method="POST" id="invest-upload">
   <div class="invest_error"></div>
   <div class="form-group" align="center">
     <h4>Harga : <b>Rp <?= number_format($tbl_project['harga'],0,',','.') ?>,- / Unit</b></h4>
-    <small>Sisa Slot : <b><?= $tbl_project['unit'] ?></b> </small>
+    <small>Sisa Slot : <b><?= $sisa_unit ?></b> / <?= $tbl_project['unit'] ?> </small>
   </div>
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-3 control-label">Jumlah Unit*</label>
@@ -48,8 +60,8 @@
     $('#total_proyek').val('Total Harga');
 
     $('#unit_proyek').keyup(function(){
-      if($('#unit_proyek').val() >= <?= $tbl_project['unit'] ?> ){
-        $('#unit_proyek').val(<?= $tbl_project['unit'] ?>);
+      if($('#unit_proyek').val() >= <?= $sisa_unit?> ){
+        $('#unit_proyek').val(<?= $sisa_unit ?>);
         var hrg = '<?= $tbl_project['harga'] ?>'
         var harga = parseFloat(hrg.replace(/,/g, ''));
         var unit = $('#unit_proyek').val();
@@ -83,7 +95,7 @@
         if (str.indexOf("success") != -1){
           form.find(".invest_error").hide().html(response).slideDown("fast");
           setTimeout(function(){
-            
+
           }, 1000);
 
           $(".btn-send").removeClass("disabled").html('<i class="fa fa-save"></i> Save').attr('disabled',false);

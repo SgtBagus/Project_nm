@@ -57,6 +57,23 @@ class Project extends MY_Controller {
 		if ($this->form_validation->run() == FALSE){
 			$this->alert->alertdanger(validation_errors());
 		}else{
+
+			$tbl_project = $this->mymodel->selectDataone('tbl_project', array('id' => $_POST['dt']['project_id']));
+
+			$unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$_POST['dt']['project_id']."' AND status_pembayaran = 'APPROVE'");
+
+			$unit_terjual = 0;
+			if($unit[0]['unit']){
+				$unit_terjual = $unit[0]['unit'];
+			}
+
+			$sisa_unit = $tbl_project['unit'] - $unit_terjual;
+			
+			if($_POST['dt']['unit'] > $sisa_unit){
+				$this->alert->alertdanger('<strong>Jumlah Unit</strong> Terlalu Banyak');   
+				return false;  
+			}
+
 			$usercheck = $this->mymodel->selectDataone('tbl_investor', array('id' => $this->session->userdata('id')));
 			foreach($usercheck as $key => $field) {  
 				if(empty($usercheck[$key])){

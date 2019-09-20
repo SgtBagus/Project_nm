@@ -98,13 +98,13 @@
                       <?php 
                       $unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$row['id']."' AND status_pembayaran = 'APPROVE'");
 
-                      $totalunit = $row['unit'] + $unit[0]['unit'];
+                      $mintunit = $row['unit'] - $unit[0]['unit'];
 
                       ?>
                       Slot Unit Tersisa : <b><?php if ($row['unit'] == 0){
-                        echo $row['unit']."/".$totalunit;
+                        echo $row['unit']."/".$row['unit'];
                       } else { 
-                        echo $row['unit']."/".$totalunit;
+                        echo $mintunit."/".$row['unit'];
                       }
                       ?></b>
                       <hr>
