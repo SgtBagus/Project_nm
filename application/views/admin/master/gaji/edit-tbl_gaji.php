@@ -13,7 +13,7 @@
                 <div class="show_error"></div><div class="form-group">
 
                       <label for="form-value">Gaji</label>
-
+ 
                       <input type="text" class="form-control" id="form-value" placeholder="Masukan Gaji" name="dt[value]" value="<?= $tbl_gaji['value'] ?>">
 
                   </div>

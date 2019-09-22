@@ -409,7 +409,7 @@
             $("#load-form").html('loading...');
 
             // location.href = "<?= base_url('admin/master/gaji/edit/') ?>"+id;
-            $("#modal-form").modal();
+            $("#modal-form").modal(); 
             $("#title-form").html('Create Gaji');
             $("#load-form").load("<?= base_url('admin/master/gaji/create/') ?>");
             

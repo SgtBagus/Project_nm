@@ -122,7 +122,7 @@
 			$data['tbl_gaji'] = $this->mymodel->selectDataone('tbl_gaji',array('id'=>$id));$data['page_name'] = "tbl_gaji";
 
 			$this->load->view('admin/master/gaji/edit-tbl_gaji',$data);
-
+ 
 		}
 
 

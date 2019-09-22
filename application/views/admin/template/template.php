@@ -404,6 +404,7 @@ if($this->session->userdata('session_sop')=="") {
       }
       $("#btnFile-many").html('<i class="fa fa-file"></i> Pilih Gambar Kembali (<b>'+total_file+'</b> telah Terpilih)');
     });
+
   </script>
 </body>
 </html>

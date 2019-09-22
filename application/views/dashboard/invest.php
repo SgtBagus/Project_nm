@@ -60,13 +60,20 @@
                                         }?>
                                     </td>
                                     <td>
-                                        <?php if ($row['status_pembayaran'] == 'WAITING') {
-                                            echo '<small class="label bg-yellow"><i class="fa fa-warning"> </i> Menunggu Dikonfirmasi </small>';
-                                        }else if ($row['status_pembayaran'] == 'APPROVE') {
+                                        <?php if($row['status_pembayaran'] == "APPROVE") {
                                             echo '<small class="label bg-green"><i class="fa fa-check"> </i> Di Terima </small>';
-                                        }else{
+
+                                        }else if($row['status_pembayaran'] == "REJECT") { 
                                             echo '<small class="label bg-red"><i class="fa fa-ban"> </i> Di Tolak </small>';
-                                        }?>
+
+                                        }else if($row['status_pembayaran'] == "EXPIRED") {
+                                            echo '<small class="label bg-red"><i class="fa fa-ban"> </i> Kadarluasa</small>';
+
+                                        }else if($row['status_pembayaran'] == "WAITING PAY") {
+                                            echo '<small class="label bg-yellow"><i class="fa fa-warning"> </i> Menunggu Pembayaran </small>';
+                                        }else {
+                                            echo '<small class="label bg-yellow"><i class="fa fa-warning"> </i> Menunggu Dikonfirmasi </small>';
+                                        } ?>
                                     </td>
                                     <td>
                                         <a href="<?= base_url('/project/view/').$project['slug'] ?>">
@@ -92,17 +99,17 @@
 </div>
 
 
-  <div class="modal modal-default fade" id="modal-delete" style="display: none;">
+<div class="modal modal-default fade" id="modal-delete" style="display: none;">
     <div class="modal-dialog round">
       <div class="modal-content round">
         <div class="modal-header top-round bg-red">
           <h4 class="modal-title" align="center"><i class="fa fa-trash"></i> Hapus Cerita</h4>
-        </div>
-        <div class="modal-body">
+      </div>
+      <div class="modal-body">
           <?php
           $this->load->view('modals/delete_form');
           ?>
-        </div>
       </div>
-    </div>
   </div>
+</div>
+</div>

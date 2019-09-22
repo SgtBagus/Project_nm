@@ -19,24 +19,19 @@
                     <th>No</th>
                     <th>Code</th>
                     <th>Project</th>
-                    <th>Investor</th>
+                    <th colspan="3">Investor</th>
                     <th>Banyak Unit</th>
                     <th>Harga per Unit</th>
                     <th>Total Harga</th>
-                    <th>Tgl Mengajukan</th>
-                    <th>Tgl Kadarluasa</th>
-                    <th>Tgl Pembayaran</th>
-                    <th>Metode</th>
                     <th>Status Pembarayan</th>
-                    <th>Tgl Konfirmasi</th>
-                    <th></th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php $i = 1; foreach ($tbl_project_invest as $row_invest) { 
                     $project =  $this->mymodel->selectDataOne('tbl_project', array('id' => $row_invest['project_id'] ));
-                    $investor =  $this->mymodel->selectDataOne('tbl_investor', array('id' => $row_invest['investor_id'] ));?>
+                    $investor =  $this->mymodel->selectDataOne('tbl_investor', array('id' => $row_invest['investor_id'] ));
+                    $file =  $this->mymodel->selectDataOne('file', array('table_id' => $investor['id'], 'table' => 'tbl_investor')) ;?>
                     <tr>
                       <td><?= $i ?></td>
                       <td><b><?= $row_invest['code'] ?></b></td>
@@ -45,95 +40,52 @@
                           <?= $project['title'] ?>
                         </a>
                       </td>
+                      <td align="center">
+                        <img src="<?= base_url().$file['dir'] ?>" width="50px" height="50px" style="border-radius: 50%">
+                      </td>
+                      <td><?= $investor['name'] ?></td>
                       <td>
                         <a href="<?= base_url('admin/investor/view/').$investor['id'] ?>">
-                          <?= $investor['name'] ?>
+                          <button type="button" class="btn btn-sm btn-sm btn-info"><i class="fa fa-user"></i></button>
                         </a>
                       </td>
                       <td><?= $row_invest['unit'] ?></td>
                       <td><b>Rp <?= number_format($project['harga'],0,',','.') ?></b></td>
                       <td><b>Rp <?= number_format($row_invest['total_harga'],0,',','.') ?>,-</b></td>
-                      <td><?= date("d-m-Y H:i:s", strtotime($row_invest['created_at']))  ?></td>
-                      <td><?= date("d-m-Y H:i:s", strtotime($row_invest['tgl_kadarluasa'])) ?></td>
-                      <td>
-                        <?php if (!$row_invest['tgl_pembayaran']) {
-                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
-                        }else {
-                          echo date("d-m-Y H:i:s", strtotime($row_invest['tgl_pembayaran']));
-                        }?>
-                      </td>
-                      <td>
-                        <?php if (!$row_invest['metode_pembayaran']) {
-                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
-                        }else {
-                          echo $row_invest['metode_pembayaran'];
-                        }?>
-                      </td>
-                      <td>
+                      <td align="center">
                         <?php if (!$row_invest['tgl_pembayaran']) { ?>
                           <p class='help-block'><i>Invoice Ini Belum Terbayar</i></p>
-                        <?php  }else { 
-                          if($invoice['status_pembayaran'] == "APPROVE") { ?>
-                            <span type="button" class="btn-success btn-sm">
-                              <i class="fa fa-check"></i> Diterima
-                            </span>
-                          <?php }else if($invoice['status_pembayaran'] == "REJECT") { ?>
-                            <span type="button" class="btn-danger btn-sm">
-                              <i class="fa fa-check"></i> Ditolak
-                            </span>
-                          <?php }else if($invoice['status_pembayaran'] == "EXPIRED") { ?>
-                            <span type="button" class="btn-danger btn-sm">
-                              <i class="fa fa-check"></i> Kadaluarsa
-                            </span>
-                          <?php }else if($invoice['status_pembayaran'] == "WAITING PAY") { ?>
-                            <span type="button" class="btn-warning btn-sm">
-                              <i class="fa fa-check"></i> Menunggu Pembayaran
-                            </span>
-                          <?php }else if($invoice['status_pembayaran'] == "EXPIRED") { ?>
-                            <span type="button" class="btn-warning btn-sm">
-                              <i class="fa fa-check"></i> Kadaluarsa
-                            </span>
-                          <?php }else { ?>
-                            <span type="button" class="btn-success btn-sm">
-                              <i class="fa fa-check"></i> Belum Memilih Metode
-                            </span>
-                          <?php } 
+                        <?php  }else {
+                          if ($row_invest['status_pembayaran'] == 'WAITING') {
+                            echo '<small class="label bg-yellow"><i class="fa fa-warning"> </i> Menunggu Dikonfirmasi </small>
+                            <hr>
+                            <div class="row" align="center">
+                            <button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-primary" onclick="approve('.$row_invest['id'].')"><i class="fa fa-check-circle"></i> Terima</button>
+                            <button type="button" class="btn btn-send btn-reject btn-sm btn-sm btn-danger" onclick="reject('.$row_invest['id'].')"><i class="fa fa-ban"></i>  Tolak</button>
+                            </div>';
+                          } else if($row_invest['status_pembayaran'] == "APPROVE") {
+                            echo '<small class="label bg-green"><i class="fa fa-check"> </i> Di Terima </small>';
+
+                          }else if($row_invest['status_pembayaran'] == "REJECT") { 
+                            echo '<small class="label bg-red"><i class="fa fa-ban"> </i> Di Tolak </small>';
+
+                          }else if($row_invest['status_pembayaran'] == "EXPIRED") {
+                            echo '<small class="label bg-red"><i class="fa fa-ban"> </i> Kadarluasa</small>';
+
+                          }else if($row_invest['status_pembayaran'] == "WAITING PAY") {
+                            echo '<small class="label bg-yellow"><i class="fa fa-warning"> </i> Menunggu Pembayaran </small>';
+                          }
                         } ?>
                       </td>
                       <td>
-                        <?php if (!$row_invest['tgl_konfirmasi']) {
-                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
-                        }else {
-                          echo date("d-m-Y", strtotime($row_invest['tgl_konfirmasi']));
-                        }?>
-                      </td>
-                      <td>
-                        <?php if (!$row_invest['tgl_pembayaran']) {
-                          echo '<button type="button" class="btn btn-sm btn-sm btn-success"><i class="fa fa-credit-card"></i> Pembayaran Manual</button>';
-                        }else {
-                          ?>
-                          <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-block btn-info">
-                              <i class="fa fa-eye"></i> Lihat Bukti pembayaran
-                            </button>
-                          </div>
-                          <hr>
-                          <div class="col-md-6">
-                            <button type="button" class="btn btn-block btn-sm btn-primary">
-                              <i class="fa fa-edit"></i>
-                            </button>
-                          </div>
-                          <div class="col-md-6">
-                            <button type="button"class="btn btn-block btn-sm btn-danger">
-                              <i class="fa fa-trash-o"></i>
-                            </button>
-                          </div>
-                        <?php } ?>
-                      </td>
-                      <td>
-                        <a href="<?= base_url('invoice/payment/').$row_invest['code']?>" target="_blank">
-                          <button type="button" class="btn btn-sm btn-sm btn-info"><i class="fa fa-print"></i></button>
-                        </a>
+                        <div class="btn-group">
+                          <a href="<?= base_url('admin/investasi/view/').$row_invest['id']?>">
+                            <button type="button" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></button></div>
+                          </a>
+                          <a href="<?= base_url('invoice/payment/').$row_invest['code']?>" target="_blank">
+                            <button type="button" class="btn btn-sm btn-sm btn-primary"><i class="fa fa-print"></i></button>
+                          </a>
+                        </div>
                       </td>
                     </tr>
                     <?php $i++; }  ?>
@@ -147,6 +99,15 @@
     </div>
   </section>
 </div>
+<div class="modal fade bd-example-modal-sm" tabindex="-1" tbl_gaji="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-form">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div id="load-form"></div>
+      </div>
+    </div>
+  </div>
+</div> 
 <script type="text/javascript">
 
   function approve(id) {
