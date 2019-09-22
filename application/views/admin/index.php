@@ -112,7 +112,8 @@
                     if($unit[0]['unit']){
                       $unit_terjual = $unit[0]['unit'];
                     }
-                    $totalunit = $row['unit'] + $unit[0]['unit'];
+                    
+                    $totalunit = $row['unit'];
 
                     $persent = $unit_terjual/$totalunit*100;
 
@@ -176,7 +177,7 @@
                     <th style="width:20px">No</th>
                     <th>Pembuat</th>
                     <th>Title</th>
-                    <th>Return per Tahun</th>
+                    <th>Bagi Hasil</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -189,16 +190,18 @@
                     </td>
                     <td><?= $row['title'] ?></td>
                     <td>
-                      <a href="<?= base_url('admin/project/viewReturn/').$row['id'] ?>">
-                        <button type="button" class="btn btn-sm btn-sm btn-info"><i class="fa fa-eye"></i> Lihat Detail Return</button>
-                      </a>
-                    </td>
-                    <td>
                       <?php if (!$row['bagi_hasil']) {
                         echo "<p class='help-block'><i>Kosong</i></p>";
                       }else {
                         echo $row['bagi_hasil']." Tahun";
                       }?>
+                    </td>
+                    <td>
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-info" onclick="view(<?=$row['id']?>)">
+                          <i class="fa fa-eye"></i>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                   <?php $i++; } ?>
@@ -225,7 +228,7 @@
                   <div class="row" align="center">
                     <?php $image_src = $this->mymodel->selectDataone('file', array('table'=>'tbl_investor', 'table_id' => $row_invest['id'])); ?>
                     <img style="height: 100px; width: 100px; object-fit: cover; display: inline;" src="<?= base_url().$image_src['dir']?>"><br>
-                    <b><?= $row_invest['name'] ?></b>
+                    <b><?= strlen($row_invest["name"]) > 5 ? substr($row_invest["name"],0,5)."..." : $row_invest["name"] ?> </b>
                   </div>
                 </div>
               </a>
@@ -320,4 +323,10 @@
       options: options
     });
   });
+
+
+  function view(id) {
+    location.href = "<?= base_url('admin/project/view/') ?>"+id;
+  }
+
 </script>

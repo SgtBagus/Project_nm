@@ -15,7 +15,7 @@ class Project extends MY_Controller {
 				$data['tbl_project'] = $this->mymodel->selectWithQuery("SELECT (a.harga*AVG(b.return_tahun)/100) as return_besar, a.* from tbl_project a LEFT JOIN tbl_project_return b on a.id = b.project_id WHERE a.public = 'ENABLE' GROUP BY a.id ORDER BY `return_besar` DESC");
 			} else if ($_GET['search'] == 'invest'){
 				$data['tbl_project'] = $this->mymodel->selectWithQuery("SELECT *
-					FROM (SELECT * FROM tbl_project a) x
+					FROM (SELECT * FROM tbl_project a WHERE a.public = 'ENABLE') x
 					LEFT OUTER JOIN
 					(SELECT a.project_id, COUNT(a.investor_id) as count_invest
 					from  tbl_project_invest a 
@@ -57,6 +57,32 @@ class Project extends MY_Controller {
 		if ($this->form_validation->run() == FALSE){
 			$this->alert->alertdanger(validation_errors());
 		}else{
+
+			$tbl_project = $this->mymodel->selectDataone('tbl_project', array('id' => $_POST['dt']['project_id']));
+
+			$unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$_POST['dt']['project_id']."' AND status_pembayaran = 'APPROVE'");
+
+			$unit_terjual = 0;
+			if($unit[0]['unit']){
+				$unit_terjual = $unit[0]['unit'];
+			}
+
+			$sisa_unit = $tbl_project['unit'] - $unit_terjual;
+			
+			if($_POST['dt']['unit'] > $sisa_unit){
+				$this->alert->alertdanger('<strong>Jumlah Unit</strong> Terlalu Banyak');   
+				return false;  
+			}
+
+			$usercheck = $this->mymodel->selectDataone('tbl_investor', array('id' => $this->session->userdata('id')));
+			foreach($usercheck as $key => $field) {  
+				if(empty($usercheck[$key])){
+					$this->alert->alertdanger('Mohon Untuk melengkapi data yang di perlukan untuk melakukan Investasi, Buka <a href
+						="'.base_url('dashboard/account').'"> Data Akun </a>');   
+					return false;  
+				}
+			}
+
 			$dt = $_POST['dt'];
 
 			$chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -67,11 +93,9 @@ class Project extends MY_Controller {
 				}
 
 				$query = $this->db->query("SELECT * FROM tbl_project_invest WHERE code='$res'")->result();
-	// echo "SELECT * FROM donasi WHERE kodeDonasi='$res'";
 				if(count($query)==0){
 					break;
 				}else{
-		// echo 'ADA';
 				}
 			}
 
@@ -83,10 +107,6 @@ class Project extends MY_Controller {
 			$dt['tgl_kadarluasa'] = date('Y-m-d H:i:s', time() + 86400);
 			$dt['status'] = 'ENABLE';
 			$this->db->insert('tbl_project_invest', $dt);
-
-			// $unit = $this->mymodel->selectDataOne('tbl_project', array('id' => $_POST['dt']['project_id']));
-			// $minUnit['unit'] = $unit['unit']-$_POST['dt']['unit'];
-			// $this->mymodel->updateData('tbl_project', $minUnit , array('id'=>$_POST['dt']['project_id']));
 
 			$this->alert->alertsuccess('Investasi Telah Dikirim dan menunggu untuk melakukan Pembayaran <br> Cek Proses Investasi di <a href="'.base_url('dashboard/invest').'"> Dashboard</a>');
 			echo '<script type="text/javascript" language="Javascript">window.open("'.base_url('invoice/payment/').$dt['code'].'");</script>';

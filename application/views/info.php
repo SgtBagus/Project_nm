@@ -1,6 +1,12 @@
 <div class="content-wrapper" style="min-height: 655px;">
   <div class="container">
     <section class="content">
+      <section class="content-header">
+        <ol class="breadcrumb" style="background: #f3f3f3;">
+          <li><a href="<?= base_url() ?>"><b>AGNOV</b></a></li>
+          <li class="active"><i class="fa fa-list"></i> <?= $data[0]->title ?></li>
+        </ol>
+      </section>
       <div class="row">
         <div class="col-md-8">
           <h1>

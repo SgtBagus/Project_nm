@@ -32,6 +32,8 @@ if($this->session->userdata('session_sop')=="") {
 
   <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
+  <link rel="icon" href="<?= base_url('assets/')?>icon.png">
+  
   <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
 
   <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/main.css">
@@ -210,10 +212,9 @@ if($this->session->userdata('session_sop')=="") {
     <?=$contents?>
 
     <footer class="main-footer">
-      <div class="pull-right hidden-xs">
-        <b>Version</b> <?= VERSION ?>
+      <div class="container" align="center">
+        <strong>Copyright © 2019  by <a href="https://www.agnov.id/">Agnov..</a> All Right Reserved</strong>
       </div>
-      <strong>Copyright © 2019  by <a href="https://www.agnov.id/">Agnov</a></strong>
     </footer>
     <div class="control-sidebar-bg"></div>
   </div>

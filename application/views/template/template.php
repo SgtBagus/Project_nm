@@ -22,6 +22,8 @@
   <script src="<?= base_url('assets/') ?>/jquery/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
   
+  <link rel="icon" href="<?= base_url('assets/')?>icon.png">
+  
   <script type="text/javascript" src='https://maps.google.com/maps/api/js?libraries=places&key=AIzaSyASx6JCkfcpuUIDho2q_G_ayRSsq4BpV2Q'></script>
   <script src="<?= base_url('assets/') ?>maps/locationpicker.jquery.min.js"></script>
   <link rel="stylesheet" href="<?= base_url('assets/') ?>custom/css_custom.css">
@@ -35,7 +37,7 @@
   </style>
 </head>
 <?php 
-$actual_link = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+$actual_link = "https://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $this->session->set_userdata(array('url_session' => $actual_link));
 ?>
 <body class="hold-transition skin-green layout-top-nav">
@@ -136,9 +138,12 @@ $this->session->set_userdata(array('url_session' => $actual_link));
         </div>
       </div>
     </div>
+    <a href="https://api.whatsapp.com/send?phone=6285526250131&text=Perkenalkan Saya <?= $this->session->userdata('name')?>. Saya ingin menanyakan tentang..." class="float" target="_blank">
+      <i class="fa fa-whatsapp my-float"></i>
+    </a>
     <footer class="main-footer">
       <div class="container" align="center">
-        <strong>Copyright © 2019  by <a href="https://www.agnov.id/">Agnov</a></strong>
+        <strong>Copyright © 2019  by <a href="https://www.agnov.id/">Agnov..</a> All Right Reserved</strong>
       </div>
     </footer>
   </div>

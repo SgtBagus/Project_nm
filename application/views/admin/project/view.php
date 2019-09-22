@@ -119,9 +119,9 @@
           <div class="row">
             <div class="col-md-8">
               <?php if($file['dir']){ ?>
-                <img src="<?= base_url().$file['dir'] ?>" class="round" id="main_image" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%; border-radius: 15px">
+                <img src="<?= base_url().$file['dir'] ?>" class="round" id="main_image" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%; border-radius: 15px;  object-fit: cover; display: inline;">
               <?php } else { ?>
-                <img src="<?= base_url('webfile/project/default.jpg')?>" class="round" id="main_image" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%; border-radius: 15px">
+                <img src="<?= base_url('webfile/project/default.jpg')?>" class="round" id="main_image" alt="Second slide" alt="Second slide" style="height: 390px; width: 100%; border-radius: 15px;  object-fit: cover; display: inline;">
               <?php } ?>
               <br><br>
               <div class="row">
@@ -131,22 +131,12 @@
                   foreach($file_detail as $img){
                     ?>
                     <div class="col-md-2 col-sm-3 col-xs-4">
-                      <img src="<?= base_url().$img['dir']?>" id="detail_image-<?=$i?>" alt="User Image" width="100%" height="85px" style="border-radius: 15px; margin-bottom: 20px">
+                      <img src="<?= base_url().$img['dir']?>" id="detail_image-<?=$i?>" alt="User Image" width="100%" height="85px" style="border-radius: 15px; margin-bottom: 20px;  object-fit: cover; display: inline;">
                     </div>
                     <?php
                     $i++;
                   }
                 }?>
-              </div>
-              <br>
-              <div class="box box-solid">
-                <div class="box-body" align="center">
-                  <div class="row">
-                    <div class="col-md-12" align="center">
-                      Telah dibesarkan <b>493</b> Unit disponsori <b>212</b> orang
-                    </div>
-                  </div>
-                </div>
               </div>
               <div class="box box-solid">
                 <div class="box-header with-border" align="center">
@@ -160,6 +150,14 @@
                     </div>
                     <div class="col-md-6" align="left">
                       <b><?= $tbl_project['periode'] ?> tahun</b>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6" align="right">
+                      Return Tahun ke <b><?=$tbl_project_return['tahun']?></b> :
+                    </div>
+                    <div class="col-md-6" align="left">
+                      <b><?= $tbl_project_return['return_tahun'] ?></b>  % per Tahun
                     </div>
                   </div>
                   <div class="row">

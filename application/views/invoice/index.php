@@ -10,7 +10,7 @@ data-client-key="SB-Mid-client-BwKVZAEn_uaPXdIe"></script>
   <div class="container">
     <section class="content">
       <div class="row" align="center"> 
-        <a class="btn btn-info round" href="javascript:close();">Tutup Invoice</a>
+        <a class="btn btn-info round" href="<?= base_url('dashboard/invest') ?>"><i class="fa fa-bar-chart"></i> Data Investasi</a>
         <h1><i class="fa fa-credit-card"></i> Invoice </h1>
         <small>Selesaikan Pembayaran Anda ! </small>
       </div>
@@ -21,7 +21,7 @@ data-client-key="SB-Mid-client-BwKVZAEn_uaPXdIe"></script>
             <div class="col-md-12">
               <div class="box box-solid round">
                 <div class="box-header with-border">
-                  <h3 class="box-title pull-left">Sisa Waktu</h3>
+                  <h3 class="box-title pull-left">Sisa Waktu</h3> 
                   <h3 class="box-title pull-right">
                     <?php if($invoice['status_pembayaran'] == "APPROVE") { ?>
                       <span type="button" class="btn-primary btn-sm round">
@@ -62,9 +62,15 @@ data-client-key="SB-Mid-client-BwKVZAEn_uaPXdIe"></script>
               </div>
             </div>
           </div>
-          <span type="button" class="btn-block btn-primary btn-lg round" align="center">
+          <button type="button" class="btn btn-block btn-primary btn-lg round" align="center">
             <i class="fa fa-credit-card"></i> Bayar Sekarang
-          </span>
+          </button>
+          <br>
+          <a  href="https://api.whatsapp.com/send?phone=6281995020895?>&text=Halo Admin AGNOV. Perkenalkan Saya <?=$investor['name']?>. Saya ingin melakukan konfirmasi pembayaran donasi dengan link <?=base_url()?>invoice/payment/<?=$invoice['code']?>. Berikut saya sertakan bukti pembayarannya. Terimakasih..." target="_blank"> 
+            <button  type="button" class="btn btn-success btn-block btn-lg round">
+              <i class="fa fa-whatsapp"></i> Konfirmasi Lewat WA
+            </button>
+          </a>
         </div>
         <div class="col-md-7 col-sm-7 col-xs-12">
           <div class="row">

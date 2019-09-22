@@ -1,6 +1,13 @@
 <div class="content-wrapper">
   <div class="container">
     <section class="content">
+      <section class="content-header">
+        <ol class="breadcrumb" style="background: #f3f3f3;">
+          <li><a href="<?= base_url() ?>"><b>AGNOV</b></a></li>
+          <li><a href="<?= base_url('blog') ?>"><i class="fa fa-newspaper-o"></i> Blog</a></li>
+          <li class="active"><?= $tbl_blog['title']?> </li>
+        </ol>
+      </section>
       <div class="row">
         <div class="col-md-8">
           <h1>

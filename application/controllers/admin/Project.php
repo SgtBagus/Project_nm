@@ -19,7 +19,7 @@ class Project extends MY_Controller {
 
 	public function create(){
 		$data['page_name'] = "Project";
- 
+
 		if($this->session->userdata('role_id') == '17'){
 			$this->template->load('admin/template/template','admin/project/create', $data);
 		}else{
@@ -135,6 +135,14 @@ class Project extends MY_Controller {
 		$this->mymodel->deleteData('tbl_project_return',  array('id'=>$_POST['id']));
 		$this->mymodel->updateData('tbl_project', $prj , array('id'=>$project['id']));
 
+		$return = $this->mymodel->selectWithQuery("SELECT count(id) as return_row FROM tbl_project_return WHERE project_id = ".$_POST['id']);
+
+		if($return[0][return_row] == '0'){
+			$prj['public'] = "DISABLE";
+			$prj['status'] = "DISABLE";
+			$this->mymodel->updateData('tbl_project', $prj , array('id'=>$id));
+		}
+
 		$this->alert->alertsuccess('Berhasil Hapus Data');
 	}
 
@@ -233,6 +241,7 @@ class Project extends MY_Controller {
 	public function view($id){
 		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('id'=>$id));
 		$data['tbl_project_invest'] = $this->mymodel->selectWhere('tbl_project_invest',array('project_id'=>$id));
+		$data['tbl_project_return'] = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$data['tbl_project']['id'], 'public' => 'ENABLE'));
 		$data['tbl_project_return_grafik'] = $this->mymodel->selectWhere('tbl_project_return', array('project_id'=>$data['tbl_project']['id']));
 		$data['user'] = $this->mymodel->selectDataone('user',array('id'=>$data['tbl_project']['user_id']));
 		$data['user_image'] = $this->mymodel->selectDataone('file',array('table_id'=>$data['user']['id'],'table'=>'user'));

@@ -30,6 +30,7 @@
                     <th>Status Pembarayan</th>
                     <th>Tgl Konfirmasi</th>
                     <th></th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -72,21 +73,32 @@
                         <?php if (!$row_invest['tgl_pembayaran']) { ?>
                           <p class='help-block'><i>Invoice Ini Belum Terbayar</i></p>
                         <?php  }else { 
-                          if ($row_invest['status_pembayaran'] == 'WAITING') {
-                            echo '<small class="label bg-yellow"><i class="fa fa-warning"> </i> Menunggu Dikonfirmasi </small>';
-                            if($this->session->userdata('role_id') == '17'){
-                              echo '<hr>
-                              <div class="row" align="center">
-                              <button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-primary" onclick="approve('.$row_invest['id'].')"><i class="fa fa-check-circle"></i></button>
-                              <button type="button" class="btn btn-send btn-reject btn-sm btn-sm btn-danger" onclick="reject('.$row_invest['id'].')"><i class="fa fa-ban"></i></button>
-                              </div>';
-                            }
-                          }else if ($row_invest['status_pembayaran'] == 'APPROVE') {
-                            echo '<small class="label bg-green"><i class="fa fa-check"> </i> Di Terima </small>';
-                          }else{
-                            echo '<small class="label bg-red"><i class="fa fa-ban"> </i> Di Tolak </small>';
-                          }?>
-                        <?php } ?>
+                          if($invoice['status_pembayaran'] == "APPROVE") { ?>
+                            <span type="button" class="btn-success btn-sm">
+                              <i class="fa fa-check"></i> Diterima
+                            </span>
+                          <?php }else if($invoice['status_pembayaran'] == "REJECT") { ?>
+                            <span type="button" class="btn-danger btn-sm">
+                              <i class="fa fa-check"></i> Ditolak
+                            </span>
+                          <?php }else if($invoice['status_pembayaran'] == "EXPIRED") { ?>
+                            <span type="button" class="btn-danger btn-sm">
+                              <i class="fa fa-check"></i> Kadaluarsa
+                            </span>
+                          <?php }else if($invoice['status_pembayaran'] == "WAITING PAY") { ?>
+                            <span type="button" class="btn-warning btn-sm">
+                              <i class="fa fa-check"></i> Menunggu Pembayaran
+                            </span>
+                          <?php }else if($invoice['status_pembayaran'] == "EXPIRED") { ?>
+                            <span type="button" class="btn-warning btn-sm">
+                              <i class="fa fa-check"></i> Kadaluarsa
+                            </span>
+                          <?php }else { ?>
+                            <span type="button" class="btn-success btn-sm">
+                              <i class="fa fa-check"></i> Belum Memilih Metode
+                            </span>
+                          <?php } 
+                        } ?>
                       </td>
                       <td>
                         <?php if (!$row_invest['tgl_konfirmasi']) {
@@ -96,8 +108,31 @@
                         }?>
                       </td>
                       <td>
+                        <?php if (!$row_invest['tgl_pembayaran']) {
+                          echo '<button type="button" class="btn btn-sm btn-sm btn-success"><i class="fa fa-credit-card"></i> Pembayaran Manual</button>';
+                        }else {
+                          ?>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-block btn-info">
+                              <i class="fa fa-eye"></i> Lihat Bukti pembayaran
+                            </button>
+                          </div>
+                          <hr>
+                          <div class="col-md-6">
+                            <button type="button" class="btn btn-block btn-sm btn-primary">
+                              <i class="fa fa-edit"></i>
+                            </button>
+                          </div>
+                          <div class="col-md-6">
+                            <button type="button"class="btn btn-block btn-sm btn-danger">
+                              <i class="fa fa-trash-o"></i>
+                            </button>
+                          </div>
+                        <?php } ?>
+                      </td>
+                      <td>
                         <a href="<?= base_url('invoice/payment/').$row_invest['code']?>" target="_blank">
-                          <button type="button" class="btn btn-sm btn-sm btn-info"><i class="fa fa-print"></i> Invoice</button>
+                          <button type="button" class="btn btn-sm btn-sm btn-info"><i class="fa fa-print"></i></button>
                         </a>
                       </td>
                     </tr>
