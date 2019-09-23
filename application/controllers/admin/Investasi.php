@@ -1,4 +1,4 @@
-<?php 
+<?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Investasi extends MY_Controller {
 	public function __construct(){
@@ -12,8 +12,9 @@ class Investasi extends MY_Controller {
 		}else{
 			$data['tbl_project_invest'] = $this->mymodel->selectWithQuery("SELECT a.id as user_id, b.id as project_id, c.* FROM tbl_project_invest c INNER JOIN tbl_project b ON c.project_id = b.id INNER JOIN user a ON b.user_id = a.id WHERE a.id = ".$this->session->userdata('id')." ORDER BY created_at DESC");
 		}
+
 		$data['page_name'] = "Investasi";
-		$this->template->load('admin/template/template','admin/investasi/index', $data); 
+		$this->template->load('admin/template/template','admin/investasi/index', $data);
 	}
 
 	public function approve($id){
@@ -24,9 +25,9 @@ class Investasi extends MY_Controller {
 			'updated_at' => date('Y-m-d H:i:s')
 		);
 		$this->mymodel->updateData('tbl_project_invest', $data , array('id'=>$id));
-		$this->alert->alertsuccess('Success Update Data');  
+		$this->alert->alertsuccess('Success Update Data');
 	}
-	
+
 	public function reject($id){
 
 		$data = array(
@@ -36,7 +37,7 @@ class Investasi extends MY_Controller {
 		);
 
 		$this->mymodel->updateData('tbl_project_invest', $data , array('id'=>$id));
-		$this->alert->alertsuccess('Success Update Data');  
+		$this->alert->alertsuccess('Success Update Data');
 	}
 
 
@@ -48,7 +49,7 @@ class Investasi extends MY_Controller {
 		$data['file_project'] =  $this->mymodel->selectDataOne('file', array('table_id' => $data['project']['id'], 'table' => 'tbl_project'));
 		$data['file_invest'] =  $this->mymodel->selectDataOne('file', array('table_id' => $data['tbl_project_invest']['id'], 'table' => 'tbl_project_invest'));
 		$data['page_name'] = "Investasi";
-		$this->template->load('admin/template/template','admin/investasi/view', $data); 
+		$this->template->load('admin/template/template','admin/investasi/view', $data);
 	}
 
 	public function sumbitImage($id){
@@ -60,7 +61,7 @@ class Investasi extends MY_Controller {
 			$this->load->library('upload', $config);
 			if ( ! $this->upload->do_upload('file')){
 				$error = $this->upload->display_errors();
-				$this->alert->alertdanger($error);		
+				$this->alert->alertdanger($error);
 			}else{
 				$file = $this->upload->data();
 
@@ -78,13 +79,13 @@ class Investasi extends MY_Controller {
 				$file_dir = $this->mymodel->selectDataone('file', array('table_id' => $id, 'table' => 'tbl_project_invest'));
 				if($file_dir['name']){
 					@unlink($file_dir['dir']);
-					$this->mymodel->updateData('file', $data , array('table_id'=>$id, 'table' => 'tbl_project_invest'));	
+					$this->mymodel->updateData('file', $data , array('table_id'=>$id, 'table' => 'tbl_project_invest'));
 				}else{
-					$this->mymodel->insertData('file', $data);	
+					$this->mymodel->insertData('file', $data);
 				}
 			}
 		}
-		$this->alert->alertsuccess('Success Send Data');   
+		$this->alert->alertsuccess('Success Send Data');
 	}
 
 }

@@ -28,7 +28,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php $i = 1; foreach ($tbl_project_invest as $row_invest) { 
+                  <?php $i = 1; foreach ($tbl_project_invest as $row_invest) {
                     $project =  $this->mymodel->selectDataOne('tbl_project', array('id' => $row_invest['project_id'] ));
                     $investor =  $this->mymodel->selectDataOne('tbl_investor', array('id' => $row_invest['investor_id'] ));
                     $file =  $this->mymodel->selectDataOne('file', array('table_id' => $investor['id'], 'table' => 'tbl_investor')) ;?>
@@ -66,7 +66,7 @@
                           } else if($row_invest['status_pembayaran'] == "APPROVE") {
                             echo '<small class="label bg-green"><i class="fa fa-check"> </i> Di Terima </small>';
 
-                          }else if($row_invest['status_pembayaran'] == "REJECT") { 
+                          }else if($row_invest['status_pembayaran'] == "REJECT") {
                             echo '<small class="label bg-red"><i class="fa fa-ban"> </i> Di Tolak </small>';
 
                           }else if($row_invest['status_pembayaran'] == "EXPIRED") {
@@ -107,7 +107,7 @@
       </div>
     </div>
   </div>
-</div> 
+</div>
 <script type="text/javascript">
 
   function approve(id) {
