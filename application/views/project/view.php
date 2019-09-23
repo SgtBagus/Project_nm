@@ -95,9 +95,9 @@
         <div class="col-md-4">
           <div class="row" align="center" style="margin-top: -20px">
             <?php 
-              $unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$tbl_project['id']."' AND status_pembayaran = 'APPROVE'");
+            $unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$tbl_project['id']."' AND status_pembayaran = 'APPROVE'");
 
-              $mintunit = $tbl_project['unit'] - $unit[0]['unit'];
+            $mintunit = $tbl_project['unit'] - $unit[0]['unit'];
 
             ?>
 
@@ -175,6 +175,7 @@
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#tab_detail_1" data-toggle="tab" aria-expanded="false">Deskripsi</a></li>
                   <li class=""><a href="#tab_detail_2" data-toggle="tab" aria-expanded="false">Simulasi Bagi Hasil</a></li>
+                  <li class=""><a href="#tab_detail_3" data-toggle="tab" aria-expanded="false">Histori Investasi</a></li>
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_detail_1">
@@ -252,165 +253,221 @@
                       </div>
                     </div>
                   </div>
+                  <div class="tab-pane" id="tab_detail_3">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="row" align="center">
+                          <h3><b>Histori Investasi</b></h3>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="box-body table-responsive no-padding">
+                              <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>No</th>
+                                    <th colspan="2">Investor</th>
+                                    <th>Unit</th>
+                                    <th>Total Harga</th>
+                                    <th>Tanggal</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <?php 
+                                  $total_unit = 0; 
+                                  $i = 1; 
+                                  if($tbl_investor){
+                                    foreach ($tbl_investor as $invest) { ?>
+                                      <?php $investor = $this->mymodel->selectDataone('tbl_investor', array('id' => $invest['investor_id']));  
+
+                                      $profil =  $this->mymodel->selectDataOne('file', array('table_id' => $investor['id'], 'table' => 'tbl_investor')) ;
+                                      ?>
+                                      <tr>
+                                        <td><?=$i?></td>
+                                        <td align="center">
+                                          <img src="<?= base_url().$profil['dir'] ?>" width="50px" height="50px" style="border-radius: 50%">
+                                        </td>
+                                        <td><?= $investor['name'] ?></td>
+                                        <td><?= $invest['unit']?></td>
+                                        <td>Rp <?= number_format($invest['total_harga'],0,',','.') ?>,-</td>
+                                        <td><?= date("d-m-Y", strtotime($invest['created_at']))?></td>
+                                      </tr>
+                                      <?php $i++; }
+                                    } else { ?>
+                                      <tr>
+                                        <td colspan="5" align="center">
+                                          <img src='https://icon-library.net/images/no-data-icon/no-data-icon-20.jpg' width='100px' height='100px'>
+                                          <p><b>Tidak Ada Data</b><p> 
+                                          </td>
+                                        </tr>
+                                      <?php } ?>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
-  </section>
-</div>
-</div>
+  </div>
 
-<div class="modal modal-default fade" id="modal-invest" style="display: none;">
-  <div class="modal-dialog round">
-    <div class="modal-content round">
-      <div class="modal-header top-round bg-green">
-        <h4 class="modal-title" align="center"><i class="fa fa-credit-card"></i> Investasi Sekarang</h4>
-      </div>
-      <div class="modal-body">
-        <?php
-        if($this->session->userdata('session_sop') == true){
-          $this->load->view('modals/invest_form');
-        } else if($this->session->userdata('session_sop') == ""){
+  <div class="modal modal-default fade" id="modal-invest" style="display: none;">
+    <div class="modal-dialog round">
+      <div class="modal-content round">
+        <div class="modal-header top-round bg-green">
+          <h4 class="modal-title" align="center"><i class="fa fa-credit-card"></i> Investasi Sekarang</h4>
+        </div>
+        <div class="modal-body">
+          <?php
+          if($this->session->userdata('session_sop') == true){
+            $this->load->view('modals/invest_form');
+          } else if($this->session->userdata('session_sop') == ""){
+            ?>
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              <h4><i class="icon fa fa-ban"></i> Perhatian!</h4>
+              Mohon untuk Melakukan Login Masuk Terlebih Dahulu !
+            </div>
+            <?php $this->load->view('modals/login_form');
+          }
           ?>
-          <div class="alert alert-danger alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4><i class="icon fa fa-ban"></i> Perhatian!</h4>
-            Mohon untuk Melakukan Login Masuk Terlebih Dahulu !
-          </div>
-          <?php $this->load->view('modals/login_form');
-        }
-        ?>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-  $('#us3').locationpicker({
-    location: {
-      latitude: <?= $tbl_project['latitude'] ?>,
-      longitude: <?= $tbl_project['longitude'] ?>},
-      radius: 0,
-      inputBinding: {
-        latitudeInput: $('#us3-lat'),
-        longitudeInput: $('#us3-lon'),
-        locationNameInput: $('#us3-address')
-      },
-      enableAutocomplete: true,
-      onchanged: function (currentLocation, radius, isMarkerDropped) {
-      }
-    });
-
-  <?php if($this->session->userdata('session_sop')) {
-    if($this->session->userdata('role') != 'Investor'){ ?>
-      $('.btn-invest').remove();
-      $('#modal-invest').remove();
-    <?php } 
-  }
-
-  if($file_detail){
-    $i = 1;
-    foreach($file_detail as $img){
-      ?>
-
-      $('#detail_image-<?=$i?>').click(function() {
-        var main_src = $('#main_image').attr('src');
-        var detail_src = $('#detail_image-<?=$i?>').attr('src');
-
-        $('#detail_image-<?=$i?>').attr('src',main_src);
-        $('#main_image').attr('src',detail_src);
-      });
-      <?php
-      $i++;
-    }
-  }
-  ?>
-
-  $(function () {
-    var ctx = document.getElementById("myChart");
-
-    var data = {
-      labels: [
-      <?php foreach ($tbl_project_return_grafik as $grafik) { ?>
-        "Tahun <?= $grafik['tahun'] ?>",
-      <?php } ?>
-      ],
-      datasets: [
-      {
-        label: "Profit ",
-        data: [
-        <?php foreach ($tbl_project_return_grafik as $grafik) { 
-          $harga = $tbl_project['harga']; 
-          $persentase = $grafik['return_tahun'];
-          $hasil = $harga*$persentase/100;
-          echo $hasil.","; } ?>
-          ],
-          backgroundColor: 'rgb(193, 193, 229)',
-          borderColor: 'rgb(105, 105, 205)',
-          borderWidth: 4,
-          pointBorderWidth: 6
+    $('#us3').locationpicker({
+      location: {
+        latitude: <?= $tbl_project['latitude'] ?>,
+        longitude: <?= $tbl_project['longitude'] ?>},
+        radius: 0,
+        inputBinding: {
+          latitudeInput: $('#us3-lat'),
+          longitudeInput: $('#us3-lon'),
+          locationNameInput: $('#us3-address')
+        },
+        enableAutocomplete: true,
+        onchanged: function (currentLocation, radius, isMarkerDropped) {
         }
-        ]
-      };
+      });
 
-      var options = {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          position: 'top',
-        },
-        hover: {
-          mode: 'label'
-        },
-        scales: {
-          xAxes: [{
-            display: true,
-            scaleLabel: {
+    <?php if($this->session->userdata('session_sop')) {
+      if($this->session->userdata('role') != 'Investor'){ ?>
+        $('.btn-invest').remove();
+        $('#modal-invest').remove();
+      <?php } 
+    }
+
+    if($file_detail){
+      $i = 1;
+      foreach($file_detail as $img){
+        ?>
+
+        $('#detail_image-<?=$i?>').click(function() {
+          var main_src = $('#main_image').attr('src');
+          var detail_src = $('#detail_image-<?=$i?>').attr('src');
+
+          $('#detail_image-<?=$i?>').attr('src',main_src);
+          $('#main_image').attr('src',detail_src);
+        });
+        <?php
+        $i++;
+      }
+    }
+    ?>
+
+    $(function () {
+      var ctx = document.getElementById("myChart");
+
+      var data = {
+        labels: [
+        <?php foreach ($tbl_project_return_grafik as $grafik) { ?>
+          "Tahun <?= $grafik['tahun'] ?>",
+        <?php } ?>
+        ],
+        datasets: [
+        {
+          label: "Profit ",
+          data: [
+          <?php foreach ($tbl_project_return_grafik as $grafik) { 
+            $harga = $tbl_project['harga']; 
+            $persentase = $grafik['return_tahun'];
+            $hasil = $harga*$persentase/100;
+            echo $hasil.","; } ?>
+            ],
+            backgroundColor: 'rgb(193, 193, 229)',
+            borderColor: 'rgb(105, 105, 205)',
+            borderWidth: 4,
+            pointBorderWidth: 6
+          }
+          ]
+        };
+
+        var options = {
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+            position: 'top',
+          },
+          hover: {
+            mode: 'label'
+          },
+          scales: {
+            xAxes: [{
               display: true,
-              labelString: 'Tahun ke',
-              ticks: {
-                userCallback: function(value, index, values) {
-                  return value.replace("Tahun ","");
+              scaleLabel: {
+                display: true,
+                labelString: 'Tahun ke',
+                ticks: {
+                  userCallback: function(value, index, values) {
+                    return value.replace("Tahun ","");
+                  }
                 }
               }
-            }
-          }],
-          yAxes: [{
-            display: true,
-            scaleLabel: {
+            }],
+            yAxes: [{
               display: true,
-              labelString: 'Profit'
-            },
-            gridLines: {
-              display: false
-            },
-            ticks: {
-              callback: function(value, index, values) {
-                return 'Rp ' + formatNumber(value) + ',-';
+              scaleLabel: {
+                display: true,
+                labelString: 'Profit'
+              },
+              gridLines: {
+                display: false
+              },
+              ticks: {
+                callback: function(value, index, values) {
+                  return 'Rp ' + formatNumber(value) + ',-';
+                }
+              }
+            }]
+          },
+          tooltips: {
+            callbacks: {
+              label: function(t, d) {
+                var xLabel = d.datasets[t.datasetIndex].label;
+                var yLabel = "Rp "+ formatNumber(t.yLabel) + ',-';
+                return xLabel + ': ' + yLabel;
               }
             }
-          }]
-        },
-        tooltips: {
-          callbacks: {
-            label: function(t, d) {
-              var xLabel = d.datasets[t.datasetIndex].label;
-              var yLabel = "Rp "+ formatNumber(t.yLabel) + ',-';
-              return xLabel + ': ' + yLabel;
-            }
-          }
-        },
-      }
+          },
+        }
 
-      var myLineChart = new Chart(ctx, {
-        type: 'line',
-        data: data,
-        options: options
+        var myLineChart = new Chart(ctx, {
+          type: 'line',
+          data: data,
+          options: options
+        });
       });
-    });
 
-  </script>
+    </script>

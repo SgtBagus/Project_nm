@@ -24,6 +24,7 @@
                     <th>Harga per Unit</th>
                     <th>Total Harga</th>
                     <th>Status Pembarayan</th>
+                    <th>Bukti Pembarayan</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -31,7 +32,8 @@
                   <?php $i = 1; foreach ($tbl_project_invest as $row_invest) {
                     $project =  $this->mymodel->selectDataOne('tbl_project', array('id' => $row_invest['project_id'] ));
                     $investor =  $this->mymodel->selectDataOne('tbl_investor', array('id' => $row_invest['investor_id'] ));
-                    $file =  $this->mymodel->selectDataOne('file', array('table_id' => $investor['id'], 'table' => 'tbl_investor')) ;?>
+                    $file =  $this->mymodel->selectDataOne('file', array('table_id' => $investor['id'], 'table' => 'tbl_investor')) ;
+                    $file_invest =  $this->mymodel->selectDataOne('file', array('table_id' => $row_invest['id'], 'table' => 'tbl_project_invest')) ;?>
                     <tr>
                       <td><?= $i ?></td>
                       <td><b><?= $row_invest['code'] ?></b></td>
@@ -76,6 +78,19 @@
                             echo '<small class="label bg-yellow"><i class="fa fa-warning"> </i> Menunggu Pembayaran </small>';
                           }
                         } ?>
+                      </td>
+                      <td align="center">
+                        <?php if (!$file_invest) { ?>
+                          <p class='help-block'><i>Tidak Tersedia</i></p>
+                        <?php  }else { ?>
+                          <div class="row" align="center">
+                            <a href="<?= base_url().$file_invest['dir']?>" target="_blank">
+                              <button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-info">
+                                <i class="fa fa-eye"></i> Bukti
+                              </button>
+                            </a>
+                          </div>
+                        <?php } ?>
                       </td>
                       <td>
                         <div class="btn-group">
