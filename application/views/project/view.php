@@ -57,18 +57,18 @@
             </div>
             <div class="box-body">
               <div class="row">
-                <div class="col-md-6" align="right">
+                <div class="col-md-6 col-xs-6" align="right">
                   Periode :
                 </div>
-                <div class="col-md-6" align="left">
+                <div class="col-md-6 col-xs-6" align="left">
                   <b><?= $tbl_project['periode'] ?> tahun</b>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6" align="right">
+                <div class="col-md-6 col-xs-6" align="right">
                   Periode Bagi Hasil :
                 </div>
-                <div class="col-md-6" align="left">
+                <div class="col-md-6 col-xs-6" align="left">
                   <b><?= $tbl_project['bagi_hasil'] ?> tahun</b>
                 </div>
               </div>
@@ -170,6 +170,7 @@
             <i class="fa fa-credit-card"></i> Lakukan Investasi
           </button>
         </div>
+        <br>
         <div class="col-md-4">
           <div class="row" align="center" style="margin-top: -20px">
             <?php 
