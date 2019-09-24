@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Sep 17, 2019 at 02:36 PM
--- Server version: 10.1.39-MariaDB
--- PHP Version: 7.3.5
+-- Host: localhost
+-- Generation Time: Sep 24, 2019 at 08:31 AM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -572,8 +572,8 @@ INSERT INTO `access_control` (`id`, `folder`, `class`, `method`, `val`) VALUES
 CREATE TABLE `activity` (
   `ip` varchar(255) DEFAULT NULL,
   `link` varchar(255) DEFAULT NULL,
-  `get` longtext,
-  `post` longtext,
+  `get` longtext DEFAULT NULL,
+  `post` longtext DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -650,7 +650,7 @@ INSERT INTO `file` (`id`, `name`, `mime`, `dir`, `table`, `table_id`, `status`, 
 (231, '6950c16c9bcc6995f376b297f1631759330051.jpg', 'image/jpeg', 'webfile/project/project-milik-mitra-2/6950c16c9bcc6995f376b297f1631759330051.jpg', 'tbl_project_gambar', 4, 'ENABLE', '2019-09-10 15:13:08', NULL),
 (232, '6950c16c9bcc6995f376b297f1631759330052.jpg', 'image/jpeg', 'webfile/project/project-milik-mitra-2/6950c16c9bcc6995f376b297f1631759330052.jpg', 'tbl_project_gambar', 4, 'ENABLE', '2019-09-10 15:13:08', NULL),
 (233, '6950c16c9bcc6995f376b297f163175966348.png', 'image/png', 'webfile/investor/6950c16c9bcc6995f376b297f163175966348.png', 'tbl_investor', 1, 'ENABLE', '2019-09-11 18:38:43', '2019-09-12 09:02:36'),
-(234, '6950c16c9bcc6995f376b297f16317596343.jpg', 'image/jpg', 'webfile/blog/6950c16c9bcc6995f376b297f16317596343.jpg', 'tbl_blog', 3, 'ENABLE', '2019-09-12 00:00:00', NULL),
+(234, '6950c16c9bcc6995f376b297f163175993576.png', 'image/png', 'webfile/blog/6950c16c9bcc6995f376b297f163175993576.png', 'user', 3, 'ENABLE', '2019-09-12 00:00:00', '2019-09-20 10:47:49'),
 (235, '6950c16c9bcc6995f376b297f16317599653.jpeg', 'image/jpeg', 'webfile/blog/6950c16c9bcc6995f376b297f16317599653.jpeg', 'tbl_blog', 4, 'ENABLE', '2019-09-12 00:00:00', NULL),
 (236, '6950c16c9bcc6995f376b297f163175973684.png', 'image/png', 'webfile/blog/6950c16c9bcc6995f376b297f163175973684.png', 'tbl_blog', 5, 'ENABLE', '2019-09-12 00:00:00', '2019-09-12 00:00:00'),
 (237, 'default.png', 'image/png', 'webfile/investor/default.png', 'tbl_investor', 2, 'ENABLE', '2019-09-12 08:24:06', '2019-09-12 08:24:06'),
@@ -660,7 +660,22 @@ INSERT INTO `file` (`id`, `name`, `mime`, `dir`, `table`, `table_id`, `status`, 
 (244, '6950c16c9bcc6995f376b297f1631759527711.png', 'image/png', 'webfile/project/testing-nbaru-multi-image/6950c16c9bcc6995f376b297f1631759527711.png', 'tbl_project_gambar', 5, 'ENABLE', '2019-09-12 18:58:30', NULL),
 (245, '6950c16c9bcc6995f376b297f163175952771.jpg', 'image/jpeg', 'webfile/project/testing-nbaru-multi-image/6950c16c9bcc6995f376b297f163175952771.jpg', 'tbl_project_gambar', 5, 'ENABLE', '2019-09-12 18:58:31', NULL),
 (246, '6950c16c9bcc6995f376b297f1631759527712.png', 'image/png', 'webfile/project/testing-nbaru-multi-image/6950c16c9bcc6995f376b297f1631759527712.png', 'tbl_project_gambar', 5, 'ENABLE', '2019-09-12 18:58:31', NULL),
-(247, 'default.png', 'image/png', 'webfile/investor/default.png', 'tbl_investor', 3, 'ENABLE', '2019-09-13 10:03:27', NULL);
+(247, 'default.png', 'image/png', 'webfile/investor/default.png', 'tbl_investor', 3, 'ENABLE', '2019-09-13 10:03:27', NULL),
+(248, '6950c16c9bcc6995f376b297f163175957342.png', 'image/png', 'webfile/project/pengembalian-modal-kesatu/6950c16c9bcc6995f376b297f163175957342.png', 'tbl_project', 6, 'ENABLE', '2019-09-17 09:48:23', NULL),
+(249, '6950c16c9bcc6995f376b297f1631759573421.png', 'image/png', 'webfile/project/pengembalian-modal-kesatu/6950c16c9bcc6995f376b297f1631759573421.png', 'tbl_project_gambar', 6, 'ENABLE', '2019-09-17 09:48:23', NULL),
+(250, '6950c16c9bcc6995f376b297f1631759573422.png', 'image/png', 'webfile/project/pengembalian-modal-kesatu/6950c16c9bcc6995f376b297f1631759573422.png', 'tbl_project_gambar', 6, 'ENABLE', '2019-09-17 09:48:23', NULL),
+(251, '6950c16c9bcc6995f376b297f1631759573423.png', 'image/png', 'webfile/project/pengembalian-modal-kesatu/6950c16c9bcc6995f376b297f1631759573423.png', 'tbl_project_gambar', 6, 'ENABLE', '2019-09-17 09:48:23', NULL),
+(252, '6950c16c9bcc6995f376b297f1631759573424.png', 'image/png', 'webfile/project/pengembalian-modal-kesatu/6950c16c9bcc6995f376b297f1631759573424.png', 'tbl_project_gambar', 6, 'ENABLE', '2019-09-17 09:48:23', NULL),
+(253, '6950c16c9bcc6995f376b297f1631759573425.png', 'image/png', 'webfile/project/pengembalian-modal-kesatu/6950c16c9bcc6995f376b297f1631759573425.png', 'tbl_project_gambar', 6, 'ENABLE', '2019-09-17 09:48:23', NULL),
+(254, 'default.png', 'image/png', 'webfile/investor/default.png', 'tbl_investor', 4, 'ENABLE', '2019-09-17 15:01:51', NULL),
+(255, '6950c16c9bcc6995f376b297f163175998103.jpg', 'image/jpeg', 'webfile/blog/6950c16c9bcc6995f376b297f163175998103.jpg', 'tbl_blog', 3, 'ENABLE', '2019-09-20 00:00:00', '2019-09-20 10:52:11'),
+(256, '6950c16c9bcc6995f376b297f163175955499.png', 'image/png', 'webfile/users/6950c16c9bcc6995f376b297f163175955499.png', 'user', 16, 'ENABLE', '2019-09-20 11:38:46', NULL),
+(257, '6950c16c9bcc6995f376b297f163175926546.png', 'image/png', 'webfile/project/project-milik-mitra-ke-2/6950c16c9bcc6995f376b297f163175926546.png', 'tbl_project', 7, 'ENABLE', '2019-09-20 11:40:05', NULL),
+(258, '6950c16c9bcc6995f376b297f1631759265461.png', 'image/png', 'webfile/project/project-milik-mitra-ke-2/6950c16c9bcc6995f376b297f1631759265461.png', 'tbl_project_gambar', 7, 'ENABLE', '2019-09-20 11:40:05', NULL),
+(259, '6950c16c9bcc6995f376b297f163175926546.jpeg', 'image/jpeg', 'webfile/project/project-milik-mitra-ke-2/6950c16c9bcc6995f376b297f163175926546.jpeg', 'tbl_project_gambar', 7, 'ENABLE', '2019-09-20 11:40:05', NULL),
+(260, '6950c16c9bcc6995f376b297f1631759265462.png', 'image/png', 'webfile/project/project-milik-mitra-ke-2/6950c16c9bcc6995f376b297f1631759265462.png', 'tbl_project_gambar', 7, 'ENABLE', '2019-09-20 11:40:05', NULL),
+(261, '6950c16c9bcc6995f376b297f163175926546.jpg', 'image/jpeg', 'webfile/project/project-milik-mitra-ke-2/6950c16c9bcc6995f376b297f163175926546.jpg', 'tbl_project_gambar', 7, 'ENABLE', '2019-09-20 11:40:05', NULL),
+(262, '6950c16c9bcc6995f376b297f163175913778.png', 'image/png', 'webfile/invest/6950c16c9bcc6995f376b297f163175913778.png', 'tbl_project_invest', 9, 'ENABLE', '2019-09-24 10:34:10', '2019-09-24 10:34:10');
 
 -- --------------------------------------------------------
 
@@ -728,7 +743,7 @@ INSERT INTO `keys` (`id`, `user_id`, `key`, `level`, `ignore_limits`, `is_privat
 CREATE TABLE `konfig` (
   `id` int(11) NOT NULL,
   `slug` varchar(255) DEFAULT NULL,
-  `value` text,
+  `value` text DEFAULT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
@@ -740,7 +755,7 @@ CREATE TABLE `konfig` (
 
 INSERT INTO `konfig` (`id`, `slug`, `value`, `status`, `created_at`, `updated_at`) VALUES
 (6, 'APPLICATION', 'AGNOV', 'ENABLE', '2019-02-18 15:28:44', '2019-06-26 13:56:36'),
-(7, 'LOGO', 'http://www.pertanian.go.id/img/logo.png', 'ENABLE', '2019-02-18 15:29:32', '2019-04-29 10:56:09'),
+(7, 'LOGO', 'https://agnov.id/assets/icon.png', 'ENABLE', '2019-02-18 15:29:32', '2019-04-29 10:56:09'),
 (8, 'LOGIN_BACKGROUND', 'background-image: url(\'https://coloredbrain.com/wp-content/uploads/2016/07/login-background.jpg\');background-size: cover;background-position: center;', 'ENABLE', '2019-02-18 15:29:52', '2019-04-29 10:57:19'),
 (9, 'COLOR_HEADER', 'background: linear-gradient(to right,#0052D4,#65C7F7);', 'DISABLE', '2019-02-18 15:30:24', '2019-02-18 15:31:08'),
 (10, 'VERSION', '1.0.0', 'ENABLE', '2019-02-18 15:30:39', NULL),
@@ -764,13 +779,13 @@ CREATE TABLE `logs` (
   `id` int(11) NOT NULL,
   `uri` varchar(255) NOT NULL,
   `method` varchar(6) NOT NULL,
-  `params` text,
+  `params` text DEFAULT NULL,
   `api_key` varchar(40) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
   `time` int(11) NOT NULL,
   `rtime` float DEFAULT NULL,
   `authorized` varchar(1) NOT NULL,
-  `response_code` smallint(3) DEFAULT '0'
+  `response_code` smallint(3) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -825,7 +840,7 @@ INSERT INTO `menu_master` (`id`, `name`, `icon`, `link`, `urutan`, `parent`, `no
 CREATE TABLE `report` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `query` longtext,
+  `query` longtext DEFAULT NULL,
   `header` varchar(255) DEFAULT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -842,7 +857,7 @@ CREATE TABLE `role` (
   `id` int(11) NOT NULL,
   `role` varchar(255) DEFAULT NULL,
   `status` enum('DISABLE','ENABLE') DEFAULT NULL,
-  `menu` text,
+  `menu` text DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -932,7 +947,7 @@ CREATE TABLE `tbl_blog` (
   `user_id` int(11) DEFAULT NULL,
   `title` varchar(225) DEFAULT NULL,
   `slug` varchar(225) DEFAULT NULL,
-  `deskripsi` text,
+  `deskripsi` text DEFAULT NULL,
   `view` int(11) DEFAULT NULL,
   `public` enum('ENABLE','DISABLE') DEFAULT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
@@ -945,8 +960,8 @@ CREATE TABLE `tbl_blog` (
 --
 
 INSERT INTO `tbl_blog` (`id`, `user_id`, `title`, `slug`, `deskripsi`, `view`, `public`, `status`, `created_at`, `updated_at`) VALUES
-(3, 13, 'Blog Pertama dan ke 1', 'blog-pertama-dan-ke-1', '<p>Ini Isi nya dengan HTML format untuk <b>Blog</b> Pertama ke 1</p>', 12, 'ENABLE', 'ENABLE', '2019-09-11 14:50:28', NULL),
-(4, 13, 'Blog Milik User Mitra', 'blog-milik-user-mitra', '<p>Lorem ipsum dolor sit amet, <b>consectetur</b> adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse <u>cillum</u> dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non <i>proident</i>, sunt in culpa qui officia deserunt <b>mollit</b> anim id est laborum.</p>', 5, 'ENABLE', 'ENABLE', '2019-09-11 15:24:27', '2019-09-11 15:28:34'),
+(3, 13, 'Blog Pertama dan ke 1', 'blog-pertama-dan-ke-1', '<p>Ini Isi nya dengan HTML format untuk <b>Blog</b> Pertama ke 1</p>', 13, 'ENABLE', 'ENABLE', '2019-09-11 14:50:28', '2019-09-20 10:52:11'),
+(4, 13, 'Blog Milik User Mitra', 'blog-milik-user-mitra', '<p>Lorem ipsum dolor sit amet, <b>consectetur</b> adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse <u>cillum</u> dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non <i>proident</i>, sunt in culpa qui officia deserunt <b>mollit</b> anim id est laborum.</p>', 10, 'ENABLE', 'ENABLE', '2019-09-11 15:24:27', '2019-09-11 15:28:34'),
 (5, 13, 'Keuntungan Investasi Jeruk Gerga', 'keuntungan-investasi-jeruk-gerga', '<p>desc...</p>', 1, 'ENABLE', 'ENABLE', '2019-09-11 15:43:57', NULL);
 
 -- --------------------------------------------------------
@@ -986,7 +1001,7 @@ INSERT INTO `tbl_gaji` (`id`, `value`, `status`, `created_at`, `updated_at`) VAL
 CREATE TABLE `tbl_hows_work` (
   `id` int(11) NOT NULL,
   `title` varchar(225) DEFAULT NULL,
-  `value` text,
+  `value` text DEFAULT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
@@ -1015,12 +1030,12 @@ CREATE TABLE `tbl_investor` (
   `tgl_lahir` date DEFAULT NULL,
   `jk` enum('L','P') DEFAULT NULL,
   `wrg_negara` enum('WNI','WNA') DEFAULT NULL,
-  `status_kawin` enum('0','1') DEFAULT NULL,
+  `status_kawin` enum('NO','YES') DEFAULT NULL,
   `agama_id` int(11) DEFAULT NULL,
   `pendidikan_id` int(11) DEFAULT NULL,
   `email` varchar(225) DEFAULT NULL,
   `phone` varchar(225) DEFAULT NULL,
-  `alamat` text,
+  `alamat` text DEFAULT NULL,
   `kelurahan` varchar(225) DEFAULT NULL,
   `kecamatan` varchar(225) DEFAULT NULL,
   `provinsi_id` int(11) DEFAULT NULL,
@@ -1045,9 +1060,10 @@ CREATE TABLE `tbl_investor` (
 --
 
 INSERT INTO `tbl_investor` (`id`, `name`, `tpt_lahir`, `tgl_lahir`, `jk`, `wrg_negara`, `status_kawin`, `agama_id`, `pendidikan_id`, `email`, `phone`, `alamat`, `kelurahan`, `kecamatan`, `provinsi_id`, `kota_id`, `kode_pos`, `sumberdana_id`, `pekerjaan_id`, `gaji_id`, `bank_id`, `bank_cabang`, `no_rek`, `atas_nama`, `no_ktp`, `no_npwp`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Bagus Andika (MadChan)', 'Malang', '2000-02-27', 'L', 'WNI', '0', 1, NULL, 'procw57@gmail.com', '0821234634512', 'Disini', 'Dau', 'Dau', 1, '1', 65034, 1, 4, 1, 10, 'Malang', '0829367231', 'Bagus', '23421', '23241232', 'ENABLE', '2019-09-11 00:00:00', '2019-09-17 19:22:55'),
+(1, 'Bagus Andika (MadChan)', 'Malang', '2000-02-27', 'L', 'WNI', 'NO', 1, 3, 'procw57@gmail.com', '0821234634512', 'Disini', 'Dau', 'Dau', 1, '4', 65034, 1, 4, 1, 10, 'Malang', '0829367231', 'Bagus', '23421', '23241232', 'ENABLE', '2019-09-11 00:00:00', '2019-09-18 09:37:44'),
 (2, 'Arvin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'arvin@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ENABLE', '2019-09-12 08:24:06', NULL),
-(3, 'User Mendaftar', 'Disini', '2019-09-12', 'L', 'WNA', NULL, NULL, NULL, 'daftar@gmail.com', NULL, 'Disini', NULL, NULL, NULL, NULL, 2312541, 1, NULL, 2, 1, NULL, '231541232', NULL, NULL, NULL, 'ENABLE', '2019-09-13 10:03:27', NULL);
+(3, 'User Mendaftar', 'Disini', '2019-09-12', 'L', 'WNA', NULL, NULL, NULL, 'daftar@gmail.com', NULL, 'Disini', NULL, NULL, NULL, NULL, 2312541, 1, NULL, 2, 1, NULL, '231541232', NULL, NULL, NULL, 'ENABLE', '2019-09-13 10:03:27', NULL),
+(4, 'userke2', 'Malang', '2019-09-13', 'L', 'WNI', NULL, NULL, NULL, 'userke2@gmail.com', NULL, 'aa', NULL, NULL, NULL, NULL, 23123, 1, 2, 2, 1, NULL, '2312323', NULL, NULL, NULL, 'ENABLE', '2019-09-17 15:01:51', '2019-09-17 15:49:19');
 
 -- --------------------------------------------------------
 
@@ -1140,13 +1156,13 @@ CREATE TABLE `tbl_project` (
   `user_id` int(11) NOT NULL,
   `title` varchar(225) DEFAULT NULL,
   `slug` varchar(225) NOT NULL,
-  `harga` int(125) DEFAULT NULL,
-  `unit` int(125) DEFAULT NULL,
-  `total_harga` int(125) DEFAULT NULL,
+  `harga` int(225) DEFAULT NULL,
+  `unit` int(225) DEFAULT NULL,
+  `total_harga` int(225) DEFAULT NULL,
   `modal_back` int(11) DEFAULT NULL,
-  `periode` int(125) DEFAULT NULL,
-  `bagi_hasil` int(125) DEFAULT NULL,
-  `deskripsi` text,
+  `periode` int(225) DEFAULT NULL,
+  `bagi_hasil` int(225) DEFAULT NULL,
+  `deskripsi` text DEFAULT NULL,
   `latitude` float NOT NULL,
   `longitude` float NOT NULL,
   `public` enum('ENABLE','DISABLE') NOT NULL,
@@ -1160,11 +1176,13 @@ CREATE TABLE `tbl_project` (
 --
 
 INSERT INTO `tbl_project` (`id`, `user_id`, `title`, `slug`, `harga`, `unit`, `total_harga`, `modal_back`, `periode`, `bagi_hasil`, `deskripsi`, `latitude`, `longitude`, `public`, `status`, `created_at`, `updated_at`) VALUES
-(1, 15, 'Project Ke 1', 'project-ke-1', 2000000, 400, 800000000, 1000000, 4, 1, '<p>Mencoba Membuat <b>Project </b>Baru</p>', -7.96662, 112.633, 'ENABLE', 'ENABLE', '2019-09-07 17:06:31', '2019-09-13 13:23:10'),
-(2, 15, 'Project Ke 2 dengan mutli imput baru', 'project-ke-2-dengan-mutli-imput-baru', 2000000, 200, 400000000, 1000000, 1, 1, '<p>Multi <b>input</b> Baru</p>', 0, 0, 'ENABLE', 'ENABLE', '2019-09-09 09:26:03', NULL),
-(3, 15, 'Proyek dengan input return baru', 'proyek-dengan-input-return-baru', 1000000, 150, 150000000, 1000000, 2, 1, '<p>Return Baru</p>', 0, 0, 'ENABLE', 'ENABLE', '2019-09-10 09:34:24', '2019-09-10 11:51:37'),
-(4, 15, 'Project Milik mitra 2', 'project-milik-mitra-2', 2000000, 198, 400000000, 1000000, 1, 1, '<p>Ini Milik Mitra</p>', 0, 0, 'ENABLE', 'ENABLE', '2019-09-10 15:13:08', NULL),
-(5, 15, 'Testing nbaru multi image', 'testing-nbaru-multi-image', 2000000, 400, 800000000, 1000000, 3, 1, '<p>Ini <b>Deskripsi</b></p>', 0, 0, 'ENABLE', 'ENABLE', '2019-09-12 18:58:30', NULL);
+(1, 15, 'Project Ke 1', 'project-ke-1', 2000000, 400, 800000000, 1000000, 5, 1, '<p>Mencoba Membuat <b>Project </b>Baru</p>', -8.17331, 113.701, 'ENABLE', 'ENABLE', '2019-09-07 17:06:31', '2019-09-17 09:44:57'),
+(2, 15, 'Project Ke 2 dengan mutli imput baru', 'project-ke-2-dengan-mutli-imput-baru', 2000000, 200, 400000000, 2000000, 3, 1, '<p>Multi <b>input</b> Baru</p>', -7.25747, 112.752, 'ENABLE', 'ENABLE', '2019-09-09 09:26:03', '2019-09-18 08:46:19'),
+(3, 15, 'Proyek dengan input return baru', 'proyek-dengan-input-return-baru', 1000000, 150, 150000000, 0, 2, 1, '<p>Return Baru</p>', 0, 0, 'ENABLE', 'ENABLE', '2019-09-10 09:34:24', '2019-09-10 11:51:37'),
+(4, 15, 'Project Milik mitra 2', 'project-milik-mitra-2', 2000000, 200, 400000000, 0, 1, 1, '<p>Ini Milik Mitra</p>', 0, 0, 'ENABLE', 'ENABLE', '2019-09-10 15:13:08', NULL),
+(5, 15, 'Testing nbaru multi image', 'testing-nbaru-multi-image', 2000000, 400, 800000000, 2000000, 3, 1, '<p>Ini <b>Deskripsi</b></p>', 0, 0, 'ENABLE', 'ENABLE', '2019-09-12 18:58:30', NULL),
+(6, 15, 'Pengembalian Modal Kesatu', 'pengembalian-modal-kesatu', 1000000, 500, 500000000, 1000000, 2, 1, '<p>Testing Pengembalian Modal</p>', 0, 0, 'ENABLE', 'ENABLE', '2019-09-17 09:48:23', NULL),
+(7, 16, 'Project Milik Mitra Ke 2', 'project-milik-mitra-ke-2', 2000000, 100, 200000000, 1000000, 3, 1, '<p>Testing</p>', -7.91299, 112.582, 'ENABLE', 'ENABLE', '2019-09-20 11:40:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -1185,8 +1203,8 @@ CREATE TABLE `tbl_project_invest` (
   `tgl_kadarluasa` datetime DEFAULT NULL,
   `tgl_pembayaran` datetime DEFAULT NULL,
   `metode_pembayaran` varchar(225) DEFAULT NULL,
-  `url_pembayaran` text,
-  `idTransaksiMidtrans` text,
+  `url_pembayaran` text DEFAULT NULL,
+  `idTransaksiMidtrans` text DEFAULT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
@@ -1197,9 +1215,13 @@ CREATE TABLE `tbl_project_invest` (
 --
 
 INSERT INTO `tbl_project_invest` (`id`, `code`, `project_id`, `investor_id`, `unit`, `harga`, `total_harga`, `status_pembayaran`, `tgl_konfirmasi`, `tgl_kadarluasa`, `tgl_pembayaran`, `metode_pembayaran`, `url_pembayaran`, `idTransaksiMidtrans`, `status`, `created_at`, `updated_at`) VALUES
-(9, 'AN-LNNMLV1WA3', 1, 1, '2', '2000000', '4000000', 'WAITING', NULL, '2019-09-13 09:16:38', NULL, NULL, NULL, NULL, 'ENABLE', '2019-09-12 09:16:38', NULL),
-(11, 'AN-50G8PHAEH3', 4, 1, '2', '2000000', '4000000', 'APPROVE', '2019-09-12 10:49:40', '2019-09-13 10:46:34', '2019-09-12 00:00:00', 'Payment Backing', NULL, NULL, 'ENABLE', '2019-09-12 10:46:34', '2019-09-12 10:49:40'),
-(12, 'AN-1WNHBH3OJT', 4, 2, '15', '2000000', '30000000', 'WAITING', NULL, '2019-09-13 18:33:05', '2019-09-12 00:00:00', NULL, NULL, NULL, 'ENABLE', '2019-09-12 18:33:05', NULL);
+(9, 'AN-LNNMLV1WA3', 1, 1, '2', '2000000', '4000000', 'APPROVE', '2019-09-24 10:33:56', '2019-09-13 09:16:38', '2019-09-24 10:33:57', NULL, NULL, NULL, 'ENABLE', '2019-09-12 09:16:38', '2019-09-24 10:33:56'),
+(11, 'AN-50G8PHAEH3', 4, 1, '2', '2000000', '4000000', 'WAITING', '2019-09-12 10:49:40', '2019-09-13 10:46:34', '2019-09-12 00:00:00', 'Payment Backing', NULL, NULL, 'ENABLE', '2019-09-12 10:46:34', '2019-09-12 10:49:40'),
+(12, 'AN-1WNHBH3OJT', 4, 2, '15', '2000000', '30000000', 'APPROVE', '2019-09-24 10:24:39', '2019-09-13 18:33:05', '2019-09-12 00:00:00', NULL, NULL, NULL, 'ENABLE', '2019-09-12 18:33:05', '2019-09-24 10:24:39'),
+(13, 'AN-G5PL6Q0YU8', 1, 1, '395', '2000000', '10000000', 'APPROVE', '2019-09-24 10:24:28', '2019-09-18 09:11:18', '2019-09-17 00:00:00', 'Payment Backing', NULL, NULL, 'ENABLE', '2019-09-17 09:11:18', '2019-09-24 10:24:28'),
+(14, 'AN-33ZYY9I8PI', 3, 4, '5', '1000000', '5000000', 'APPROVE', '2019-09-24 10:23:26', '2019-09-18 15:50:45', '2019-09-24 10:23:26', NULL, NULL, NULL, 'ENABLE', '2019-09-17 15:50:45', '2019-09-24 10:23:26'),
+(15, 'AN-S3I1ME1K6R', 3, 4, '3', '1000000', '3000000', 'APPROVE', '2019-09-24 10:22:24', '2019-09-18 15:53:04', '2019-09-24 10:22:24', NULL, NULL, NULL, 'ENABLE', '2019-09-17 15:53:04', '2019-09-24 10:22:24'),
+(17, 'AN-9ZFCZTNZEN', 1, 1, '3', '2000000', '6000000', 'APPROVE', '2019-09-24 10:19:26', '2019-09-19 09:45:19', '2019-09-24 10:19:26', NULL, NULL, NULL, 'ENABLE', '2019-09-18 09:45:19', '2019-09-24 10:19:26');
 
 -- --------------------------------------------------------
 
@@ -1211,7 +1233,7 @@ CREATE TABLE `tbl_project_return` (
   `id` int(11) NOT NULL,
   `project_id` int(11) DEFAULT NULL,
   `tahun` int(11) NOT NULL,
-  `return_tahun` varchar(225) DEFAULT NULL,
+  `return_tahun` int(11) DEFAULT NULL,
   `public` enum('ENABLE','DISABLE') NOT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -1223,17 +1245,25 @@ CREATE TABLE `tbl_project_return` (
 --
 
 INSERT INTO `tbl_project_return` (`id`, `project_id`, `tahun`, `return_tahun`, `public`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '10', 'DISABLE', 'ENABLE', '2019-09-10 00:00:00', '2019-09-10 10:58:42'),
-(2, 1, 2, '14', 'ENABLE', 'ENABLE', '2019-09-10 00:00:00', '2019-09-10 00:00:00'),
-(3, 1, 3, '12', 'DISABLE', 'ENABLE', '2019-09-10 00:00:00', '2019-09-10 00:00:00'),
-(4, 1, 4, '15', 'DISABLE', 'ENABLE', '2019-09-10 10:23:53', NULL),
-(5, 3, 1, '10', 'ENABLE', 'ENABLE', '2019-09-10 10:25:13', NULL),
-(7, 3, 2, '20', 'ENABLE', 'ENABLE', '2019-09-10 11:47:53', NULL),
-(8, 4, 1, '12', 'ENABLE', 'ENABLE', '2019-09-10 15:13:24', NULL),
-(9, 5, 1, '5', 'ENABLE', 'ENABLE', '2019-09-12 18:59:06', NULL),
-(10, 5, 2, '10', 'DISABLE', 'ENABLE', '2019-09-12 18:59:29', NULL),
-(11, 5, 3, '8', 'DISABLE', 'ENABLE', '2019-09-12 18:59:39', NULL),
-(12, 2, 1, '15', 'ENABLE', 'ENABLE', '2019-09-13 08:45:30', NULL);
+(1, 1, 1, 10, 'ENABLE', 'ENABLE', '2019-09-10 00:00:00', '2019-09-10 10:58:42'),
+(2, 1, 2, 14, 'DISABLE', 'ENABLE', '2019-09-10 00:00:00', '2019-09-10 00:00:00'),
+(3, 1, 3, 12, 'DISABLE', 'ENABLE', '2019-09-10 00:00:00', '2019-09-10 00:00:00'),
+(4, 1, 4, 15, 'DISABLE', 'ENABLE', '2019-09-10 10:23:53', NULL),
+(8, 4, 1, 12, 'ENABLE', 'ENABLE', '2019-09-10 15:13:24', NULL),
+(9, 5, 1, 5, 'ENABLE', 'ENABLE', '2019-09-12 18:59:06', NULL),
+(10, 5, 2, 10, 'DISABLE', 'ENABLE', '2019-09-12 18:59:29', NULL),
+(11, 5, 3, 8, 'DISABLE', 'ENABLE', '2019-09-12 18:59:39', NULL),
+(12, 2, 1, 15, 'ENABLE', 'ENABLE', '2019-09-13 08:45:30', NULL),
+(13, 6, 1, 13, 'ENABLE', 'ENABLE', '2019-09-17 10:02:51', NULL),
+(14, 6, 2, 10, 'DISABLE', 'ENABLE', '2019-09-17 10:02:57', NULL),
+(15, 2, 2, 10, 'DISABLE', 'ENABLE', '2019-09-18 08:46:45', NULL),
+(16, 2, 3, 15, 'DISABLE', 'ENABLE', '2019-09-18 08:46:50', NULL),
+(17, 1, 5, 10, 'DISABLE', 'ENABLE', '2019-09-20 11:18:14', NULL),
+(18, 3, 1, 10, 'ENABLE', 'ENABLE', '2019-09-20 11:35:14', NULL),
+(19, 3, 2, 15, 'DISABLE', 'ENABLE', '2019-09-20 11:35:19', NULL),
+(20, 7, 1, 20, 'ENABLE', 'ENABLE', '2019-09-20 11:40:16', NULL),
+(21, 7, 2, 10, 'DISABLE', 'ENABLE', '2019-09-20 11:40:21', NULL),
+(22, 7, 3, 15, 'DISABLE', 'ENABLE', '2019-09-20 11:40:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -1310,7 +1340,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `nip`, `name`, `email`, `password`, `role_id`, `desc`, `status`, `created_at`, `updated_at`, `telepon`) VALUES
 (13, 'bagus', 'Bagus', 'bagus@gmail.com', '17b38fc02fd7e92f3edeb6318e3066d8', 17, 'gkdshagdsj', '0', '2019-07-02 09:55:20', '2019-09-09 15:40:14', '085'),
 (14, 'Admin', 'Super Admin', 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 17, 'Super Admin', '0', '2019-09-05 12:56:42', NULL, ''),
-(15, 'Mitra', 'Mitra', 'mitra@gmail.com', '92706ba4fd3022cede6d1610b17a0d2d', 18, 'Mitra', '0', '2019-09-05 12:57:38', '2019-09-05 13:11:56', '');
+(15, 'Mitra', 'Mitra', 'mitra@gmail.com', '92706ba4fd3022cede6d1610b17a0d2d', 18, 'Mitra', '0', '2019-09-05 12:57:38', '2019-09-05 13:11:56', ''),
+(16, 'Mitra ke 2', 'Mitra 2', 'mitra2@gmail.com', 'b3c9323ca84c0f3e6ea210cd31c9ea7a', 18, 'asd', '0', '2019-09-20 11:38:46', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -1322,7 +1353,7 @@ CREATE TABLE `webpage` (
   `id` int(11) NOT NULL,
   `title` varchar(225) DEFAULT NULL,
   `slug` varchar(225) DEFAULT NULL,
-  `content` text,
+  `content` text DEFAULT NULL,
   `prioritas` varchar(225) DEFAULT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -1517,7 +1548,7 @@ ALTER TABLE `access_control`
 -- AUTO_INCREMENT for table `file`
 --
 ALTER TABLE `file`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=248;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=263;
 
 --
 -- AUTO_INCREMENT for table `grafik`
@@ -1595,7 +1626,7 @@ ALTER TABLE `tbl_hows_work`
 -- AUTO_INCREMENT for table `tbl_investor`
 --
 ALTER TABLE `tbl_investor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_kota`
@@ -1619,19 +1650,19 @@ ALTER TABLE `tbl_pendidikan`
 -- AUTO_INCREMENT for table `tbl_project`
 --
 ALTER TABLE `tbl_project`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_project_invest`
 --
 ALTER TABLE `tbl_project_invest`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tbl_project_return`
 --
 ALTER TABLE `tbl_project_return`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `tbl_provinsi`
@@ -1649,7 +1680,7 @@ ALTER TABLE `tbl_sumberdana`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `webpage`

@@ -21,11 +21,7 @@
               <div class="col-sm-9"> 
                 <div class="radio">
                   <label style="margin-right: 5px">
-                    <input type="radio" name="filter" onclick="filterall()" id="optionsRadios1" value="filter 1" <?php if(!$_GET['search']) { echo "checked"; }?>>
-                    Semua Proyek
-                  </label>
-                  <label style="margin-right: 5px">
-                    <input type="radio" name="filter" onclick="filternew()" id="optionsRadios1" value="filter 1" <?php if($_GET['search'] == 'new') { echo "checked"; }?>>
+                    <input type="radio" name="filter" onclick="filternew()" id="optionsRadios1" value="filter 1" <?php if(!$_GET['search']) { echo "checked"; }?>>
                     Baru Berjalan 
                   </label>
                   <label style="margin-right: 5px">
@@ -38,7 +34,7 @@
                   </label>
                   <label style="margin-right: 5px">
                     <input type="radio" name="filter" onclick="filterinvest()" id="optionsRadios1" value="filter 1" <?php if($_GET['search'] == 'invest') { echo "checked"; }?>>
-                    Proyek Dengan Banyak Invest Berhasil Terdaftar
+                    Proyek Dengan Banyak Investor Berhasil Terdaftar
                   </label>
                 </div>
               </div>

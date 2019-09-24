@@ -66,14 +66,6 @@
               </div>
               <div class="row">
                 <div class="col-md-6" align="right">
-                  Return Tahun ke <b><?=$tbl_project_return['tahun']?></b> :
-                </div>
-                <div class="col-md-6" align="left">
-                  <b><?= $tbl_project_return['return_tahun'] ?></b>  % per Tahun
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6" align="right">
                   Periode Bagi Hasil :
                 </div>
                 <div class="col-md-6" align="left">
@@ -174,15 +166,9 @@
               </div>
             </div>
           </div>
-          <button type="button" class="btn-invest btn btn-block btn-primary btn-lg round" data-toggle="modal" data-target="#modal-invest" <?php if( ($tbl_project['status']=='DISABLE') || $tbl_project['unit'] == 0){ echo "disabled"; }?> >
+          <button type="button" class="btn-invest btn btn-block btn-primary btn-lg round" data-toggle="modal" data-target="#modal-invest" <?php if( ($tbl_project['status']=='DISABLE') || $mintunit <= 0){ echo "disabled"; }?> >
             <i class="fa fa-credit-card"></i> Lakukan Investasi
           </button>
-          <br>
-          <?php if ($tbl_project['unit'] == 0){
-            echo '<div class="row" align="center"><small class="label bg-red btn-md round"> 
-            <i class="fa fa-ban"></i><b> Slot Telah Habis</b>
-            </small></div><br>';
-          } ?>
         </div>
         <div class="col-md-4">
           <div class="row" align="center" style="margin-top: -20px">
@@ -197,9 +183,15 @@
 
             <?php
             if($tbl_project['status']=='ENABLE'){
-              echo '<h4><small class="label bg-green btn-md round"> 
-              <i class="fa fa-check-circle"></i><b> Masih Dibuka</b>
-              </small></h4>';
+              if($mintunit <= 0){
+                echo '<h4><small class="label bg-red btn-md round"> 
+                <i class="fa fa-ban"></i><b> Stok Habis</b>
+                </small></h4>';
+              }else{
+                echo '<h4><small class="label bg-green btn-md round"> 
+                <i class="fa fa-check-circle"></i><b> Masih Dibuka</b>
+                </small></h4>';
+              }
             }else{
               echo '<h4><small class="label bg-red btn-md round"> 
               <i class="fa fa-ban"></i><b> Sudah Ditutup</b>
@@ -214,23 +206,17 @@
               <h2><b>Rp <?= number_format($tbl_project['harga'],0,',','.') ?>,- / Unit</b></h2>
             </div>
           </div>
-          <button type="button" class="btn-invest btn btn-primary btn-block round btn-md" data-toggle="modal" data-target="#modal-invest" <?php if(($tbl_project['status']=='DISABLE') || $tbl_project['unit'] == 0){ echo "disabled"; }?> >
+          <button type="button" class="btn-invest btn btn-primary btn-block round btn-md" data-toggle="modal" data-target="#modal-invest" <?php if(($tbl_project['status']=='DISABLE') || $mintunit <= 0){ echo "disabled"; }?> >
             <i class="fa fa-credit-card"></i> Lakukan Investasi
           </button>
-          <br>
-          <?php if ($tbl_project['unit'] == 0){
-            echo '<div class="row" align="center"><small class="label bg-red btn-md round"> 
-            <i class="fa fa-ban"></i><b> Slot Telah Habis</b>
-            </small></div><br>';
-          } ?>
-          <div style="margin: 5px">
+          <div style="margin-top: 15px">
             Proyek dimulai <b><?= date("d-m-Y", strtotime($tbl_project['created_at']))  ?></b> oleh:
           </div>
           <div class="box box-solid round">
             <div class="box-body">
               <div class="row">
                 <div class="col-md-4 col-xs-12 col-6 mb-md-0 mb-5" align="center">
-                  <img src="<?= base_url().$user_image['dir'] ?>" alt="Second slide" style="height: 100px; width: 100px" class="round">
+                  <img src="<?= base_url().$user_image['dir'] ?>" alt="Second slide" style="height: 100px; width: 100px; object-fit: cover; display: inline;" class="round">
                 </div>
                 <div class="col-md-8 col-xs-12 col-6 mb-md-0 mb-5">
                   <h3><?= $user['name'] ?> </h3>
@@ -352,6 +338,12 @@
       $('.btn-invest').remove();
       $('#modal-invest').remove();
     <?php } 
+  }
+
+  if($mintunit <= 0){
+    ?>
+    $('#modal-invest').remove();
+    <?php
   }
 
   if($file_detail){
