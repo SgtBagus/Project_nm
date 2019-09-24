@@ -27,44 +27,64 @@
                       <tr class="bg-success">
                         <th>No</th>
                         <th>Code</th>
-                        <th>Investor</th>
+                        <th colspan="3">Investor</th>
                         <th>Banyak Unit</th>
                         <th>Harga per Unit</th>
                         <th>Total Harga</th>
-                        <th>Status Pembarayan</th>
+                        <th>Tgl Pembayaran</th>
+                        <th>Status Pembayaran</th>
+                        <th>Bukti Pembayaran</th>
                         <th></th>
                       </tr>
                     </thead>
                     <tbody>
-                      <?php $i = 1; foreach ($tbl_project_invest as $row_invest) { 
+                      <?php $i = 1; foreach ($tbl_project_invest as $row_invest) {
                         $project =  $this->mymodel->selectDataOne('tbl_project', array('id' => $row_invest['project_id'] ));
-                        $investor =  $this->mymodel->selectDataOne('tbl_investor', array('id' => $row_invest['investor_id'] ));?>
+                        $investor =  $this->mymodel->selectDataOne('tbl_investor', array('id' => $row_invest['investor_id'] ));
+                        $file_investor =  $this->mymodel->selectDataOne('file', array('table_id' => $investor['id'], 'table' => 'tbl_investor')) ;
+                        $file_invest =  $this->mymodel->selectDataOne('file', array('table_id' => $row_invest['id'], 'table' => 'tbl_project_invest')) ;?>
                         <tr>
                           <td><?= $i ?></td>
                           <td><b><?= $row_invest['code'] ?></b></td>
+                          <td align="center">
+                            <img src="<?= base_url().$file_investor['dir'] ?>" width="50px" height="50px" style="border-radius: 50%">
+                          </td>
+                          <td><?= $investor['name'] ?></td>
                           <td>
                             <a href="<?= base_url('admin/investor/view/').$investor['id'] ?>">
-                              <?= $investor['name'] ?>
+                              <button type="button" class="btn btn-sm btn-sm btn-info"><i class="fa fa-user"></i></button>
                             </a>
                           </td>
                           <td><?= $row_invest['unit'] ?></td>
                           <td><b>Rp <?= number_format($project['harga'],0,',','.') ?></b></td>
                           <td><b>Rp <?= number_format($row_invest['total_harga'],0,',','.') ?>,-</b></td>
+                          <td>
+                            <?php if (!$row_invest['tgl_pembayaran']) { 
+                              echo "<p class='help-block'><i>Belum Tersedia</i></p>";
+                            } else {
+                              echo date('Y-m-d H:i:s', strtotime($row_invest['tgl_pembayaran']));
+                            }?>
+                          </td>
                           <td align="center">
                             <?php if (!$row_invest['tgl_pembayaran']) { ?>
                               <p class='help-block'><i>Invoice Ini Belum Terbayar</i></p>
-                            <?php  }else {
+                              <hr>
+                              <div class="row" align="center">
+                                <button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-primary" onclick="approve(<?=$row_invest['id']?>)"><i class="fa fa-check-circle"></i></button>
+                                <button type="button" class="btn btn-send btn-reject btn-sm btn-sm btn-danger" onclick="reject(<?=$row_invest['id']?>)"><i class="fa fa-ban"></i></button>
+                              </div>
+                            <?php  } else {
                               if ($row_invest['status_pembayaran'] == 'WAITING') {
                                 echo '<small class="label bg-yellow"><i class="fa fa-warning"> </i> Menunggu Dikonfirmasi </small>
                                 <hr>
                                 <div class="row" align="center">
-                                <button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-primary" onclick="approve('.$row_invest['id'].')"><i class="fa fa-check-circle"></i> Terima</button>
-                                <button type="button" class="btn btn-send btn-reject btn-sm btn-sm btn-danger" onclick="reject('.$row_invest['id'].')"><i class="fa fa-ban"></i>  Tolak</button>
+                                <button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-primary" onclick="approve('.$row_invest['id'].')"><i class="fa fa-check-circle"></i></button>
+                                <button type="button" class="btn btn-send btn-reject btn-sm btn-sm btn-danger" onclick="reject('.$row_invest['id'].')"><i class="fa fa-ban"></i></button>
                                 </div>';
                               } else if($row_invest['status_pembayaran'] == "APPROVE") {
                                 echo '<small class="label bg-green"><i class="fa fa-check"> </i> Di Terima </small>';
 
-                              }else if($row_invest['status_pembayaran'] == "REJECT") { 
+                              }else if($row_invest['status_pembayaran'] == "REJECT") {
                                 echo '<small class="label bg-red"><i class="fa fa-ban"> </i> Di Tolak </small>';
 
                               }else if($row_invest['status_pembayaran'] == "EXPIRED") {
@@ -75,9 +95,22 @@
                               }
                             } ?>
                           </td>
+                          <td align="center">
+                            <?php if (!$file_invest) { ?>
+                              <p class='help-block'><i>Belum Tersedia</i></p>
+                            <?php  }else { ?>
+                              <div class="row" align="center">
+                                <a href="<?= base_url().$file_invest['dir']?>" target="_blank">
+                                  <button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-info">
+                                    <i class="fa fa-eye"></i> Bukti
+                                  </button>
+                                </a>
+                              </div>
+                            <?php } ?>
+                          </td>
                           <td>
                             <div class="btn-group">
-                              <a href="<?= base_url('admin/investasi/view/').$row_invest['id']?>" target="_blank">
+                              <a href="<?= base_url('admin/investasi/view/').$row_invest['id']?>">
                                 <button type="button" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></button></div>
                               </a>
                               <a href="<?= base_url('invoice/payment/').$row_invest['code']?>" target="_blank">
@@ -148,6 +181,98 @@
                     </div>
                     <div class="col-md-6" align="left">
                       <b><?= $tbl_project['bagi_hasil'] ?> tahun</b>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="box box-solid">
+                    <div class="box-body">
+                      <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                          <li class="active"><a href="#tab_detail_1" data-toggle="tab" aria-expanded="false">Deskripsi</a></li>
+                          <li class=""><a href="#tab_detail_2" data-toggle="tab" aria-expanded="false">Simulasi Bagi Hasil</a></li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="tab_detail_1">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <?= $tbl_project['deskripsi'] ?>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tab-pane" id="tab_detail_2">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="row" align="center">
+                                  <h3><b>Simulasi Bagi Hasil</b></h3>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="box-body table-responsive no-padding">
+                                      <table class="table table-hover">
+                                        <thead>
+                                          <tr>
+                                            <th>No</th>
+                                            <th>Tahun Ke </th>
+                                            <th>Bagi Hasil</th>
+                                            <th>ROI</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <?php $i = 1; foreach ($tbl_project_return_grafik as $grafik) { ?>
+                                            <tr>
+                                              <td><?=$i?></td>
+                                              <td>Tahun Ke - <?= $grafik['tahun']?></td>
+                                              <td><?php 
+                                              $total_harga = $tbl_project['harga']; 
+                                              $persentase = $grafik['return_tahun'];
+                                              $hasil = $total_harga*$persentase/100;
+
+                                              $total_hasil += $hasil;
+
+                                              echo "Rp ".number_format($hasil,0,',','.').",-"; ?>
+                                            </td>
+                                            <td><?= $grafik['return_tahun']?> % per Tahun</td>
+                                          </tr>
+                                          <?php $i++; } ?>
+                                          <tr>
+                                            <td colspan="2" align="right"><b>Pengembalian Modal : </b></td>
+                                            <td colspan="2" align="left"><b>Rp <?= number_format($tbl_project['modal_back'],0,',','.')?> ,-</b></td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="2" align="right"><b>Total : </b></td>
+                                            <td colspan="2" align="left"><b>Rp <?= number_format($total_hasil+$tbl_project['modal_back'],0,',','.')?> ,-</b></td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <br>
+                                    <div class="box-group" id="accordion">
+                                      <div class="panel box box-primary" align="center">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
+                                          <div class="box-header with-border">
+                                            <h4 class="box-title">
+                                              Buka Simulasi Grafik
+                                            </h4>
+                                          </div>
+                                        </a>
+                                        <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                          <div class="row" style="width: 100%; height: 300px;">
+                                            <canvas id="myChart" style="width: 512px; height: 256px" ></canvas>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -233,97 +358,6 @@
                     </div>
                   </div>
                 <?php } ?>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="box box-solid">
-                  <div class="box-body">
-                    <div class="nav-tabs-custom">
-                      <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab_detail_1" data-toggle="tab" aria-expanded="false">Deskripsi</a></li>
-                        <li class=""><a href="#tab_detail_2" data-toggle="tab" aria-expanded="false">Simulasi Bagi Hasil</a></li>
-                      </ul>
-                      <div class="tab-content">
-                        <div class="tab-pane active" id="tab_detail_1">
-                          <div class="row">
-                            <div class="col-md-12">
-                              <?= $tbl_project['deskripsi'] ?>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="tab-pane" id="tab_detail_2">
-                          <div class="row">
-                            <div class="col-md-12">
-                              <div class="row" align="center">
-                                <h3><b>Simulasi Bagi Hasil</b></h3>
-                              </div>
-                              <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                  <div class="box-body table-responsive no-padding">
-                                    <table class="table table-hover">
-                                      <thead>
-                                        <tr>
-                                          <th>No</th>
-                                          <th>Tahun Ke </th>
-                                          <th>Bagi Hasil</th>
-                                          <th>ROI</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <?php $i = 1; foreach ($tbl_project_return_grafik as $grafik) { ?>
-                                          <tr>
-                                            <td><?=$i?></td>
-                                            <td>Tahun Ke - <?= $grafik['tahun']?></td>
-                                            <td><?php 
-                                            $total_harga = $tbl_project['harga']; 
-                                            $persentase = $grafik['return_tahun'];
-                                            $hasil = $total_harga*$persentase/100;
-
-                                            $total_hasil += $hasil;
-
-                                            echo "Rp ".number_format($hasil,0,',','.').",-"; ?>
-                                          </td>
-                                          <td><?= $grafik['return_tahun']?> % per Tahun</td>
-                                        </tr>
-                                        <?php $i++; } ?>
-                                        <tr>
-                                          <td colspan="2" align="right"><b>Pengembalian Modal : </b></td>
-                                          <td colspan="2" align="left"><b>Rp <?= number_format($tbl_project['modal_back'],0,',','.')?> ,-</b></td>
-                                        </tr>
-                                        <tr>
-                                          <td colspan="2" align="right"><b>Total : </b></td>
-                                          <td colspan="2" align="left"><b>Rp <?= number_format($total_hasil+$tbl_project['modal_back'],0,',','.')?> ,-</b></td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                  </div>
-                                  <br>
-                                  <div class="box-group" id="accordion">
-                                    <div class="panel box box-primary" align="center">
-                                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
-                                        <div class="box-header with-border">
-                                          <h4 class="box-title">
-                                            Buka Simulasi Grafik
-                                          </h4>
-                                        </div>
-                                      </a>
-                                      <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                        <div class="row" style="width: 100%; height: 300px;">
-                                          <canvas id="myChart" style="width: 512px; height: 256px" ></canvas>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
             <div class="row">

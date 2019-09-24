@@ -164,10 +164,10 @@
 						</a>
 					</div>
 					<div class="col-md-4 col-sm-4 col-xm-4">
-						<button type="button" class="btn btn-send btn-block btn-approve btn-lg btn-primary" onclick="approve('.$tbl_project_invest['id'].')"><i class="fa fa-check-circle"></i> Terima</button>
+						<button type="button" class="btn btn-send btn-block btn-approve btn-lg btn-primary" onclick="approve(<?=$tbl_project_invest['id']?>)"><i class="fa fa-check-circle"></i> Terima</button>
 					</div>
 					<div class="col-md-4 col-sm-4 col-xm-4">
-						<button type="button" class="btn btn-send btn-block btn-reject btn-lg btn-danger" onclick="reject('.$tbl_project_invest['id'].')"><i class="fa fa-ban"></i>  Tolak</button>
+						<button type="button" class="btn btn-send btn-block btn-reject btn-lg btn-danger" onclick="reject(<?=$tbl_project_invest['id']?>)"><i class="fa fa-ban"></i>  Tolak</button>
 					</div>
 				</div>
 			</div>

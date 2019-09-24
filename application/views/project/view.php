@@ -82,8 +82,100 @@
               </div>
             </div>
           </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box box-solid round">
+                <div class="box-body">
+                  <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                      <li class="active"><a href="#tab_detail_1" data-toggle="tab" aria-expanded="false">Deskripsi</a></li>
+                      <li class=""><a href="#tab_detail_2" data-toggle="tab" aria-expanded="false">Simulasi Bagi Hasil</a></li>
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="tab_detail_1">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <?= $tbl_project['deskripsi'] ?>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane" id="tab_detail_2">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="row" align="center">
+                              <h3><b>Simulasi Bagi Hasil</b></h3>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="box-body table-responsive no-padding">
+                                  <table class="table table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>No</th>
+                                        <th>Tahun Ke </th>
+                                        <th>Bagi Hasil</th>
+                                        <th>ROI</th> 
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <?php $total_hasil = 0; $i = 1; foreach ($tbl_project_return_grafik as $grafik) { ?>
+                                        <tr>
+                                          <td><?=$i?></td>
+                                          <td>Tahun Ke - <?= $grafik['tahun']?></td>
+                                          <td><?php 
+                                          $total_harga = $tbl_project['harga']; 
+                                          $persentase = $grafik['return_tahun'];
+                                          $hasil = $total_harga*$persentase/100;
+
+                                          $total_hasil += $hasil;
+
+                                          echo "Rp ".number_format($hasil,0,',','.').",-"; ?>
+                                        </td>
+                                        <td><?= $grafik['return_tahun']?> % per Tahun</td>
+                                      </tr>
+                                      <?php $i++; } ?>
+                                      <tr>
+                                        <td colspan="2" align="right"><b>Pengembalian Modal : </b></td>
+                                        <td colspan="2" align="left"><b>Rp <?= number_format($tbl_project['modal_back'],0,',','.')?> ,-</b></td>
+                                      </tr>
+                                      <tr>
+                                        <td colspan="2" align="right"><b>Total : </b></td>
+                                        <td colspan="2" align="left"><b>Rp <?= number_format($total_hasil+$tbl_project['modal_back'],0,',','.')?> ,-</b></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                                <br>
+                                <div class="box-group" id="accordion">
+                                  <div class="panel box box-primary" align="center">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
+                                      <div class="box-header with-border">
+                                        <h4 class="box-title">
+                                          Buka Simulasi Grafik
+                                        </h4>
+                                      </div>
+                                    </a>
+                                    <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                      <div class="row" style="width: 100%; height: 300px;">
+                                        <canvas id="myChart" style="width: 512px; height: 600px" ></canvas>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <button type="button" class="btn-invest btn btn-block btn-primary btn-lg round" data-toggle="modal" data-target="#modal-invest" <?php if( ($tbl_project['status']=='DISABLE') || $tbl_project['unit'] == 0){ echo "disabled"; }?> >
-            <i class="fa fa-credit-card"></i> Lakukan nvestasi
+            <i class="fa fa-credit-card"></i> Lakukan Investasi
           </button>
           <br>
           <?php if ($tbl_project['unit'] == 0){
@@ -165,309 +257,202 @@
               </div>
             </div>
           <?php } ?>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box box-solid round">
-            <div class="box-body">
-              <div class="nav-tabs-custom">
-                <ul class="nav nav-tabs">
-                  <li class="active"><a href="#tab_detail_1" data-toggle="tab" aria-expanded="false">Deskripsi</a></li>
-                  <li class=""><a href="#tab_detail_2" data-toggle="tab" aria-expanded="false">Simulasi Bagi Hasil</a></li>
-                  <li class=""><a href="#tab_detail_3" data-toggle="tab" aria-expanded="false">Histori Investasi</a></li>
-                </ul>
-                <div class="tab-content">
-                  <div class="tab-pane active" id="tab_detail_1">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <?= $tbl_project['deskripsi'] ?>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-pane" id="tab_detail_2">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="row" align="center">
-                          <h3><b>Simulasi Bagi Hasil</b></h3>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div class="box-body table-responsive no-padding">
-                              <table class="table table-hover">
-                                <thead>
-                                  <tr>
-                                    <th>No</th>
-                                    <th>Tahun Ke </th>
-                                    <th>Bagi Hasil</th>
-                                    <th>ROI</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <?php $total_hasil = 0; $i = 1; foreach ($tbl_project_return_grafik as $grafik) { ?>
-                                    <tr>
-                                      <td><?=$i?></td>
-                                      <td>Tahun Ke - <?= $grafik['tahun']?></td>
-                                      <td><?php 
-                                      $total_harga = $tbl_project['harga']; 
-                                      $persentase = $grafik['return_tahun'];
-                                      $hasil = $total_harga*$persentase/100;
+          <div class="row">
+            <div class="col-md-12" align="center">
+              <div class="box box-solid round">
+                <div class="box-body">
+                  <h3>Riwayat Investasi</h3>
+                  <table id="datatable-history" class="table table-bordered table-striped" >
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th></th>
+                        <th>Investor</th>
+                        <th>Unit</th>
+                        <th>Total Harga</th>
+                        <th>Tanggal</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php $total_unit = 0; $i = 1; if($tbl_investor){
+                        foreach ($tbl_investor as $invest) { ?>
+                          <?php $investor = $this->mymodel->selectDataone('tbl_investor', array('id' => $invest['investor_id']));  
 
-                                      $total_hasil += $hasil;
-
-                                      echo "Rp ".number_format($hasil,0,',','.').",-"; ?>
-                                    </td>
-                                    <td><?= $grafik['return_tahun']?> % per Tahun</td>
-                                  </tr>
-                                  <?php $i++; } ?>
-                                  <tr>
-                                    <td colspan="2" align="right"><b>Pengembalian Modal : </b></td>
-                                    <td colspan="2" align="left"><b>Rp <?= number_format($tbl_project['modal_back'],0,',','.')?> ,-</b></td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="2" align="right"><b>Total : </b></td>
-                                    <td colspan="2" align="left"><b>Rp <?= number_format($total_hasil+$tbl_project['modal_back'],0,',','.')?> ,-</b></td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                            <br>
-                            <div class="box-group" id="accordion">
-                              <div class="panel box box-primary" align="center">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
-                                  <div class="box-header with-border">
-                                    <h4 class="box-title">
-                                      Buka Simulasi Grafik
-                                    </h4>
-                                  </div>
-                                </a>
-                                <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                  <div class="row" style="width: 100%; height: 300px;">
-                                    <canvas id="myChart" style="width: 512px; height: 600px" ></canvas>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-pane" id="tab_detail_3">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="row" align="center">
-                          <h3><b>Histori Investasi</b></h3>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div class="box-body table-responsive no-padding">
-                              <table class="table table-hover">
-                                <thead>
-                                  <tr>
-                                    <th>No</th>
-                                    <th colspan="2">Investor</th>
-                                    <th>Unit</th>
-                                    <th>Total Harga</th>
-                                    <th>Tanggal</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <?php 
-                                  $total_unit = 0; 
-                                  $i = 1; 
-                                  if($tbl_investor){
-                                    foreach ($tbl_investor as $invest) { ?>
-                                      <?php $investor = $this->mymodel->selectDataone('tbl_investor', array('id' => $invest['investor_id']));  
-
-                                      $profil =  $this->mymodel->selectDataOne('file', array('table_id' => $investor['id'], 'table' => 'tbl_investor')) ;
-                                      ?>
-                                      <tr>
-                                        <td><?=$i?></td>
-                                        <td align="center">
-                                          <img src="<?= base_url().$profil['dir'] ?>" width="50px" height="50px" style="border-radius: 50%">
-                                        </td>
-                                        <td><?= $investor['name'] ?></td>
-                                        <td><?= $invest['unit']?></td>
-                                        <td>Rp <?= number_format($invest['total_harga'],0,',','.') ?>,-</td>
-                                        <td><?= date("d-m-Y", strtotime($invest['created_at']))?></td>
-                                      </tr>
-                                      <?php $i++; }
-                                    } else { ?>
-                                      <tr>
-                                        <td colspan="5" align="center">
-                                          <img src='https://icon-library.net/images/no-data-icon/no-data-icon-20.jpg' width='100px' height='100px'>
-                                          <p><b>Tidak Ada Data</b><p> 
-                                          </td>
-                                        </tr>
-                                      <?php } ?>
-                                    </tbody>
-                                  </table>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                          $profil =  $this->mymodel->selectDataOne('file', array('table_id' => $investor['id'], 'table' => 'tbl_investor')) ;
+                          ?>
+                          <tr>
+                            <td><?=$i?></td>
+                            <td align="center">
+                              <img src="<?= base_url().$profil['dir'] ?>" width="50px" height="50px" style="border-radius: 50%">
+                            </td>
+                            <td><?= $investor['name'] ?></td>
+                            <td><?= $invest['unit']?></td>
+                            <td>Rp <?= number_format($invest['total_harga'],0,',','.') ?>,-</td>
+                            <td><?= date("d-m-Y", strtotime($invest['created_at']))?></td>
+                          </tr>
+                          <?php $i++; }
+                        } ?>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   </div>
+</div>
 
-  <div class="modal modal-default fade" id="modal-invest" style="display: none;">
-    <div class="modal-dialog round">
-      <div class="modal-content round">
-        <div class="modal-header top-round bg-green">
-          <h4 class="modal-title" align="center"><i class="fa fa-credit-card"></i> Investasi Sekarang</h4>
-        </div>
-        <div class="modal-body">
-          <?php
-          if($this->session->userdata('session_sop') == true){
-            $this->load->view('modals/invest_form');
-          } else if($this->session->userdata('session_sop') == ""){
-            ?>
-            <div class="alert alert-danger alert-dismissible">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-              <h4><i class="icon fa fa-ban"></i> Perhatian!</h4>
-              Mohon untuk Melakukan Login Masuk Terlebih Dahulu !
-            </div>
-            <?php $this->load->view('modals/login_form');
-          }
+<div class="modal modal-default fade" id="modal-invest" style="display: none;">
+  <div class="modal-dialog round">
+    <div class="modal-content round">
+      <div class="modal-header top-round bg-green">
+        <h4 class="modal-title" align="center"><i class="fa fa-credit-card"></i> Investasi Sekarang</h4>
+      </div>
+      <div class="modal-body">
+        <?php
+        if($this->session->userdata('session_sop') == true){
+          $this->load->view('modals/invest_form');
+        } else if($this->session->userdata('session_sop') == ""){
           ?>
-        </div>
+          <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-ban"></i> Perhatian!</h4>
+            Mohon untuk Melakukan Login Masuk Terlebih Dahulu !
+          </div>
+          <?php $this->load->view('modals/login_form');
+        }
+        ?>
       </div>
     </div>
   </div>
+</div>
 
-  <script type="text/javascript">
+<script type="text/javascript">
 
-    $('#us3').locationpicker({
-      location: {
-        latitude: <?= $tbl_project['latitude'] ?>,
-        longitude: <?= $tbl_project['longitude'] ?>},
-        radius: 0,
-        inputBinding: {
-          latitudeInput: $('#us3-lat'),
-          longitudeInput: $('#us3-lon'),
-          locationNameInput: $('#us3-address')
-        },
-        enableAutocomplete: true,
-        onchanged: function (currentLocation, radius, isMarkerDropped) {
-        }
-      });
-
-    <?php if($this->session->userdata('session_sop')) {
-      if($this->session->userdata('role') != 'Investor'){ ?>
-        $('.btn-invest').remove();
-        $('#modal-invest').remove();
-      <?php } 
-    }
-
-    if($file_detail){
-      $i = 1;
-      foreach($file_detail as $img){
-        ?>
-
-        $('#detail_image-<?=$i?>').click(function() {
-          var main_src = $('#main_image').attr('src');
-          var detail_src = $('#detail_image-<?=$i?>').attr('src');
-
-          $('#detail_image-<?=$i?>').attr('src',main_src);
-          $('#main_image').attr('src',detail_src);
-        });
-        <?php
-        $i++;
+  $('#us3').locationpicker({
+    location: {
+      latitude: <?= $tbl_project['latitude'] ?>,
+      longitude: <?= $tbl_project['longitude'] ?>},
+      radius: 0,
+      inputBinding: {
+        latitudeInput: $('#us3-lat'),
+        longitudeInput: $('#us3-lon'),
+        locationNameInput: $('#us3-address')
+      },
+      enableAutocomplete: true,
+      onchanged: function (currentLocation, radius, isMarkerDropped) {
       }
+    });
+
+  <?php if($this->session->userdata('session_sop')) {
+    if($this->session->userdata('role') != 'Investor'){ ?>
+      $('.btn-invest').remove();
+      $('#modal-invest').remove();
+    <?php } 
+  }
+
+  if($file_detail){
+    $i = 1;
+    foreach($file_detail as $img){
+      ?>
+
+      $('#detail_image-<?=$i?>').click(function() {
+        var main_src = $('#main_image').attr('src');
+        var detail_src = $('#detail_image-<?=$i?>').attr('src');
+
+        $('#detail_image-<?=$i?>').attr('src',main_src);
+        $('#main_image').attr('src',detail_src);
+      });
+      <?php
+      $i++;
     }
-    ?>
+  }
+  ?>
 
-    $(function () {
-      var ctx = document.getElementById("myChart");
+  $(function () {
+    var ctx = document.getElementById("myChart");
 
-      var data = {
-        labels: [
-        <?php foreach ($tbl_project_return_grafik as $grafik) { ?>
-          "Tahun <?= $grafik['tahun'] ?>",
-        <?php } ?>
-        ],
-        datasets: [
-        {
-          label: "Profit ",
-          data: [
-          <?php foreach ($tbl_project_return_grafik as $grafik) { 
-            $harga = $tbl_project['harga']; 
-            $persentase = $grafik['return_tahun'];
-            $hasil = $harga*$persentase/100;
-            echo $hasil.","; } ?>
-            ],
-            backgroundColor: 'rgb(193, 193, 229)',
-            borderColor: 'rgb(105, 105, 205)',
-            borderWidth: 4,
-            pointBorderWidth: 6
-          }
-          ]
-        };
+    var data = {
+      labels: [
+      <?php foreach ($tbl_project_return_grafik as $grafik) { ?>
+        "Tahun <?= $grafik['tahun'] ?>",
+      <?php } ?>
+      ],
+      datasets: [
+      {
+        label: "Profit ",
+        data: [
+        <?php foreach ($tbl_project_return_grafik as $grafik) { 
+          $harga = $tbl_project['harga']; 
+          $persentase = $grafik['return_tahun'];
+          $hasil = $harga*$persentase/100;
+          echo $hasil.","; } ?>
+          ],
+          backgroundColor: 'rgb(193, 193, 229)',
+          borderColor: 'rgb(105, 105, 205)',
+          borderWidth: 4,
+          pointBorderWidth: 6
+        }
+        ]
+      };
 
-        var options = {
-          responsive: true,
-          maintainAspectRatio: false,
-          legend: {
-            position: 'top',
-          },
-          hover: {
-            mode: 'label'
-          },
-          scales: {
-            xAxes: [{
+      var options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          position: 'top',
+        },
+        hover: {
+          mode: 'label'
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            scaleLabel: {
               display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Tahun ke',
-                ticks: {
-                  userCallback: function(value, index, values) {
-                    return value.replace("Tahun ","");
-                  }
-                }
-              }
-            }],
-            yAxes: [{
-              display: true,
-              scaleLabel: {
-                display: true,
-                labelString: 'Profit'
-              },
-              gridLines: {
-                display: false
-              },
+              labelString: 'Tahun ke',
               ticks: {
-                callback: function(value, index, values) {
-                  return 'Rp ' + formatNumber(value) + ',-';
+                userCallback: function(value, index, values) {
+                  return value.replace("Tahun ","");
                 }
-              }
-            }]
-          },
-          tooltips: {
-            callbacks: {
-              label: function(t, d) {
-                var xLabel = d.datasets[t.datasetIndex].label;
-                var yLabel = "Rp "+ formatNumber(t.yLabel) + ',-';
-                return xLabel + ': ' + yLabel;
               }
             }
-          },
-        }
+          }],
+          yAxes: [{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Profit'
+            },
+            gridLines: {
+              display: false
+            },
+            ticks: {
+              callback: function(value, index, values) {
+                return 'Rp ' + formatNumber(value) + ',-';
+              }
+            }
+          }]
+        },
+        tooltips: {
+          callbacks: {
+            label: function(t, d) {
+              var xLabel = d.datasets[t.datasetIndex].label;
+              var yLabel = "Rp "+ formatNumber(t.yLabel) + ',-';
+              return xLabel + ': ' + yLabel;
+            }
+          }
+        },
+      }
 
-        var myLineChart = new Chart(ctx, {
-          type: 'line',
-          data: data,
-          options: options
-        });
+      var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options
       });
+    });
 
-    </script>
+  </script>

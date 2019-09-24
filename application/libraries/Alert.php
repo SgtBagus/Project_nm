@@ -9,6 +9,7 @@ class Alert extends CI_Controller  {
 	{	
 		$this->CI =& get_instance();
 	}
+
 	public function alertsuccess($status=null)
 	{
 		# code...
@@ -16,9 +17,37 @@ class Alert extends CI_Controller  {
 		echo '	<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
 		echo '		<span aria-hidden="true" class="fa fa-close"></span>';
 		echo '	</button>';
-		echo '	<h5 class="alert-heading">Alert</h5>';
+		echo '	<h5 class="alert-heading">Berhasil</h5>';
 		echo '		<ul>';
 		echo "			<li>$status</li>";
+		echo '		</ul>';
+		echo '</div>';
+	}
+
+	public function alertapprove()
+	{
+		# code...
+		echo '<div class="alert alert-info ks-solid ks-active-border" role="alert">';
+		echo '	<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+		echo '		<span aria-hidden="true" class="fa fa-close"></span>';
+		echo '	</button>';
+		echo '	<h5 class="alert-heading">Berhasil</h5>';
+		echo '		<ul>';
+		echo "			<li>Investasi Di Terima</li>";
+		echo '		</ul>';
+		echo '</div>';
+	}
+
+	public function alertreject()
+	{
+		# code...
+		echo '<div class="alert alert-danger ks-solid ks-active-border" role="alert">';
+		echo '	<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+		echo '		<span aria-hidden="true" class="fa fa-close"></span>';
+		echo '	</button>';
+		echo '	<h5 class="alert-heading">Perhatian !</h5>';
+		echo '		<ul>';
+		echo "			<li>Investasi Di Tolak</li>";
 		echo '		</ul>';
 		echo '</div>';
 	}

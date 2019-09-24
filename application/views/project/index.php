@@ -34,7 +34,7 @@
                   </label>
                   <label style="margin-right: 5px">
                     <input type="radio" name="filter" onclick="filterreturn()" id="optionsRadios1" value="filter 1" <?php if($_GET['search'] == 'return') { echo "checked"; }?>>
-                    Rata Rata Return Terbesar
+                    Return Pertama yang Terbesar
                   </label>
                   <label style="margin-right: 5px">
                     <input type="radio" name="filter" onclick="filterinvest()" id="optionsRadios1" value="filter 1" <?php if($_GET['search'] == 'invest') { echo "checked"; }?>>
@@ -63,21 +63,33 @@
                     <h5 align="center">
                       <?php 
                       $user = $this->mymodel->selectDataone('user', array('id'=>$row['user_id']));
-                      $return = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$row['id'], 'public' => 'ENABLE')); 
 
-                      $avgReturn = $this->mymodel->selectWithQuery('SELECT AVG(return_tahun) as AVG from tbl_project_return WHERE project_id = "'.$row[id].'"');
+                      $firstReturn = $this->mymodel->selectWithQuery('SELECT min(return_tahun) as return_tahun from tbl_project_return WHERE project_id = "'.$row[id].'"');
+
+                      $lastReturn = $this->mymodel->selectWithQuery('SELECT max(return_tahun) as return_tahun from tbl_project_return WHERE project_id = "'.$row[id].'"');
 
                       $countInvestor = $this->mymodel->selectWithQuery('SELECT COUNT(id) as COUNT from tbl_project_invest WHERE project_id = "'.$row[id].'" AND status_pembayaran = "APPROVE" GROUP BY investor_id');
+
+                      $unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$row['id']."' AND status_pembayaran = 'APPROVE'");
+
+                      $mintunit = $row['unit'] - $unit[0]['unit'];
+
                       ?>
                       Oleh : <b><?= $user['name'] ?></b>
                       <p class='help-block'><b>Dibuat pada : </b><?= date("d-m-Y", strtotime($row['created_at']))  ?></p>
                       <hr>
                       <?php
                       if($row['status']=='ENABLE'){
-                        echo '<div class="alert alert-success alert-dismissible round status-alert" align="center">
-                        <i class="fa fa-check-circle"></i> <b>Masih Dibuka</b>
-                        </div>';
-                      }else{
+                        if($mintunit <= 0){
+                          echo '<div class="alert alert-danger alert-dismissible round status-alert" align="center">
+                          <i class="fa fa-ban"></i> <b>Stock Telah Habis</b>
+                          </div>';
+                        }else{
+                          echo '<div class="alert alert-success alert-dismissible round status-alert" align="center"> 
+                          <i class="fa fa-check-circle"></i> <b>Masih Dibuka</b>
+                          </div>';
+                        }
+                      } else {
                         echo '<div class="alert alert-danger alert-dismissible round status-alert" align="center">
                         <i class="fa fa-ban"></i> <b>Sudah Ditutup</b>
                         </div>';
@@ -86,21 +98,20 @@
                       <hr>
                       Periode Kontrak : <b><?= $row['periode'] ?> Tahun</b>
                       <hr>
-                      Return Tahun ke <b><?=$return['tahun']?></b> : <b><?= $return['return_tahun'] ?></b>  % per Tahun
+                      Return Terkecil : <b><?= $firstReturn[0]['return_tahun'] ?></b>  %
+                      <br>
+                      Return Terbesar : <b><?= $lastReturn[0]['return_tahun'] ?></b>  %
                       <hr>
-                      Rata Rata Return Kembali : <br>
                       <?php 
                       $harga = $row['harga'];
-                      $rata2return = $avgReturn[0]['AVG'];
-                      $hasilrata2 = $harga*$rata2return/100;
-                      echo "Rp. <b>".number_format($hasilrata2,0,',','.')."</b>,- s/d Rp. <b>".number_format($hasilrata2+100000,0,',','.')."</b>,-"; ?></b>  
-                      <hr>
-                      <?php 
-                      $unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$row['id']."' AND status_pembayaran = 'APPROVE'");
 
-                      $mintunit = $row['unit'] - $unit[0]['unit'];
-
+                      $firstHarga = $harga*$firstReturn[0]['return_tahun']/100;
+                      $lastHarga = $harga*$lastReturn[0]['return_tahun']/100;
                       ?>
+                      Return Kembali Terkecil : <b> Rp. <?= number_format($firstHarga,0,',','.')?>,- </b>
+                      <br>
+                      Return Kembali Terbesar : <b> Rp. <?= number_format($lastHarga,0,',','.')?>,- </b>
+                      <hr>
                       Slot Unit Tersisa : <b><?php if ($row['unit'] == 0){
                         echo $row['unit']."/".$row['unit'];
                       } else { 

@@ -268,6 +268,27 @@ $this->session->set_userdata(array('url_session' => $actual_link));
         }
       },
     });
+
+    $('#datatable-history').DataTable({
+      "paging"      : true,
+      "lengthChange": true,
+      "searching"   : false,
+      "ordering"    : true,
+      "info"        : false,
+      "scrollX": true,
+      "scrollY": true,
+      "language": {
+        "search": "<b> Pencarian : </b>",
+        "zeroRecords": function () {
+          return "<img src='https://icon-library.net/images/no-data-icon/no-data-icon-20.jpg' width='100px' height='100px'><p><b>Tidak Ada Data</b><p>";
+        },
+        "paginate": {
+          "previous": "<i class='fa fa-arrow-left'></i>",
+          "next" : "<i class='fa fa-arrow-right'></i>"
+        },
+        "lengthMenu": '<label>Tampilkan <select name="datatable_length" aria-controls="datatable" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> Data</label>'
+      },
+    });
   });
 
   $("#btnFile").click(function() {

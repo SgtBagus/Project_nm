@@ -107,87 +107,96 @@
         <h1><i class="fa fa-archive"></i> Mulai Pembiayaan di sini !</h1>
       </div>
       <br>
-      <div class="row" id="myList">
+      <div class="row">
         <?php foreach($tbl_project as $row){ ?>
-          <li>
-            <a href="<?= base_url('project/view/').$row['slug'] ?>" class="a_black">
-              <div class="col-md-4 col-6 mb-md-0 mb-5">
-                <div class="box box-solid round">
-                  <div class="box-body">
-                    <?php $image_src = $this->mymodel->selectDataone('file', array('table'=>'tbl_project', 'table_id' => $row['id'])); ?>
-                    <img style="height: 200px; width: 100%; object-fit: cover; display: inline;" src="<?= base_url().$image_src['dir']?>">
-                    <h2 align="center">
-                      <?= strlen($row["title"]) > 15 ? substr($row["title"],0,15)."..." : $row["title"] ?>
-                    </h2>
-                    <h5 align="center">
-                      <?php 
-                      $user = $this->mymodel->selectDataone('user', array('id'=>$row['user_id']));
-                      $return = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$row['id'], 'public' => 'ENABLE')); 
+          <a href="<?= base_url('project/view/').$row['slug'] ?>" class="a_black">
+            <div class="col-md-4 col-6 mb-md-0 mb-5">
+              <div class="box box-solid round">
+                <div class="box-body">
+                  <?php $image_src = $this->mymodel->selectDataone('file', array('table'=>'tbl_project', 'table_id' => $row['id'])); ?>
+                  <img style="height: 200px; width: 100%; object-fit: cover; display: inline;" src="<?= base_url().$image_src['dir']?>">
+                  <h2 align="center">
+                    <?= strlen($row["title"]) > 15 ? substr($row["title"],0,15)."..." : $row["title"] ?>
+                  </h2>
+                  <h5 align="center">
+                    <?php 
+                    $user = $this->mymodel->selectDataone('user', array('id'=>$row['user_id']));
 
-                      $avgReturn = $this->mymodel->selectWithQuery('SELECT AVG(return_tahun) as AVG from tbl_project_return WHERE project_id = "'.$row[id].'"');
+                    $firstReturn = $this->mymodel->selectWithQuery('SELECT min(return_tahun) as return_tahun from tbl_project_return WHERE project_id = "'.$row[id].'"');
 
-                      $countInvestor = $this->mymodel->selectWithQuery('SELECT COUNT(id) as COUNT from tbl_project_invest WHERE project_id = "'.$row[id].'" AND status_pembayaran = "APPROVE" GROUP BY investor_id');
-                      ?>
-                      Oleh : <b><?= $user['name'] ?></b>
-                      <p class='help-block'><b>Dibuat pada : </b><?= date("d-m-Y", strtotime($row['created_at']))  ?></p>
-                      <hr>
-                      <?php
-                      if($row['status']=='ENABLE'){
-                        echo '<div class="alert alert-success alert-dismissible round status-alert" align="center">
-                        <i class="fa fa-check-circle"></i> <b>Masih Dibuka</b>
+                    $lastReturn = $this->mymodel->selectWithQuery('SELECT max(return_tahun) as return_tahun from tbl_project_return WHERE project_id = "'.$row[id].'"');
+
+                    $countInvestor = $this->mymodel->selectWithQuery('SELECT COUNT(id) as COUNT from tbl_project_invest WHERE project_id = "'.$row[id].'" AND status_pembayaran = "APPROVE" GROUP BY investor_id');
+
+                    $unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$row['id']."' AND status_pembayaran = 'APPROVE'");
+
+                    $mintunit = $row['unit'] - $unit[0]['unit'];
+
+                    ?>
+                    Oleh : <b><?= $user['name'] ?></b>
+                    <p class='help-block'><b>Dibuat pada : </b><?= date("d-m-Y", strtotime($row['created_at']))  ?></p>
+                    <hr>
+                    <?php
+                    if($row['status']=='ENABLE'){
+                      if($mintunit <= 0){
+                        echo '<div class="alert alert-danger alert-dismissible round status-alert" align="center">
+                        <i class="fa fa-ban"></i> <b>Stock Telah Habis</b>
                         </div>';
                       }else{
-                        echo '<div class="alert alert-danger alert-dismissible round status-alert" align="center">
-                        <i class="fa fa-ban"></i> <b>Sudah Ditutup</b>
+                        echo '<div class="alert alert-success alert-dismissible round status-alert" align="center"> 
+                        <i class="fa fa-check-circle"></i> <b>Masih Dibuka</b>
                         </div>';
                       }
-                      ?>
-                      <hr>
-                      Periode Kontrak : <b><?= $row['periode'] ?> Tahun</b>
-                      <hr>
-                      Return Tahun ke <b><?=$return['tahun']?></b> : <b><?= $return['return_tahun'] ?></b>  % per Tahun
-                      <hr>
-                      Rata Rata Return Kembali : <br>
-                      <?php 
-                      $harga = $row['harga'];
-                      $rata2return = $avgReturn[0]['AVG'];
-                      $hasilrata2 = $harga*$rata2return/100;
-                      echo "Rp. <b>".number_format($hasilrata2,0,',','.')."</b>,- s/d Rp. <b>".number_format($hasilrata2+100000,0,',','.')."</b>,-"; ?></b>  
-                      <hr>
-                      <?php 
-                      $unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$row['id']."' AND status_pembayaran = 'APPROVE'");
-
-                      $mintunit = $row['unit'] - $unit[0]['unit'];
-
-                      ?>
-                      Slot Unit Tersisa : <b><?php if ($row['unit'] == 0){
-                        echo $row['unit']."/".$row['unit'];
-                      } else { 
-                        echo $mintunit."/".$row['unit'];
-                      }
-                      ?></b>
-                      <hr>
-                      Periode Bagi Hasil : <b><?= $row['bagi_hasil'] ?> Tahun</b>
-                    </h5>
+                    } else {
+                      echo '<div class="alert alert-danger alert-dismissible round status-alert" align="center">
+                      <i class="fa fa-ban"></i> <b>Sudah Ditutup</b>
+                      </div>';
+                    }
+                    ?>
+                    <hr>
+                    Periode Kontrak : <b><?= $row['periode'] ?> Tahun</b>
+                    <hr>
+                    Return Terkecil : <b><?= $firstReturn[0]['return_tahun'] ?></b>  %
                     <br>
-                    <h4 align="center">
-                      Harga : <b>Rp <?= number_format($row['harga'],0,',','.') ?>,- / Unit</b>
-                    </h4>
-                    <p class='help-block' align="center">Sebanyak <b> <?php if ($countInvestor[0]['COUNT']){echo $countInvestor[0]['COUNT']; } else { echo "0"; } ?></b> Invest Telah Berhasil Terdaftar</p>
-                    <div class="row" align="center">
-                      <div class="col-md-12" align="center">
-                        <a href="<?= base_url('project/view/').$row['slug'] ?>">
-                          <button type="button" class="btn btn-primary btn-block btn-md round">
-                            <i class="fa fa-search"></i> Selengkapnya
-                          </button>
-                        </a>
-                      </div>
+                    Return Terbesar : <b><?= $lastReturn[0]['return_tahun'] ?></b>  %
+                    <hr>
+                    <?php 
+                    $harga = $row['harga'];
+
+                    $firstHarga = $harga*$firstReturn[0]['return_tahun']/100;
+                    $lastHarga = $harga*$lastReturn[0]['return_tahun']/100;
+                    ?>
+                    Return Kembali Terkecil : <b> Rp. <?= number_format($firstHarga,0,',','.')?>,- </b>
+                    <br>
+                    Return Kembali Terbesar : <b> Rp. <?= number_format($lastHarga,0,',','.')?>,- </b>
+                    <hr>
+                    Slot Unit Tersisa : <b><?php if ($row['unit'] == 0){
+                      echo $row['unit']."/".$row['unit'];
+                    } else { 
+                      echo $mintunit."/".$row['unit'];
+                    }
+                    ?></b>
+                    <hr>
+                    Periode Bagi Hasil : <b><?= $row['bagi_hasil'] ?> Tahun</b>
+                  </h5>
+                  <br>
+                  <h4 align="center">
+                    Harga : <b>Rp <?= number_format($row['harga'],0,',','.') ?>,- / Unit</b>
+                  </h4>
+                  <p class='help-block' align="center">Sebanyak <b> <?php if ($countInvestor[0]['COUNT']){echo $countInvestor[0]['COUNT']; } else { echo "0"; } ?></b> Invest Telah Berhasil Terdaftar</p>
+                  <div class="row" align="center">
+                    <div class="col-md-12" align="center">
+                      <a href="<?= base_url('project/view/').$row['slug'] ?>">
+                        <button type="button" class="btn btn-primary btn-block btn-md round">
+                          <i class="fa fa-search"></i> Selengkapnya
+                        </button>
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
-            </a>
-          </li>
+            </div>
+          </a>
         <?php } ?>
       </div>
       <div class="row" align="center">

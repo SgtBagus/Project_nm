@@ -23,7 +23,7 @@ class Project extends MY_Controller {
 					ON x.id = y.project_id ORDER BY count_invest DESC");
 			}
 		}else{
-			$data['tbl_project'] = $this->mymodel->selectWhere('tbl_project', array('public' => 'ENABLE'));
+			$data['tbl_project'] = $this->mymodel->selectWithQuery("SELECT * FROM tbl_project WHERE public = 'ENABLE' ORDER BY rand()");
 		}
 		$data['file'] = $this->mymodel->selectWhere('file',array('table'=>'tbl_project'));
 		$this->template->load('template/template','project/index',$data);
@@ -33,7 +33,7 @@ class Project extends MY_Controller {
 		$data['tbl_project'] = $this->mymodel->selectDataone('tbl_project',array('slug'=>$slug));
 		$data['tbl_project_return'] = $this->mymodel->selectDataone('tbl_project_return', array('project_id'=>$data['tbl_project']['id'], 'public' => 'ENABLE'));
 		$data['tbl_project_return_grafik'] = $this->mymodel->selectWhere('tbl_project_return', array('project_id'=>$data['tbl_project']['id']));
-		$data['tbl_investor'] = $this->mymodel->selectWhere('tbl_project_invest', array('project_id'=>$data['tbl_project']['id']));
+		$data['tbl_investor'] = $this->mymodel->selectWhere('tbl_project_invest', array('project_id'=>$data['tbl_project']['id'], 'status_pembayaran' => 'APPROVE'));
 
 		$data['user'] = $this->mymodel->selectDataone('user',array('id'=>$data['tbl_project']['user_id']));
 		$data['user_image'] = $this->mymodel->selectDataone('file',array('table_id'=>$data['user']['id'],'table'=>'user'));

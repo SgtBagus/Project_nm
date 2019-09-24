@@ -130,10 +130,10 @@
 															<div class="form-group">
 																<label>Status Perkawinan</label>
 																<?php if($user['status_kawin']) {?>
-																	<select class="form-control select2" name="dt[status_kawin]" style="width: 100%">
+																	<select class="form-control select2" name="dt[status_kawin]" style="width: 100%" disabled>
 																		<option value="">--Pilih Status Perkawinan--</option>
-																		<option value="0" <?php if($user['status_kawin'] == '0'){echo "selected";} ?>>Belum Menikah</option>
-																		<option value="1" <?php if($user['status_kawin'] == '1'){echo "selected";} ?>>Sudah Menikah</option>
+																		<option value="L" <?php if($user['jk'] == 'L'){echo "selected";} ?>>Laki Laki</option>
+																		<option value="P" <?php if($user['jk'] == 'P'){echo "selected";} ?>>Perempuan</option>
 																	</select>
 																<?php } else { ?>
 																	<p class='help-block'><i>Belum Tersedia</i></p>
@@ -462,14 +462,18 @@
 											<th>Banyak Unit</th>
 											<th>Harga per Unit</th>
 											<th>Total Harga</th>
-											<th>Status Pembarayan</th>
+											<th>Tgl Pembayaran</th>
+											<th>Status Pembayaran</th>
+											<th>Bukti Pembayaran</th>
 											<th></th>
 										</tr>
 									</thead>
 									<tbody>
-										<?php $i = 1; foreach ($tbl_project_invest as $row_invest) { 
+										<?php $i = 1; foreach ($tbl_project_invest as $row_invest) {
 											$project =  $this->mymodel->selectDataOne('tbl_project', array('id' => $row_invest['project_id'] ));
-											$investor =  $this->mymodel->selectDataOne('tbl_investor', array('id' => $row_invest['investor_id'] ));?>
+											$investor =  $this->mymodel->selectDataOne('tbl_investor', array('id' => $row_invest['investor_id'] ));
+											$file =  $this->mymodel->selectDataOne('file', array('table_id' => $investor['id'], 'table' => 'tbl_investor')) ;
+											$file_invest =  $this->mymodel->selectDataOne('file', array('table_id' => $row_invest['id'], 'table' => 'tbl_project_invest')) ;?>
 											<tr>
 												<td><?= $i ?></td>
 												<td><b><?= $row_invest['code'] ?></b></td>
@@ -481,21 +485,33 @@
 												<td><?= $row_invest['unit'] ?></td>
 												<td><b>Rp <?= number_format($project['harga'],0,',','.') ?></b></td>
 												<td><b>Rp <?= number_format($row_invest['total_harga'],0,',','.') ?>,-</b></td>
+												<td>
+													<?php if (!$row_invest['tgl_pembayaran']) { 
+														echo "<p class='help-block'><i>Belum Tersedia</i></p>";
+													} else {
+														echo date('Y-m-d H:i:s', strtotime($row_invest['tgl_pembayaran']));
+													}?>
+												</td>
 												<td align="center">
 													<?php if (!$row_invest['tgl_pembayaran']) { ?>
 														<p class='help-block'><i>Invoice Ini Belum Terbayar</i></p>
-													<?php  }else {
+														<hr>
+														<div class="row" align="center">
+															<button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-primary" onclick="approve(<?=$row_invest['id']?>)"><i class="fa fa-check-circle"></i></button>
+															<button type="button" class="btn btn-send btn-reject btn-sm btn-sm btn-danger" onclick="reject(<?=$row_invest['id']?>)"><i class="fa fa-ban"></i></button>
+														</div>
+													<?php  } else {
 														if ($row_invest['status_pembayaran'] == 'WAITING') {
 															echo '<small class="label bg-yellow"><i class="fa fa-warning"> </i> Menunggu Dikonfirmasi </small>
 															<hr>
 															<div class="row" align="center">
-															<button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-primary" onclick="approve('.$row_invest['id'].')"><i class="fa fa-check-circle"></i> Terima</button>
-															<button type="button" class="btn btn-send btn-reject btn-sm btn-sm btn-danger" onclick="reject('.$row_invest['id'].')"><i class="fa fa-ban"></i>  Tolak</button>
+															<button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-primary" onclick="approve('.$row_invest['id'].')"><i class="fa fa-check-circle"></i></button>
+															<button type="button" class="btn btn-send btn-reject btn-sm btn-sm btn-danger" onclick="reject('.$row_invest['id'].')"><i class="fa fa-ban"></i></button>
 															</div>';
 														} else if($row_invest['status_pembayaran'] == "APPROVE") {
 															echo '<small class="label bg-green"><i class="fa fa-check"> </i> Di Terima </small>';
 
-														}else if($row_invest['status_pembayaran'] == "REJECT") { 
+														}else if($row_invest['status_pembayaran'] == "REJECT") {
 															echo '<small class="label bg-red"><i class="fa fa-ban"> </i> Di Tolak </small>';
 
 														}else if($row_invest['status_pembayaran'] == "EXPIRED") {
@@ -506,9 +522,22 @@
 														}
 													} ?>
 												</td>
+												<td align="center">
+													<?php if (!$file_invest) { ?>
+														<p class='help-block'><i>Belum Tersedia</i></p>
+													<?php  }else { ?>
+														<div class="row" align="center">
+															<a href="<?= base_url().$file_invest['dir']?>" target="_blank">
+																<button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-info">
+																	<i class="fa fa-eye"></i> Bukti
+																</button>
+															</a>
+														</div>
+													<?php } ?>
+												</td>
 												<td>
 													<div class="btn-group">
-														<a href="<?= base_url('admin/investasi/view/').$row_invest['id']?>" target="_blank">
+														<a href="<?= base_url('admin/investasi/view/').$row_invest['id']?>">
 															<button type="button" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></button></div>
 														</a>
 														<a href="<?= base_url('invoice/payment/').$row_invest['code']?>" target="_blank">
@@ -537,68 +566,68 @@
 
 <script type="text/javascript">
 
-  function approve(id) {
-    $.ajax({
-      type: "POST",
-      url: "<?= base_url('admin/investasi/approve/') ?>"+id,
-      cache: false,
-      contentType: false,
-      processData: false,
-      beforeSend : function(){
-        $(".btn-send").addClass("disabled").html("<i class='fa fa-spinner'></i>").attr('disabled',true);
-        $(".show_error").slideUp().html("");
-      },
-      success: function(response, textStatus, xhr) {
-        var str = response;
-        if (str.indexOf("success") != -1){
-          $(".show_error").hide().html(response).slideDown("fast");
-          $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
-          $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
-          location.reload();
-        }else{
-          setTimeout(function(){
-            $("#modal-delete").modal('hide');
-          }, 1000);
-          $(".show_error").hide().html(response).slideDown("fast");
-          $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
-          $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
-        }
-      },
-      error: function(xhr, textStatus, errorThrown) {
-      }
-    });
-  }
+	function approve(id) {
+		$.ajax({
+			type: "POST",
+			url: "<?= base_url('admin/investasi/approve/') ?>"+id,
+			cache: false,
+			contentType: false,
+			processData: false,
+			beforeSend : function(){
+				$(".btn-send").addClass("disabled").html("<i class='fa fa-spinner'></i>").attr('disabled',true);
+				$(".show_error").slideUp().html("");
+			},
+			success: function(response, textStatus, xhr) {
+				var str = response;
+				if (str.indexOf("success") != -1){
+					$(".show_error").hide().html(response).slideDown("fast");
+					$(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
+					$(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
+					location.reload();
+				}else{
+					setTimeout(function(){
+						$("#modal-delete").modal('hide');
+					}, 1000);
+					$(".show_error").hide().html(response).slideDown("fast");
+					$(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
+					$(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
+				}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+			}
+		});
+	}
 
-  function reject(id) {
-    $.ajax({
-      type: "POST",
-      url: "<?= base_url('admin/investasi/reject/') ?>"+id,
-      cache: false,
-      contentType: false,
-      processData: false,
-      beforeSend : function(){
-        $(".btn-send").addClass("disabled").html("<i class='fa fa-spinner'></i>").attr('disabled',true);
-        $(".show_error").slideUp().html("");
-      },
-      success: function(response, textStatus, xhr) {
-        var str = response;
-        if (str.indexOf("success") != -1){
-          $(".show_error").hide().html(response).slideDown("fast");
-          $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
-          $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
-          location.reload();
-        }else{
-          setTimeout(function(){
-            $("#modal-delete").modal('hide');
-          }, 1000);
-          $(".show_error").hide().html(response).slideDown("fast");
-          $(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
-          $(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
-        }
-      },
-      error: function(xhr, textStatus, errorThrown) {
-      }
-    });
-  }
+	function reject(id) {
+		$.ajax({
+			type: "POST",
+			url: "<?= base_url('admin/investasi/reject/') ?>"+id,
+			cache: false,
+			contentType: false,
+			processData: false,
+			beforeSend : function(){
+				$(".btn-send").addClass("disabled").html("<i class='fa fa-spinner'></i>").attr('disabled',true);
+				$(".show_error").slideUp().html("");
+			},
+			success: function(response, textStatus, xhr) {
+				var str = response;
+				if (str.indexOf("success") != -1){
+					$(".show_error").hide().html(response).slideDown("fast");
+					$(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
+					$(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
+					location.reload();
+				}else{
+					setTimeout(function(){
+						$("#modal-delete").modal('hide');
+					}, 1000);
+					$(".show_error").hide().html(response).slideDown("fast");
+					$(".btn-approve").removeClass("disabled").html('<i class="fa fa-check-circle"></i> ').attr('disabled',false);
+					$(".btn-reject").removeClass("disabled").html('<i class="fa fa-ban"></i> ').attr('disabled',false);
+				}
+			},
+			error: function(xhr, textStatus, errorThrown) {
+			}
+		});
+	}
 
 </script>

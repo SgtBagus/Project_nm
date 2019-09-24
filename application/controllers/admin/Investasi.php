@@ -25,7 +25,14 @@ class Investasi extends MY_Controller {
 			'updated_at' => date('Y-m-d H:i:s')
 		);
 		$this->mymodel->updateData('tbl_project_invest', $data , array('id'=>$id));
-		$this->alert->alertsuccess('Success Update Data');
+		
+		$invest = $this->mymodel->selectDataone('tbl_project_invest', array('id' => $id));
+		if(!$invest['tgl_pembayaran']){
+			$data_pembayaran = array('tgl_pembayaran' => date('Y-m-d H:i:s'));
+			$this->mymodel->updateData('tbl_project_invest', $data_pembayaran , array('id'=>$id));
+		}
+
+		$this->alert->alertapprove();
 	}
 
 	public function reject($id){
@@ -37,7 +44,7 @@ class Investasi extends MY_Controller {
 		);
 
 		$this->mymodel->updateData('tbl_project_invest', $data , array('id'=>$id));
-		$this->alert->alertsuccess('Success Update Data');
+		$this->alert->alertreject();
 	}
 
 

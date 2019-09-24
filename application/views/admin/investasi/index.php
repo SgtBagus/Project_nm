@@ -23,8 +23,9 @@
                     <th>Banyak Unit</th>
                     <th>Harga per Unit</th>
                     <th>Total Harga</th>
-                    <th>Status Pembarayan</th>
-                    <th>Bukti Pembarayan</th>
+                    <th>Tgl Pembayaran</th>
+                    <th>Status Pembayaran</th>
+                    <th>Bukti Pembayaran</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -54,16 +55,28 @@
                       <td><?= $row_invest['unit'] ?></td>
                       <td><b>Rp <?= number_format($project['harga'],0,',','.') ?></b></td>
                       <td><b>Rp <?= number_format($row_invest['total_harga'],0,',','.') ?>,-</b></td>
+                      <td>
+                        <?php if (!$row_invest['tgl_pembayaran']) { 
+                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
+                        } else {
+                          echo date('Y-m-d H:i:s', strtotime($row_invest['tgl_pembayaran']));
+                        }?>
+                      </td>
                       <td align="center">
                         <?php if (!$row_invest['tgl_pembayaran']) { ?>
                           <p class='help-block'><i>Invoice Ini Belum Terbayar</i></p>
-                        <?php  }else {
+                          <hr>
+                          <div class="row" align="center">
+                            <button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-primary" onclick="approve(<?=$row_invest['id']?>)"><i class="fa fa-check-circle"></i></button>
+                            <button type="button" class="btn btn-send btn-reject btn-sm btn-sm btn-danger" onclick="reject(<?=$row_invest['id']?>)"><i class="fa fa-ban"></i></button>
+                          </div>
+                        <?php  } else {
                           if ($row_invest['status_pembayaran'] == 'WAITING') {
                             echo '<small class="label bg-yellow"><i class="fa fa-warning"> </i> Menunggu Dikonfirmasi </small>
                             <hr>
                             <div class="row" align="center">
-                            <button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-primary" onclick="approve('.$row_invest['id'].')"><i class="fa fa-check-circle"></i> Terima</button>
-                            <button type="button" class="btn btn-send btn-reject btn-sm btn-sm btn-danger" onclick="reject('.$row_invest['id'].')"><i class="fa fa-ban"></i>  Tolak</button>
+                            <button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-primary" onclick="approve('.$row_invest['id'].')"><i class="fa fa-check-circle"></i></button>
+                            <button type="button" class="btn btn-send btn-reject btn-sm btn-sm btn-danger" onclick="reject('.$row_invest['id'].')"><i class="fa fa-ban"></i></button>
                             </div>';
                           } else if($row_invest['status_pembayaran'] == "APPROVE") {
                             echo '<small class="label bg-green"><i class="fa fa-check"> </i> Di Terima </small>';
@@ -81,7 +94,7 @@
                       </td>
                       <td align="center">
                         <?php if (!$file_invest) { ?>
-                          <p class='help-block'><i>Tidak Tersedia</i></p>
+                          <p class='help-block'><i>Belum Tersedia</i></p>
                         <?php  }else { ?>
                           <div class="row" align="center">
                             <a href="<?= base_url().$file_invest['dir']?>" target="_blank">

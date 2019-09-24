@@ -222,17 +222,19 @@
             </div>
           </div>
           <div class="box-body">
-            <?php foreach ($investor as $row_invest) { ?>
-              <a href="<?= base_url('admin/investor/view/').$row_invest['id']?>" style="color:black">
-                <div class="col-md-4 col-6 mb-md-0 mb-5">
-                  <div class="row" align="center">
+            <ul class="users-list clearfix">
+              <?php foreach ($investor as $row_invest) { ?>
+                <li>
+                  <a href="<?= base_url('admin/investor/view/').$row_invest['id']?>" style="color:black">
                     <?php $image_src = $this->mymodel->selectDataone('file', array('table'=>'tbl_investor', 'table_id' => $row_invest['id'])); ?>
-                    <img style="height: 100px; width: 100px; object-fit: cover; display: inline;" src="<?= base_url().$image_src['dir']?>"><br>
-                    <b><?= strlen($row_invest["name"]) > 5 ? substr($row_invest["name"],0,5)."..." : $row_invest["name"] ?> </b>
-                  </div>
-                </div>
-              </a>
-            <?php } ?>
+                    <img style="height: 50px; width: 50px; object-fit: cover; display: inline;" src="<?= base_url().$image_src['dir']?>" alt="User Image">
+
+                    <?= strlen($row_invest["name"]) > 5 ? substr($row_invest["name"],0,5)."..." : $row_invest["name"] ?> 
+                    <span class="users-list-date"><?= date("m-Y", strtotime($row_invest['created_at']))  ?></span>
+                  </a>
+                </li>
+              <?php } ?>
+            </ul>
           </div>
           <div class="box-footer" align="center">
             <a href="<?= base_url('admin/investor')?>">

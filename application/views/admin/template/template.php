@@ -278,29 +278,24 @@ if($this->session->userdata('session_sop')=="") {
 
     $(function () {
       $('.datatable').DataTable()
-      $('#example2').DataTable({
-        'paging'      : true,
-        'lengthChange': false,
-        'searching'   : false,
-        'ordering'    : true,
-        'info'        : true,
-        'autoWidth'   : false
-      })
+
       $('#datatable').DataTable({
-        "paging"      : true,
-        "lengthChange": true,
-        "searching"   : true,
-        "ordering"    : true,
-        "info"        : false,
+        'paging'      : true,
+        'lengthChange': true,
+        'searching'   : true,
+        'ordering'    : true,
+        'info'        : false,
+        'autoWidth'   : false,
         "language": {
           "search": "<b> Pencarian : </b>",
           "zeroRecords": function () {
             return "<img src='https://icon-library.net/images/no-data-icon/no-data-icon-20.jpg' width='100px' height='100px'><p><b>Tidak Ada Data</b><p>";
           },
           "paginate": {
-            "previous": "Sebelumnya",
-            "next" : "Selanjutnya"
-          }
+            "previous": "<i class='fa fa-arrow-left'></i>",
+            "next" : "<i class='fa fa-arrow-right'></i>",
+          },
+          "lengthMenu": '<label>Tampilkan <select name="datatable_length" aria-controls="datatable" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> Data</label>'
         }
       });
     });
