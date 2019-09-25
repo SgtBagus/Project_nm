@@ -1,3 +1,9 @@
+<?php 
+$unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$tbl_project['id']."' AND status_pembayaran = 'APPROVE'");
+
+$mintunit = $tbl_project['unit'] - $unit[0]['unit'];
+
+?>
 <div class="content-wrapper">
   <div class="container">
     <section class="content">
@@ -166,20 +172,13 @@
               </div>
             </div>
           </div>
-          <button type="button" class="btn-invest btn btn-block btn-primary btn-lg round" data-toggle="modal" data-target="#modal-invest" <?php if( ($tbl_project['status']=='DISABLE') || $mintunit <= 0){ echo "disabled"; }?> >
+          <button type="button" class="btn-invest btn btn-primary btn-block round btn-md" data-toggle="modal" data-target="#modal-invest" <?php if(($tbl_project['status']=='DISABLE') || $mintunit <= 0){ echo "disabled"; }?> >
             <i class="fa fa-credit-card"></i> Lakukan Investasi
           </button>
         </div>
         <br>
         <div class="col-md-4">
           <div class="row" align="center" style="margin-top: -20px">
-            <?php 
-            $unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$tbl_project['id']."' AND status_pembayaran = 'APPROVE'");
-
-            $mintunit = $tbl_project['unit'] - $unit[0]['unit'];
-
-            ?>
-
             <h2>Slot Unit : <b><?= $mintunit ?></b> / <?= $tbl_project['unit'] ?></h2>
 
             <?php

@@ -208,3 +208,12 @@ a.float:hover{
 .my-float{
   margin-top:10px;
 }
+
+.main-footer{
+  background-color: #1a1b1d;
+  color: #fff;
+}
+
+.skin-green .main-header .navbar {
+    background: #56ab2f;
+}

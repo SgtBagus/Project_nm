@@ -46,7 +46,10 @@ $this->session->set_userdata(array('url_session' => $actual_link));
       <nav class="navbar navbar-static-top">
         <div class="container">
           <div class="navbar-header">
-            <a href="<?= base_url()?>" class="navbar-brand"><b>AGNOV</b></a>
+            <a href="<?= base_url()?>" class="navbar-brand">
+              <b><img src="<?= base_url('assets/')?>icon.png" width="25px" height="25px">
+              AGNOV</b>
+            </a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
               <i class="fa fa-bars"></i>
             </button>
@@ -55,7 +58,6 @@ $this->session->set_userdata(array('url_session' => $actual_link));
             <ul class="nav navbar-nav">
               <li><a href="<?= base_url('project') ?>"><i class="fa fa-archive"></i> Proyek</a></li>
               <li><a href="<?= base_url('blog') ?>"><i class="fa fa-newspaper-o"></i> Blog</a></li>
-              <!-- <li><a href="<?= base_url('dashboard/mitra') ?>"><i class="fa fa-users"></i> Jadi Mitra</a></li> -->
               <li><a href="<?= base_url('info/view/tentang-aplikasi') ?>"><i class="fa fa-list"></i> Info Lainnya</a></li>
             </ul>
           </div>
@@ -142,8 +144,83 @@ $this->session->set_userdata(array('url_session' => $actual_link));
       <i class="fa fa-whatsapp my-float"></i>
     </a>
     <footer class="main-footer">
-      <div class="container" align="center">
-        <strong>Copyright © 2019  by <a href="https://www.agnov.id/">Agnov..</a> All Right Reserved</strong>
+      <div class="container"  style="margin-top: 15px">
+        <div class="row">
+          <div class="col-md-3 col-sm-6 col-xs-12 text-center">
+            <img src="<?= base_url('assets/')?>icon.png" width="100px" height="100px">
+            <h1><b>AGNOV.ID</b></h1>
+            <p>Copyright <i class="fa fa-copyright"></i> 2019</p>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <h2><b>AGNOV</b></h2>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <a href="#" style="color: white">
+                  Menu Ke Satu
+                </a>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <a href="#" style="color: white">
+                  Menu Ke Dua
+                </a>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <a href="#" style="color: white">
+                  Menu Ke Tiga
+                </a>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <a href="#" style="color: white">
+                  Menu Ke Empat
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <h2><b>INFORMASI</b></h2>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <a href="#" style="color: white">
+                  Menu Ke Satu
+                </a>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <a href="#" style="color: white">
+                  Menu Ke Dua
+                </a>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <a href="#" style="color: white">
+                  Menu Ke Tiga
+                </a>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <a href="#" style="color: white">
+                  Menu Ke Empat
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <h2><b>IKUTI KAMI</b></h2>
+            <div class="row text-center">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <a class="btn btn-social-icon btn-facebook round" style="margin: 2px">
+                  <i class="fa fa-facebook"></i>
+                </a>
+                <a class="btn btn-social-icon btn-instagram round" style="margin: 2px">
+                  <i class="fa fa-instagram"></i>
+                </a>
+                <a class="btn btn-social-icon btn-success round" style="margin: 2px">
+                  <i class="fa fa-whatsapp"></i>
+                </a>
+                <a class="btn btn-social-icon btn-twitter round" style="margin: 2px">
+                  <i class="fa fa-twitter"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
   </div>

@@ -18,21 +18,28 @@ class Investasi extends MY_Controller {
 	}
 
 	public function approve($id){
-
-		$data = array(
-			'status_pembayaran' => 'APPROVE',
-			'tgl_konfirmasi' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		);
-		$this->mymodel->updateData('tbl_project_invest', $data , array('id'=>$id));
-		
 		$invest = $this->mymodel->selectDataone('tbl_project_invest', array('id' => $id));
-		if(!$invest['tgl_pembayaran']){
-			$data_pembayaran = array('tgl_pembayaran' => date('Y-m-d H:i:s'));
-			$this->mymodel->updateData('tbl_project_invest', $data_pembayaran , array('id'=>$id));
-		}
+		$stock = $this->mymodel->selectDataone('tbl_project', array('id' => $invest['project_id']));
+		$unit = $this->mymodel->selectWithQuery("SELECT SUM(unit) as unit FROM tbl_project_invest WHERE project_id = '".$invest['project_id']."' AND status_pembayaran = 'APPROVE'");
+		$mintunit = $stock['unit'] - ($unit[0]['unit']+$invest['unit']);
+		
+		if($mintunit <= 0){
+			$this->alert->alertdanger("Stok Unit <b>Tidak Cukup/Telah Habis</b>");
+			return false;
+		}else{
+			$data = array(
+				'status_pembayaran' => 'APPROVE',
+				'tgl_konfirmasi' => date('Y-m-d H:i:s'),
+				'updated_at' => date('Y-m-d H:i:s')
+			);
+			$this->mymodel->updateData('tbl_project_invest', $data , array('id'=>$id));
 
-		$this->alert->alertapprove();
+			if(!$invest['tgl_pembayaran']){
+				$data_pembayaran = array('tgl_pembayaran' => date('Y-m-d H:i:s'));
+				$this->mymodel->updateData('tbl_project_invest', $data_pembayaran , array('id'=>$id));
+			}
+			$this->alert->alertapprove();
+		}
 	}
 
 	public function reject($id){

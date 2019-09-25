@@ -454,10 +454,9 @@ class Project extends MY_Controller {
 						'created_at'=>date('Y-m-d H:i:s')
 					);
 					$str = $this->db->insert('file', $data);
-					header('Location: '.base_url('admin/project/editImage/'.$id));
+					$this->alert->alertsuccess('Success Update Data');
 				}
 			}
-			header('Location: '.base_url('admin/project/editImage/'.$id));
 		}else{
 			$this->alert->alertdanger('<strong>Detail Gambar</strong> Tidak bisa lebih dari 6 Gambar');
 			return false;
@@ -495,7 +494,6 @@ class Project extends MY_Controller {
 				$this->mymodel->updateData('file', $data , array('id'=>$id));
 
 				$this->alert->alertsuccess('Success Update Data');
-				header('Location: '.base_url('admin/project/editImage/'.$project_slug['id']));
 			}
 		}
 	}

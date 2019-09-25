@@ -25,7 +25,10 @@
                     <th>Total Harga</th>
                     <th>Tgl Pembayaran</th>
                     <th>Status Pembayaran</th>
+                    <th>No Rekening</th>
+                    <th>Bank</th>
                     <th>Bukti Pembayaran</th>
+                    <th>Hubungi</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -92,6 +95,21 @@
                           }
                         } ?>
                       </td>
+                      <td>
+                        <?php if (!$investor['no_rek']) { 
+                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
+                        } else {
+                          echo $investor['no_rek'];
+                        }?>
+                      </td>
+                      <td>
+                        <?php if (!$investor['bank_id']) {
+                          echo "<p class='help-block'><i>Belum Tersedia</i></p>";
+                        }else {
+                          $bank = $this->mymodel->selectDataone('tbl_bank', array('id'=>$investor['bank_id']));
+                          echo $bank['value'];
+                        }?>
+                      </td>
                       <td align="center">
                         <?php if (!$file_invest) { ?>
                           <p class='help-block'><i>Belum Tersedia</i></p>
@@ -101,6 +119,17 @@
                               <button type="button" class="btn btn-send btn-approve btn-sm btn-sm btn-info">
                                 <i class="fa fa-eye"></i> Bukti
                               </button>
+                            </a>
+                          </div>
+                        <?php } ?>
+                      </td>
+                      <td align="center">
+                        <?php if (!$investor['phone']) { ?>
+                          <p class='help-block'><i>Belum Tersedia</i></p>
+                        <?php  } else { ?>
+                          <div class="btn-group">
+                            <a href="https://api.whatsapp.com/send?phone=<?=$investor['phone']?>&text=Permisi Saudara/Saudari <?= $investor['name']?>, Saya sebagai admin AGNOV.ID (https://agnov.id/), Ingin Memberitau kan perlihat Investasi Anda dengan Link Code Invoice https://agnov.id/invoice/payment/<?= $row_invest['code'] ?> Bahwa Investasi tersebut...."target="_blank">
+                              <button type="button" class="btn btn-sm btn-success"><i class="fa fa-whatsapp"></i> Hubungi</button></div>
                             </a>
                           </div>
                         <?php } ?>
@@ -120,6 +149,8 @@
                   </tbody>
                 </table>
               </div>
+              <br>
+              <div class="show_error"></div>
             </div>
           </div>
         </div>

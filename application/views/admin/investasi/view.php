@@ -40,6 +40,27 @@
 									</td>
 								</tr>
 								<tr>
+									<th>No Rekening</th>
+									<td>
+										<?php if (!$investor['no_rek']) {
+											echo "<p class='help-block'><i>Belum Tersedia</i></p>";
+										}else {
+											echo $investor['no_rek'];
+										}?>
+									</td>
+								</tr>
+								<tr>
+									<th>Bank</th>
+									<td>
+										<?php if (!$investor['bank_id']) {
+											echo "<p class='help-block'><i>Belum Tersedia</i></p>";
+										}else {
+											$bank = $this->mymodel->selectDataone('tbl_bank', array('id'=>$investor['bank_id']));
+											echo $bank['value'];
+										}?>
+									</td>
+								</tr>
+								<tr>
 									<th>Tanggal Mengajukan</th>
 									<td><?=date('Y-m-d H:i:s', strtotime($tbl_project_invest['created_at']))?></td>
 								</tr>

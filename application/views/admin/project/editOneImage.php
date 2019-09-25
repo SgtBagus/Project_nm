@@ -17,6 +17,7 @@
                 <div class="col-md-12">
                   <div class="box-body">
                     <form method="POST" action="<?= base_url('admin/project/edit_images/'.$file_detail['id'])?>" id="add-image" enctype="multipart/form-data" class="form-horizontal">
+                      <div class="show_error"></div>
                       <div class="form-group">
                         <div class="col-sm-12">
                           <div class="row"> 

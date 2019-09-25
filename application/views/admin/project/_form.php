@@ -188,6 +188,7 @@ if($data_edit){
       }
       ?>
     </div>
+    <div class="show_error"></div>
   </div>
   <div class="box-footer" align="right">
     <a href="<?= base_url('admin/project') ?> ">

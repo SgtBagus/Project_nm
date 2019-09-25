@@ -11,7 +11,7 @@
 			<div class="col-md-12 col-sm-12 col-xm-12">
 				<div class="show_error"></div>
 				<input type="hidden" name="ids" value="<?= $tbl_investor['id'] ?>">
-				<div class="col-md-6">  
+				<div class="col-md-4">  
 					<div class="form-group">
 						<center>
 							<?php
@@ -30,11 +30,21 @@
 									<br>
 								<?php } ?>
 							<?php } ?>
+
+							<?php if ($user['phone']) { ?>
+								<br>
+								<a href="https://api.whatsapp.com/send?phone=<?=$user['phone']?>&text=Permisi Saudara/Saudari <?= $user['name']?>, Saya sebagai admin AGNOV.ID (https://agnov.id/), Ingin Mempertanyakan Bahwa...."target="_blank">
+									<button type="button" class="btn btn-sm btn-success"><i class="fa fa-whatsapp"></i> Hubungi Whatsapp</button>
+								</a>
+							<?php } ?>
 						</center>       
 					</div>    
 				</div>  
-				<div class="col-md-6">        
-					<div class="box box-solid round" >
+				<div class="col-md-8">        
+					<div class="box">
+						<div class="box-header">
+							<h3 class="box-title">Data Investor</h3>
+						</div>
 						<div class="box-body">
 							<div class="nav-tabs-custom">
 								<ul class="nav nav-tabs">
@@ -447,11 +457,11 @@
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xm-12">
 				<div class="col-md-12">   
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h3 class="panel-title">Data Investor</h3>
+					<div class="box">
+						<div class="box-header">
+							<h3 class="box-title">Data Investasi</h3>
 						</div>
-						<div class="panel-body">
+						<div class="box-body">
 							<div class="table-responsive">
 								<table id="datatable" class="table table-bordered table-striped" >
 									<thead>
