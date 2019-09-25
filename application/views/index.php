@@ -109,7 +109,7 @@
       <br>
       <div class="row">
         <?php foreach($tbl_project as $row){ ?>
-          <a href="<?= base_url('project/view/').$row['slug'] ?>" class="a_black">
+          <a href="<?= base_url('project/').$row['slug'] ?>" class="a_black">
             <div class="col-md-4 col-6 mb-md-0 mb-5">
               <div class="box box-solid round">
                 <div class="box-body">
@@ -186,7 +186,7 @@
                   <p class='help-block' align="center">Sebanyak <b> <?php if ($countInvestor[0]['COUNT']){echo $countInvestor[0]['COUNT']; } else { echo "0"; } ?></b> Invest Telah Berhasil Terdaftar</p>
                   <div class="row" align="center">
                     <div class="col-md-12" align="center">
-                      <a href="<?= base_url('project/view/').$row['slug'] ?>">
+                      <a href="<?= base_url('project/').$row['slug'] ?>">
                         <button type="button" class="btn btn-primary btn-block btn-md round">
                           <i class="fa fa-search"></i> Selengkapnya
                         </button>

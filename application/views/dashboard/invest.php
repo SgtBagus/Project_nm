@@ -76,7 +76,7 @@
                                         } ?>
                                     </td>
                                     <td>
-                                        <a href="<?= base_url('/project/view/').$project['slug'] ?>">
+                                        <a href="<?= base_url('/project/').$project['slug'] ?>">
                                             <button class="btn btn-info btn-xs">
                                                 <i class="fa fa-eye"></i>
                                             </button>

@@ -12,37 +12,40 @@ if($this->session->userdata('session_sop')) {
       </div>
       <br>
       <div class="row">
-        <div class="col-md-3 col-sm-2 col-xm-12">
-        </div>
-        <div class="col-md-6 col-sm-8 col-xm-12">
+        <div class="col-md-12 col-sm-12 col-xm-12">
           <div class="box box-solid round">
             <div class="box-body">
               <form action="<?= base_url('user/register_proses') ?>" method="POST" id="register_form">
                 <div class="show_error" id="register_error_input"></div>
-                <div class="form-group">
-                  <label>Nama</label>
-                  <input type="text" name="dt[name]" class="form-control">
+                <div class="row">
+                  <div class="col-md-6 col-sm-6 col-xm-12">
+                    <div class="form-group">
+                      <label>Nama</label>
+                      <input type="text" name="dt[name]" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" name="dt[email]" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label>Jenis Kelamin</label>
+                      <select class="form-control select2" name="dt[jk]" style="width: 100%">
+                        <option value="">--Pilih Jenis Kelamin--</option>
+                        <option value="L">Laki Laki</option>
+                        <option value="P">Perempuan</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Warga Negara</label>
+                      <select class="form-control select2" name="dt[wrg_negara]" style="width: 100%">
+                        <option value="">--Pilih Warga Negara--</option>
+                        <option value="WNI">WNI</option>
+                        <option value="WNA">WNA</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label>Email</label>
-                  <input type="email" name="dt[email]" class="form-control">
-                </div>
-                <div class="form-group">
-                  <label>Jenis Kelamin</label>
-                  <select class="form-control select2" name="dt[jk]" style="width: 100%">
-                    <option value="">--Pilih Jenis Kelamin--</option>
-                    <option value="L">Laki Laki</option>
-                    <option value="P">Perempuan</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Warga Negara</label>
-                  <select class="form-control select2" name="dt[wrg_negara]" style="width: 100%">
-                    <option value="">--Pilih Warga Negara--</option>
-                    <option value="WNI">WNI</option>
-                    <option value="WNA">WNA</option>
-                  </select>
-                </div>
+
                 <div class="form-group">
                   <label>Tempat Lahir</label>
                   <input type="text" name="dt[tpt_lahir]" class="form-control" placeholder="Masukan Tempat Lahir">
@@ -116,8 +119,6 @@ if($this->session->userdata('session_sop')) {
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-3 col-sm-2 col-xm-12">
         </div>
       </div>
     </section>

@@ -7,10 +7,15 @@
     <label>Email</label>
     <input type="email" name="email" class="form-control">
   </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" name="password" class="form-control">
+    <p class="help-block"><a href="<?= base_url('password') ?>"> Lupa Password ? </a></p>
+  </div>
   <button type="submit" class="btn btn-block btn-primary">
     Masuk Login
   </button>
-  <p class="help-block pull-right">Tidak Punya Akun ? <a href="<?= base_url('user') ?>/register">Daftar Disini </a></p>
+  <p class="help-block pull-right">Tidak Punya Akun ? <a href="<?= base_url('register') ?>">Daftar Disini </a></p>
   <br>
   <hr>
 </form>

@@ -58,7 +58,7 @@ $this->session->set_userdata(array('url_session' => $actual_link));
             <ul class="nav navbar-nav">
               <li><a href="<?= base_url('project') ?>"><i class="fa fa-archive"></i> Proyek</a></li>
               <li><a href="<?= base_url('blog') ?>"><i class="fa fa-newspaper-o"></i> Blog</a></li>
-              <li><a href="<?= base_url('info/view/tentang-aplikasi') ?>"><i class="fa fa-list"></i> Info Lainnya</a></li>
+              <li><a href="<?= base_url('info/tentang-aplikasi') ?>"><i class="fa fa-list"></i> Info Lainnya</a></li>
             </ul>
           </div>
           <?php
@@ -113,6 +113,7 @@ $this->session->set_userdata(array('url_session' => $actual_link));
             <div class="navbar-custom-menu">
               <ul class="nav navbar-nav">
                 <li><a href="#" data-toggle="modal" data-target="#modal-login">Login</a></li>
+                <li><a href="<?= base_url('register') ?>">Daftar</a></li>
                 <li>
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="refresh">
                     <i class="fa fa-refresh"></i> 
@@ -151,59 +152,42 @@ $this->session->set_userdata(array('url_session' => $actual_link));
             <h1><b>AGNOV.ID</b></h1>
             <p>Copyright <i class="fa fa-copyright"></i> 2019</p>
           </div>
-          <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="col-md-3 col-sm-6 col-xs-12 text-center">
             <h2><b>AGNOV</b></h2>
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <a href="#" style="color: white">
-                  Menu Ke Satu
+                <a href="<?= base_url('project') ?>" style="color: white">
+                  Proyek
                 </a>
               </div>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <a href="#" style="color: white">
-                  Menu Ke Dua
-                </a>
-              </div>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <a href="#" style="color: white">
-                  Menu Ke Tiga
-                </a>
-              </div>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <a href="#" style="color: white">
-                  Menu Ke Empat
+                <a href="<?= base_url('blog') ?>" style="color: white">
+                  Blog
                 </a>
               </div>
             </div>
           </div>
-          <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="col-md-3 col-sm-6 col-xs-12 text-center">
             <h2><b>INFORMASI</b></h2>
             <div class="row">
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <a href="#" style="color: white">
-                  Menu Ke Satu
-                </a>
-              </div>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <a href="#" style="color: white">
-                  Menu Ke Dua
-                </a>
-              </div>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <a href="#" style="color: white">
-                  Menu Ke Tiga
-                </a>
-              </div>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <a href="#" style="color: white">
-                  Menu Ke Empat
-                </a>
-              </div>
+                
+                <?php
+                $lainnya = $this->db->query("SELECT * FROM webpage WHERE status='ENABLE' ORDER BY prioritas ASC")->result();
+                ?>
+                <?php 
+                $no = 0; foreach($lainnya as $a){  $no++;
+                  ?>
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                        <a href="<?= base_url()?>info/<?=$a->slug?>" style="color: white"> 
+                        <?=$a->title?>
+                        </a>
+                    </div>
+                <?php } ?>
             </div>
           </div>
-          <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="col-md-3 col-sm-6 col-xs-12 text-center">
             <h2><b>IKUTI KAMI</b></h2>
-            <div class="row text-center">
+            <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <a class="btn btn-social-icon btn-facebook round" style="margin: 2px">
                   <i class="fa fa-facebook"></i>

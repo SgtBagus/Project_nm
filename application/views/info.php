@@ -45,7 +45,7 @@
                 <?php 
                 $no = 0; foreach($lainnya as $a){  $no++;
                   ?>
-                  <a href="<?= base_url()?>info/view/<?=$a->slug?>">
+                  <a href="<?= base_url()?>info/<?=$a->slug?>">
                     <li class="list-group-item a_black   <?= $a->slug == $data[0]->slug ? "active" : "" ?> " style="margin-bottom: 5px;" id="donasi">
                       <i class="fa fa-list"></i> <?=$a->title?>
                     </li>

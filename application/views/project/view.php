@@ -216,7 +216,7 @@ $mintunit = $tbl_project['unit'] - $unit[0]['unit'];
             <div class="box-body">
               <div class="row">
                 <div class="col-md-4 col-xs-12 col-6 mb-md-0 mb-5" align="center">
-                  <img src="<?= base_url().$user_image['dir'] ?>" alt="Second slide" style="height: 100px; width: 100px; object-fit: cover; display: inline;" class="round">
+                  <img src="<?= base_url().$user_image['dir'] ?>" alt="Second slide" style="height: 100px; width: 100px; object-fit: cover; display: inline; border-radius: 50%">
                 </div>
                 <div class="col-md-8 col-xs-12 col-6 mb-md-0 mb-5">
                   <h3><?= $user['name'] ?> </h3>

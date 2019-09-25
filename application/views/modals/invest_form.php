@@ -38,11 +38,9 @@ $sisa_unit = $tbl_project['unit'] - $unit_terjual;
   </div>
   <div class="row" align="center">
     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-bottom: 10px;">
-      <a href="<?=  base_url('story/view/1') ?>">
-        <button type="button" class="btn btn-block btn-danger btn-md round">
-          <i class="fa fa-close"></i> Batalkan
-        </button>
-      </a>
+      <button type="button" class="btn btn-block btn-danger btn-md round" data-dismiss="modal">
+        <i class="fa fa-close"></i> Batalkan
+      </button>
     </div>
     <div class="col-md-6 col-sm-6 col-xs-12" style="margin-bottom: 10px;"> 
       <button type="submit" class="btn btn-send btn-block btn-primary btn-md round">
