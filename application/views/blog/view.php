@@ -30,7 +30,7 @@
                 <div class="col-md-4 col-xs-12 col-6 mb-md-0 mb-5" align="center">
                   <img src="<?= base_url().$user_image['dir'] ?>" alt="Second slide" style="height: 100px; width: 100px; border-radius: 50%; object-fit: cover; display: inline;">
                 </div>
-                <div class="col-md-8 col-xs-12 col-6 mb-md-0 mb-5">
+                <div class="col-md-8 col-xs-12 col-6 mb-md-0 mb-5" align="center">
                   <h3><?= $user['name'] ?> </h3>
                   <small>Blog ini dibuat pada tanggal <br><b><?= date("d-m-Y H:i:s", strtotime($tbl_blog['created_at']))  ?></b></small>
                 </div>

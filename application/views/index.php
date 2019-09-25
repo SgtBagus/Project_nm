@@ -7,7 +7,7 @@
     <p style="color:white; font-size: 15px; font-weight: bold; text-shadow: 2px 2px 4px #000000;" align="center">  Pembiayaan yang menguntungkan, sekaligus berdampak kepada masyarakat dan lingkungan</p>
     <div class="col-md-12 col-sm-12 col-xs-12 " align="center">
       <a href="<?= base_url('project') ?>">
-        <button type="button" class="btn btn-block btn-primary btn-lg round cover_button"><i class="fa fa-archive"></i> Lihat Proyek</button>
+        <button type="button" class="btn btn-primary btn-lg round cover_button"><i class="fa fa-archive"></i> Lihat Proyek</button>
       </a>
     </div>
   </div>

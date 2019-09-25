@@ -73,8 +73,9 @@ $this->session->set_userdata(array('url_session' => $actual_link));
               <ul class="nav navbar-nav">
                 <li class="dropdown user user-menu">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="<?= base_url().$photo['dir'] ?>" class="user-image" alt="User Image">
-                    <span class="hidden-xs"><?php echo $this->session->userdata('name') ?></span>
+                    <b><img src="<?= base_url().$photo['dir'] ?>" width="25px" height="25px" style="border-radius: 50px">
+                      <?= strlen($this->session->userdata('name')) > 10 ? substr($this->session->userdata('name'),0,10)."..." : $this->session->userdata('name') ?>
+                    </b>
                   </a>
                   <ul class="dropdown-menu">
                     <li class="user-header">
@@ -170,19 +171,19 @@ $this->session->set_userdata(array('url_session' => $actual_link));
           <div class="col-md-3 col-sm-6 col-xs-12 text-center">
             <h2><b>INFORMASI</b></h2>
             <div class="row">
-                
-                <?php
-                $lainnya = $this->db->query("SELECT * FROM webpage WHERE status='ENABLE' ORDER BY prioritas ASC")->result();
+
+              <?php
+              $lainnya = $this->db->query("SELECT * FROM webpage WHERE status='ENABLE' ORDER BY prioritas ASC")->result();
+              ?>
+              <?php 
+              $no = 0; foreach($lainnya as $a){  $no++;
                 ?>
-                <?php 
-                $no = 0; foreach($lainnya as $a){  $no++;
-                  ?>
-                    <div class="col-md-6 col-sm-6 col-xs-6">
-                        <a href="<?= base_url()?>info/<?=$a->slug?>" style="color: white"> 
-                        <?=$a->title?>
-                        </a>
-                    </div>
-                <?php } ?>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                  <a href="<?= base_url()?>info/<?=$a->slug?>" style="color: white"> 
+                    <?=$a->title?>
+                  </a>
+                </div>
+              <?php } ?>
             </div>
           </div>
           <div class="col-md-3 col-sm-6 col-xs-12 text-center">
