@@ -8,10 +8,13 @@ class Mlogin extends CI_Model {
     $this->load->database();
   }
   
-  
   public function login($email, $pass){
-    $email_special = htmlspecialchars($this->db->escape($email));
-    $user = $this->mymodel->selectDataone('tbl_investor',array('email'=>$email));
+    $user = $this->mymodel->selectDataone('tbl_investor', array('email'=>$email, 'password' => $pass));
+    return $user;
+  }
+
+  public function googleLogin($email){ 
+    $user = $this->mymodel->selectDataone('tbl_investor', array('email'=>$email));
     return $user;
   }
 
@@ -29,6 +32,9 @@ class Mlogin extends CI_Model {
       'created_at' => date('Y-m-d H:i:s')
     );
     $this->db->insert('file', $file);
+
+    $this->mymodel->updateData('tbl_investor', array('password' => 'notset-'.$last_id.'_NULL'), array('id' => $last_id));
+
     return $query;
   }
   

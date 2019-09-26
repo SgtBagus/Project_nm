@@ -34,10 +34,8 @@ class Login extends MY_Controller {
         $google_data = $this->google->validate();
         $data = $google_data;
         $email = $data['email'];        
-        $pass = '';
-        $cek = $this->mlogin->login($email, $pass); 
-        $session = $this->mlogin->login($email,$pass);
-        if ($cek > 0) {
+        $session = $this->mlogin->googleLogin($email);
+        if ($session) {
             $this->session->set_userdata('session_sop', true);
             $this->session->set_userdata('id', $session['id']);
             $this->session->set_userdata('email', $session['email']);
@@ -49,12 +47,10 @@ class Login extends MY_Controller {
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'status' => 'ENABLE',
-                'created_at' => date('Y-m-d H:i:s'),
+                'created_at' => date('Y-m-d H:i:s'), 
             );
-            $check = 0; 
             $check = $this->mlogin->userAddProcess($data);
-            if($check > 0){
-                $session = $this->mlogin->login($email, $pass);
+            if($check){
                 $this->session->set_userdata('session_sop', true);
                 $this->session->set_userdata('id', $session['id']);
                 $this->session->set_userdata('email', $session['email']);

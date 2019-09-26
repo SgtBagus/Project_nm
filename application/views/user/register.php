@@ -1,12 +1,12 @@
-<?php 
-if($this->session->userdata('session_sop')) {
-  header('Location: '.base_url());
+<?php
+if ($this->session->userdata('session_sop')) {
+  header('Location: ' . base_url());
 }
 ?>
 <div class="content-wrapper">
-  <div class="container"> 
+  <div class="container">
     <section class="content">
-      <div class="row" align="center"> 
+      <div class="row" align="center">
         <h1><i class="fa fa-user"></i> Daftar </h1>
         <small>Mohon isi Form Berikut !</small>
       </div>
@@ -53,9 +53,9 @@ if($this->session->userdata('session_sop')) {
                     <div class="form-group">
                       <label>Sumber Dana</label>
                       <select class="form-control select2" name="dt[sumberdana_id]" style="width: 100%">
-                        <?php 
-                        $tbl_sumberdana = $this->mymodel->selectData("tbl_sumberdana"); foreach ($tbl_sumberdana as $key => $value) 
-                        { ?>
+                        <?php
+                        $tbl_sumberdana = $this->mymodel->selectData("tbl_sumberdana");
+                        foreach ($tbl_sumberdana as $key => $value) { ?>
                           <option value="<?= $value['id'] ?>"><?= $value['value'] ?></option>
                         <?php } ?>
                       </select>
@@ -65,9 +65,9 @@ if($this->session->userdata('session_sop')) {
                     <div class="form-group">
                       <label>Penghasilan Bulanan</label>
                       <select class="form-control select2" name="dt[gaji_id]" style="width: 100%">
-                        <?php 
-                        $tbl_gaji = $this->mymodel->selectData("tbl_gaji"); foreach ($tbl_gaji as $key => $value) 
-                        { ?>
+                        <?php
+                        $tbl_gaji = $this->mymodel->selectData("tbl_gaji");
+                        foreach ($tbl_gaji as $key => $value) { ?>
                           <option value="<?= $value['id'] ?>"><?= $value['value'] ?></option>
                         <?php } ?>
                       </select>
@@ -79,9 +79,9 @@ if($this->session->userdata('session_sop')) {
                     <div class="form-group">
                       <label>Bank</label>
                       <select class="form-control select2" name="dt[bank_id]" style="width: 100%">
-                        <?php 
-                        $tbl_bank = $this->mymodel->selectData("tbl_bank"); foreach ($tbl_bank as $key => $value) 
-                        { ?>
+                        <?php
+                        $tbl_bank = $this->mymodel->selectData("tbl_bank");
+                        foreach ($tbl_bank as $key => $value) { ?>
                           <option value="<?= $value['id'] ?>"><?= $value['value'] ?></option>
                         <?php } ?>
                       </select>
@@ -90,7 +90,7 @@ if($this->session->userdata('session_sop')) {
                   <div class="col-md-6 col-sm-6 col-xm-6">
                     <div class="form-group">
                       <label>No Rekening</label>
-                      <input type="text" name="dt[no_rek]" class="form-control" placeholder="Masukan No Rekening" value="<?= $user['no_rek']?>">
+                      <input type="text" name="dt[no_rek]" class="form-control" placeholder="Masukan No Rekening">
                     </div>
                   </div>
                 </div>
@@ -104,7 +104,7 @@ if($this->session->userdata('session_sop')) {
               <h4 align="center">atau</h4>
               <div class="row">
                 <div class="col-md-12" align="center">
-                  <a href="<?=$this->google_url?>" class="btn btn-block btn-social btn-login btn-md">
+                  <a href="<?= $this->google_url ?>" class="btn btn-block btn-social btn-login btn-md">
                     <img src="http://transformations-spafitness.com/wp-content/uploads/2013/11/google-logo-icon-PNG-Transparent-Background-1.png">
                     <div class="row" align="center">
                       Masuk Dengan Google
@@ -123,7 +123,7 @@ if($this->session->userdata('session_sop')) {
 </div>
 
 <script type="text/javascript">
-  $("#register_form").submit(function(){
+  $("#register_form").submit(function() {
     var form = $(this);
     var mydata = new FormData(this);
     $.ajax({
@@ -133,25 +133,26 @@ if($this->session->userdata('session_sop')) {
       cache: false,
       contentType: false,
       processData: false,
-      beforeSend : function(){
-        $("#btn-send").addClass("disabled").html("<i class='la la-spinner la-spin'></i>  Processing...").attr('disabled',true);
-        form.find("#register_error_input").slideUp().html("");
+      beforeSend: function() {
+        $("#btn-send").addClass("disabled").html("<i class='la la-spinner la-spin'></i>  Processing...").attr('disabled', true);
+        $("#register_error_input").slideUp().html("");
       },
 
       success: function(response, textStatus, xhr) {
         var str = response;
-        if (str.indexOf("success") != -1){
-          form.find("#register_error_input").hide().html(response).slideDown("fast");
-          $("#btn-send").removeClass("disabled").html('<i class="fa fa-user"> </i> Daftar').attr('disabled',false);
-        }else{
-          form.find("#register_error_input").hide().html(response).slideDown("fast");
-          $("#btn-send").removeClass("disabled").html('<i class="fa fa-user"> </i> Daftar').attr('disabled',false);
+        if (str.indexOf("success") != -1) {
+          $("#register_error_input").hide().html(response).slideDown("fast");
+          $("#btn-send").removeClass("disabled").html('<i class="fa fa-user"> </i> Daftar').attr('disabled', false);
+          window.location.href = "<?= base_url() ?>";
+        } else {
+          $("#register_error_input").hide().html(response).slideDown("fast");
+          $("#btn-send").removeClass("disabled").html('<i class="fa fa-user"> </i> Daftar').attr('disabled', false);
         }
       },
       error: function(xhr, textStatus, errorThrown) {
         console.log(xhr);
-        $("#btn-send").removeClass("disabled").html('<i class="fa fa-user"> </i> Daftar').attr('disabled',false);
-        form.find("#register_error_input").hide().html(xhr).slideDown("fast");
+        $("#btn-send").removeClass("disabled").html('<i class="fa fa-user"> </i> Daftar').attr('disabled', false);
+        $("#register_error_input").hide().html(xhr).slideDown("fast");
       }
     });
     return false;
