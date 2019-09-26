@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Sep 24, 2019 at 10:53 AM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.6
+-- Host: 127.0.0.1
+-- Generation Time: Sep 26, 2019 at 11:35 AM
+-- Server version: 10.1.39-MariaDB
+-- PHP Version: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -572,8 +572,8 @@ INSERT INTO `access_control` (`id`, `folder`, `class`, `method`, `val`) VALUES
 CREATE TABLE `activity` (
   `ip` varchar(255) DEFAULT NULL,
   `link` varchar(255) DEFAULT NULL,
-  `get` longtext DEFAULT NULL,
-  `post` longtext DEFAULT NULL,
+  `get` longtext,
+  `post` longtext,
   `user_id` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -675,7 +675,10 @@ INSERT INTO `file` (`id`, `name`, `mime`, `dir`, `table`, `table_id`, `status`, 
 (259, '6950c16c9bcc6995f376b297f163175926546.jpeg', 'image/jpeg', 'webfile/project/project-milik-mitra-ke-2/6950c16c9bcc6995f376b297f163175926546.jpeg', 'tbl_project_gambar', 7, 'ENABLE', '2019-09-20 11:40:05', NULL),
 (260, '6950c16c9bcc6995f376b297f1631759265462.png', 'image/png', 'webfile/project/project-milik-mitra-ke-2/6950c16c9bcc6995f376b297f1631759265462.png', 'tbl_project_gambar', 7, 'ENABLE', '2019-09-20 11:40:05', NULL),
 (261, '6950c16c9bcc6995f376b297f163175926546.jpg', 'image/jpeg', 'webfile/project/project-milik-mitra-ke-2/6950c16c9bcc6995f376b297f163175926546.jpg', 'tbl_project_gambar', 7, 'ENABLE', '2019-09-20 11:40:05', NULL),
-(262, '6950c16c9bcc6995f376b297f163175913778.png', 'image/png', 'webfile/invest/6950c16c9bcc6995f376b297f163175913778.png', 'tbl_project_invest', 9, 'ENABLE', '2019-09-24 10:34:10', '2019-09-24 10:34:10');
+(262, '6950c16c9bcc6995f376b297f163175913778.png', 'image/png', 'webfile/invest/6950c16c9bcc6995f376b297f163175913778.png', 'tbl_project_invest', 9, 'ENABLE', '2019-09-24 10:34:10', '2019-09-24 10:34:10'),
+(263, 'default.png', 'image/png', 'webfile/investor/default.png', 'tbl_investor', 5, 'ENABLE', '2019-09-26 10:05:21', NULL),
+(269, 'default.png', 'image/png', 'webfile/investor/default.png', 'tbl_investor', 12, 'ENABLE', '2019-09-26 10:34:52', NULL),
+(270, 'default.png', 'image/png', 'webfile/investor/default.png', 'tbl_investor', 13, 'ENABLE', '2019-09-26 10:42:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -743,7 +746,7 @@ INSERT INTO `keys` (`id`, `user_id`, `key`, `level`, `ignore_limits`, `is_privat
 CREATE TABLE `konfig` (
   `id` int(11) NOT NULL,
   `slug` varchar(255) DEFAULT NULL,
-  `value` text DEFAULT NULL,
+  `value` text,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
@@ -779,13 +782,13 @@ CREATE TABLE `logs` (
   `id` int(11) NOT NULL,
   `uri` varchar(255) NOT NULL,
   `method` varchar(6) NOT NULL,
-  `params` text DEFAULT NULL,
+  `params` text,
   `api_key` varchar(40) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
   `time` int(11) NOT NULL,
   `rtime` float DEFAULT NULL,
   `authorized` varchar(1) NOT NULL,
-  `response_code` smallint(3) DEFAULT 0
+  `response_code` smallint(3) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -840,7 +843,7 @@ INSERT INTO `menu_master` (`id`, `name`, `icon`, `link`, `urutan`, `parent`, `no
 CREATE TABLE `report` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `query` longtext DEFAULT NULL,
+  `query` longtext,
   `header` varchar(255) DEFAULT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -857,7 +860,7 @@ CREATE TABLE `role` (
   `id` int(11) NOT NULL,
   `role` varchar(255) DEFAULT NULL,
   `status` enum('DISABLE','ENABLE') DEFAULT NULL,
-  `menu` text DEFAULT NULL,
+  `menu` text,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -947,7 +950,7 @@ CREATE TABLE `tbl_blog` (
   `user_id` int(11) DEFAULT NULL,
   `title` varchar(225) DEFAULT NULL,
   `slug` varchar(225) DEFAULT NULL,
-  `deskripsi` text DEFAULT NULL,
+  `deskripsi` text,
   `view` int(11) DEFAULT NULL,
   `public` enum('ENABLE','DISABLE') DEFAULT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
@@ -1001,7 +1004,7 @@ INSERT INTO `tbl_gaji` (`id`, `value`, `status`, `created_at`, `updated_at`) VAL
 CREATE TABLE `tbl_hows_work` (
   `id` int(11) NOT NULL,
   `title` varchar(225) DEFAULT NULL,
-  `value` text DEFAULT NULL,
+  `value` text,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
@@ -1034,8 +1037,9 @@ CREATE TABLE `tbl_investor` (
   `agama_id` int(11) DEFAULT NULL,
   `pendidikan_id` int(11) DEFAULT NULL,
   `email` varchar(225) DEFAULT NULL,
+  `password` varchar(225) DEFAULT NULL,
   `phone` varchar(225) DEFAULT NULL,
-  `alamat` text DEFAULT NULL,
+  `alamat` text,
   `kelurahan` varchar(225) DEFAULT NULL,
   `kecamatan` varchar(225) DEFAULT NULL,
   `provinsi_id` int(11) DEFAULT NULL,
@@ -1059,11 +1063,13 @@ CREATE TABLE `tbl_investor` (
 -- Dumping data for table `tbl_investor`
 --
 
-INSERT INTO `tbl_investor` (`id`, `name`, `tpt_lahir`, `tgl_lahir`, `jk`, `wrg_negara`, `status_kawin`, `agama_id`, `pendidikan_id`, `email`, `phone`, `alamat`, `kelurahan`, `kecamatan`, `provinsi_id`, `kota_id`, `kode_pos`, `sumberdana_id`, `pekerjaan_id`, `gaji_id`, `bank_id`, `bank_cabang`, `no_rek`, `atas_nama`, `no_ktp`, `no_npwp`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Bagus Andika (MadChan)', 'Malang', '2000-02-27', 'L', 'WNI', 'NO', 1, 3, 'procw57@gmail.com', '0821234634512', 'Disini', 'Dau', 'Dau', 1, '4', 65034, 1, 4, 1, 10, 'Malang', '0829367231', 'Bagus', '23421', '23241232', 'ENABLE', '2019-09-11 00:00:00', '2019-09-18 09:37:44'),
-(2, 'Arvin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'arvin@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ENABLE', '2019-09-12 08:24:06', NULL),
-(3, 'User Mendaftar', 'Disini', '2019-09-12', 'L', 'WNA', NULL, NULL, NULL, 'daftar@gmail.com', NULL, 'Disini', NULL, NULL, NULL, NULL, 2312541, 1, NULL, 2, 1, NULL, '231541232', NULL, NULL, NULL, 'ENABLE', '2019-09-13 10:03:27', NULL),
-(4, 'userke2', 'Malang', '2019-09-13', 'L', 'WNI', NULL, NULL, NULL, 'userke2@gmail.com', NULL, 'aa', NULL, NULL, NULL, NULL, 23123, 1, 2, 2, 1, NULL, '2312323', NULL, NULL, NULL, 'ENABLE', '2019-09-17 15:01:51', '2019-09-17 15:49:19');
+INSERT INTO `tbl_investor` (`id`, `name`, `tpt_lahir`, `tgl_lahir`, `jk`, `wrg_negara`, `status_kawin`, `agama_id`, `pendidikan_id`, `email`, `password`, `phone`, `alamat`, `kelurahan`, `kecamatan`, `provinsi_id`, `kota_id`, `kode_pos`, `sumberdana_id`, `pekerjaan_id`, `gaji_id`, `bank_id`, `bank_cabang`, `no_rek`, `atas_nama`, `no_ktp`, `no_npwp`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Bagus Andika (MadChan)', 'Malang', '2000-02-27', 'L', 'WNI', 'NO', 1, 3, 'procw57@gmail.com', 'b3c9323ca84c0f3e6ea210cd31c9ea7a', '0821234634512', 'Disini', 'Dau', 'Dau', 1, '4', 65034, 1, 4, 1, 10, 'Malang', '0829367231', 'Bagus', '23421', '23241232', 'ENABLE', '2019-09-11 00:00:00', '2019-09-18 09:37:44'),
+(2, 'Arvin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'arvin@gmail.com', 'notset-1_NULL', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ENABLE', '2019-09-12 08:24:06', NULL),
+(3, 'User Mendaftar', 'Disini', '2019-09-12', 'L', 'WNA', NULL, NULL, NULL, 'daftar@gmail.com', 'notset-2_NULL', NULL, 'Disini', NULL, NULL, NULL, NULL, 2312541, 1, NULL, 2, 1, NULL, '231541232', NULL, NULL, NULL, 'ENABLE', '2019-09-13 10:03:27', NULL),
+(4, 'userke2', 'Malang', '2019-09-13', 'L', 'WNI', NULL, NULL, NULL, 'userke2@gmail.com', 'notset-3_NULL', NULL, 'aa', NULL, NULL, NULL, NULL, 23123, 1, 2, 2, 1, NULL, '2312323', NULL, NULL, NULL, 'ENABLE', '2019-09-17 15:01:51', '2019-09-17 15:49:19'),
+(12, 'daftar2', NULL, NULL, NULL, 'WNI', NULL, NULL, NULL, 'daftar2@gmail.com', '7815696ecbf1c96e6894b779456d330e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 1, 1, NULL, '1231232', NULL, NULL, NULL, 'ENABLE', '2019-09-26 10:34:52', NULL),
+(13, 'asd', NULL, NULL, NULL, 'WNI', NULL, NULL, NULL, 'asd@gmail.com', '7815696ecbf1c96e6894b779456d330e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 1, 1, NULL, '123123', NULL, NULL, NULL, 'ENABLE', '2019-09-26 10:42:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -1162,7 +1168,7 @@ CREATE TABLE `tbl_project` (
   `modal_back` int(11) DEFAULT NULL,
   `periode` int(225) DEFAULT NULL,
   `bagi_hasil` int(225) DEFAULT NULL,
-  `deskripsi` text DEFAULT NULL,
+  `deskripsi` text,
   `latitude` float NOT NULL,
   `longitude` float NOT NULL,
   `public` enum('ENABLE','DISABLE') NOT NULL,
@@ -1203,8 +1209,8 @@ CREATE TABLE `tbl_project_invest` (
   `tgl_kadarluasa` datetime DEFAULT NULL,
   `tgl_pembayaran` datetime DEFAULT NULL,
   `metode_pembayaran` varchar(225) DEFAULT NULL,
-  `url_pembayaran` text DEFAULT NULL,
-  `idTransaksiMidtrans` text DEFAULT NULL,
+  `url_pembayaran` text,
+  `idTransaksiMidtrans` text,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
@@ -1353,7 +1359,7 @@ CREATE TABLE `webpage` (
   `id` int(11) NOT NULL,
   `title` varchar(225) DEFAULT NULL,
   `slug` varchar(225) DEFAULT NULL,
-  `content` text DEFAULT NULL,
+  `content` text,
   `prioritas` varchar(225) DEFAULT NULL,
   `status` enum('ENABLE','DISABLE') DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -1366,7 +1372,8 @@ CREATE TABLE `webpage` (
 
 INSERT INTO `webpage` (`id`, `title`, `slug`, `content`, `prioritas`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'Tentang Aplikasi', 'tentang-aplikasi', 'lorem Ipsum', '1', 'ENABLE', '2019-09-11 22:28:50', NULL),
-(2, 'Kontak Kami', 'kontak-kami', 'Lorem Ipsum', '2', 'ENABLE', '2019-09-11 22:29:10', NULL);
+(2, 'Kontak Kami', 'kontak-kami', 'Lorem Ipsum', '2', 'ENABLE', '2019-09-11 22:29:10', NULL),
+(3, 'Tim Kami', 'tim-kami', '<div class=\"row\" align=\"center\">\r\n	<div class=\"col-md-3 col-sm-3 col-xs-6\" style=\"margin-bottom: 5px\">\r\n		<img src=\"https://adminlte.io/themes/AdminLTE/dist/img/user1-128x128.jpg\" width=\"100px\" height=\"100px\" alt=\"User Image\" style=\"border-radius: 50%\">\r\n		<br>\r\n		Alexander\r\n	</div>\r\n	<div class=\"col-md-3 col-sm-3 col-xs-6\" style=\"margin-bottom: 5px\">\r\n		<img src=\"https://adminlte.io/themes/AdminLTE/dist/img/user8-128x128.jpg\" width=\"100px\" height=\"100px\" alt=\"User Image\" style=\"border-radius: 50%\">\r\n		<br>\r\n		Norman\r\n	</div>\r\n	<div class=\"col-md-3 col-sm-3 col-xs-6\" style=\"margin-bottom: 5px\">\r\n		<img src=\"https://adminlte.io/themes/AdminLTE/dist/img/user7-128x128.jpg\" width=\"100px\" height=\"100px\" alt=\"User Image\" style=\"border-radius: 50%\">\r\n		<br>\r\n		Jane\r\n	</div>\r\n	<div class=\"col-md-3 col-sm-3 col-xs-6\" style=\"margin-bottom: 5px\">\r\n		<img src=\"https://adminlte.io/themes/AdminLTE/dist/img/user6-128x128.jpg\" width=\"100px\" height=\"100px\" alt=\"User Image\" style=\"border-radius: 50%\">\r\n		<br>\r\n		John\r\n	</div>\r\n	<div class=\"col-md-3 col-sm-3 col-xs-6\" style=\"margin-bottom: 5px\">\r\n		<img src=\"https://adminlte.io/themes/AdminLTE/dist/img/user2-160x160.jpg\" width=\"100px\" height=\"100px\" alt=\"User Image\" style=\"border-radius: 50%\">\r\n		<br>\r\n		Alexander\r\n	</div>\r\n	<div class=\"col-md-3 col-sm-3 col-xs-6\" style=\"margin-bottom: 5px\">\r\n		<img src=\"https://adminlte.io/themes/AdminLTE/dist/img/user5-128x128.jpg\" width=\"100px\" height=\"100px\" alt=\"User Image\" style=\"border-radius: 50%\">\r\n		<br>\r\n		Sarah\r\n	</div>\r\n	<div class=\"col-md-3 col-sm-3 col-xs-6\" style=\"margin-bottom: 5px\">\r\n		<img src=\"https://adminlte.io/themes/AdminLTE/dist/img/user4-128x128.jpg\" width=\"100px\" height=\"100px\" alt=\"User Image\" style=\"border-radius: 50%\">\r\n		<br>\r\n		Nora\r\n	</div>\r\n	<div class=\"col-md-3 col-sm-3 col-xs-6\" style=\"margin-bottom: 5px\">\r\n		<img src=\"https://adminlte.io/themes/AdminLTE/dist/img/user3-128x128.jpg\" width=\"100px\" height=\"100px\" alt=\"User Image\" style=\"border-radius: 50%\">\r\n		<br>\r\n		Nadia\r\n	</div>\r\n</div>', '3', 'ENABLE', '2019-09-26 00:00:00', NULL);
 
 --
 -- Indexes for dumped tables
@@ -1548,7 +1555,7 @@ ALTER TABLE `access_control`
 -- AUTO_INCREMENT for table `file`
 --
 ALTER TABLE `file`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=263;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=271;
 
 --
 -- AUTO_INCREMENT for table `grafik`
@@ -1626,7 +1633,7 @@ ALTER TABLE `tbl_hows_work`
 -- AUTO_INCREMENT for table `tbl_investor`
 --
 ALTER TABLE `tbl_investor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tbl_kota`
@@ -1686,7 +1693,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `webpage`
 --
 ALTER TABLE `webpage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
