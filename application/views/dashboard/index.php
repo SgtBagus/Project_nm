@@ -1,9 +1,9 @@
-<?php 
-if($this->session->userdata('session_sop')=="") {
-    header('Location: '.base_url());
-}else{
-    if($this->session->userdata('role') != 'Investor'){
-        header('Location: '.base_url('admin'));
+<?php
+if ($this->session->userdata('session_sop') == "") {
+    header('Location: ' . base_url());
+} else {
+    if ($this->session->userdata('role') != 'Investor') {
+        header('Location: ' . base_url('admin'));
     }
 }
 ?>
@@ -21,7 +21,7 @@ if($this->session->userdata('session_sop')=="") {
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-12" align="center">
-                                    <img src="<?= base_url().$file['dir']?>" class="img-circle" alt="User Image" width="100px" height="100px">
+                                    <img src="<?= base_url() . $file['dir'] ?>" class="img-circle" alt="User Image" width="100px" height="100px">
                                 </div>
                             </div>
                         </div>
@@ -66,27 +66,42 @@ if($this->session->userdata('session_sop')=="") {
                         </div>
                     </div>
                 </div>
+
+                <?php
+                $alert = '';
+                foreach ($user as $key => $field) {
+                    if (empty($user[$key])) {
+                        $alert = '<div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                            Pastilkan Data Akun anda telah di lengkapi untuk melakukan investasi !
+                          </div>';
+                    }
+                }
+                ?>
+
                 <div class="col-md-9 col-sm-6 col-xs-12">
-                    <?php 
+                    <?= $alert ?>
+                    <?php
                     $data['user'] = $user;
                     $data['file'] = $file;
-                    
-                    if($content == 'dashboard'){
+
+                    if ($content == 'dashboard') {
                         $dashboard['invest_approve'] = $invest_approve;
                         $dashboard['total_harga'] = $total_harga;
                         $dashboard['total_project'] = $total_project;
                         $this->load->view('dashboard/dashboard', $dashboard);
-                    }else if($content == 'invest'){
+                    } else if ($content == 'invest') {
                         $invest['invest'] = $invest;
                         $this->load->view('dashboard/invest', $invest);
-                    }else if($content == 'grafik'){
+                    } else if ($content == 'grafik') {
                         $grafik['grafik'] = $grafik;
                         $this->load->view('dashboard/grafik', $grafik);
-                    }else if($content == 'account'){
+                    } else if ($content == 'account') {
                         $this->load->view('dashboard/account');
-                    }else{
+                    } else {
                         $this->load->view('errors/html/error_404.php');
-                    } 
+                    }
                     ?>
                 </div>
             </div>
@@ -95,13 +110,13 @@ if($this->session->userdata('session_sop')=="") {
 </div>
 <script>
     $(document).ready(function() {
-        if('<?= $content ?>' == 'dashboard'){
+        if ('<?= $content ?>' == 'dashboard') {
             $("#dashboard").addClass("active");
-        }else if('<?= $content ?>' == 'invest'){
+        } else if ('<?= $content ?>' == 'invest') {
             $("#invest").addClass("active");
-        }else if('<?= $content ?>' == 'grafik'){
+        } else if ('<?= $content ?>' == 'grafik') {
             $("#grafik").addClass("active");
-        }else if('<?= $content ?>' == 'account'){
+        } else if ('<?= $content ?>' == 'account') {
             $("#account").addClass("active");
         }
     });
