@@ -114,10 +114,6 @@ h6 {
     display: block;
 }
 
-@media (max-width: 767px) .sidebar_mobile {
-    height: 230px
-}
-
 .navbar-header {
     margin-top: 8px
 }
