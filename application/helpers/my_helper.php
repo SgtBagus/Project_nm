@@ -12,10 +12,10 @@ function curUrl(){
     return $url;
 }
 
-function curCname(){
+function curCname($dir){
     $CI =& get_instance();
     $url ='';
-    $url  = $CI->router->fetch_directory().$CI->router->fetch_class();
+    $url  = $CI->router->fetch_directory().'/'.$dir.'/'.$CI->router->fetch_class();
     $url = strtolower($url);
     return $url;
 }
